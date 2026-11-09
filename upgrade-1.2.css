@@ -1,0 +1,101 @@
+/* WohnPlan Web 1.2 – crisp iPad header, accessible dark theme */
+html,body,#app{background:#fff}
+#app{
+ display:flex;flex-direction:column;min-height:0;
+ height:100dvh;padding-top:env(safe-area-inset-top,0px);
+ background:var(--wp-panel,#fff);
+}
+.body-layout{height:auto!important;flex:1 1 auto;min-height:0}
+.topbar{
+ flex:0 0 68px;min-height:68px;
+ background:var(--wp-panel,#fff)!important;
+ border-bottom:1px solid var(--line);
+ box-shadow:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+}
+@media(max-width:590px){
+ .topbar{flex-basis:60px;min-height:60px}
+}
+body[data-theme="light"]{--wp-panel:#fff;--wp-soft:#f0f5fc;--wp-text:#1d2b3b;--wp-canvas:#f8fbff}
+body[data-theme="dark"]{
+ --ink:#edf4ff;--muted:#a9bdd4;--line:#32475f;--bg:#101a29;--white:#1b2a3e;
+ --wp-panel:#172538;--wp-soft:#263950;--wp-text:#edf4ff;--wp-canvas:#111d2c;
+ background:#101a29;color:var(--ink);
+}
+body[data-theme="dark"] #app,
+body[data-theme="dark"] .topbar,
+body[data-theme="dark"] .sidebar,
+body[data-theme="dark"] .workspace-top,
+body[data-theme="dark"] .context-bar,
+body[data-theme="dark"] .modal,
+body[data-theme="dark"] .mobile-nav,
+body[data-theme="dark"] .modal-head,
+body[data-theme="dark"] .modal-footer{background:var(--wp-panel)!important;color:var(--ink)!important}
+body[data-theme="dark"] .workspace,
+body[data-theme="dark"] .body-layout,
+body[data-theme="dark"] .canvas-wrap{background:var(--wp-canvas)!important}
+body[data-theme="dark"] .project-title,
+body[data-theme="dark"] #menu-toggle,
+body[data-theme="dark"] #help-btn,
+body[data-theme="dark"] .mode:not(.active),
+body[data-theme="dark"] .side-action:not(.highlight),
+body[data-theme="dark"] .zoom-controls button,
+body[data-theme="dark"] .top-actions button:not(.primary),
+body[data-theme="dark"] .chip:not(.active),
+body[data-theme="dark"] .project-card,
+body[data-theme="dark"] .gallery-card,
+body[data-theme="dark"] .step,
+body[data-theme="dark"] .small-btn:not(.primary),
+body[data-theme="dark"] .field select,
+body[data-theme="dark"] .field input,
+body[data-theme="dark"] .catalog-tools input,
+body[data-theme="dark"] input,
+body[data-theme="dark"] select,
+body[data-theme="dark"] .outline,
+body[data-theme="dark"] .scale-label{
+ background:var(--wp-soft)!important;color:var(--ink)!important;border-color:var(--line)!important;
+}
+body[data-theme="dark"] .side-action.highlight,
+body[data-theme="dark"] .chip.active,
+body[data-theme="dark"] .settings-action{background:#204777!important;color:#d9eaff!important}
+body[data-theme="dark"] .preview-stage,
+body[data-theme="dark"] .gallery-card .preview,
+body[data-theme="dark"] .project-thumb{background:#263950!important}
+body[data-theme="dark"] .subtext,
+body[data-theme="dark"] .scene-info,
+body[data-theme="dark"] .save-status,
+body[data-theme="dark"] .note,
+body[data-theme="dark"] .toggle,
+body[data-theme="dark"] .context-bar>span,
+body[data-theme="dark"] .gallery-card small{color:#a9bdd4!important}
+body[data-theme="dark"] .label,
+body[data-theme="dark"] .side-section .label{color:#93aed0!important}
+body[data-theme="dark"] .selection-label,
+body[data-theme="dark"] .brand-name,
+body[data-theme="dark"] .project-card .title{color:#edf4ff!important}
+body[data-theme="dark"] .context-bar .pill{background:#264d79!important;color:#d9eaff!important}
+body[data-theme="dark"] .project-card .meta{color:#9db2ce!important}
+body[data-theme="dark"] .modal-head,
+body[data-theme="dark"] .modal-footer,
+body[data-theme="dark"] .workspace-top,
+body[data-theme="dark"] .context-bar,
+body[data-theme="dark"] .sidebar,
+body[data-theme="dark"] .side-section{border-color:var(--line)!important}
+body[data-theme="dark"] #modal-root .release-notes div{background:#22344a!important;border-color:var(--line)!important}
+body[data-theme="dark"] .primary{background:#2877da!important;color:#fff!important}
+body[data-theme="dark"] .danger{background:#512f3d!important;color:#ffe3e7!important}
+body[data-theme="dark"] .modal-backdrop{background:#0009!important}
+body[data-theme="dark"] .icon-btn{color:#e1edff!important}
+body[data-theme="dark"] .top-actions .settings-action{background:#274565!important}
+.settings-card{border:1px solid var(--line);border-radius:13px;padding:14px;background:var(--wp-panel,#fff)}
+.settings-card h3{font-size:14px;margin:0 0 12px}
+.settings-card p{margin:8px 0}
+.settings-info{font-size:12px;line-height:1.5;color:var(--muted)}
+.settings-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.settings-row select{width:100%}
+.settings-action{display:inline-flex;align-items:center;gap:7px}
+@media(max-width:590px){.settings-row{grid-template-columns:1fr}}
+@media print{
+ #app{padding-top:0!important}
+ .body-layout{height:auto!important}
+ body[data-theme="dark"] .canvas-wrap{background:#fff!important}
+}
