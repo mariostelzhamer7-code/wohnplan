@@ -1,5 +1,5 @@
 /* WohnPlan 1.2 – offline support and reliable future app updates */
-const VERSION = 'wohnplan-v1.3.0';
+const VERSION = 'wohnplan-v1.3.1';
 const ASSETS = [
  './', './index.html', './localization.js', './upgrade-1.2.js', './upgrade-1.2.css', './upgrade-1.3.js', './upgrade-1.3.css',
  './manifest.webmanifest', './apple-touch-icon.png', './favicon.png',
