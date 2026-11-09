@@ -1,0 +1,1701 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+ <meta name="theme-color" content="#2877da" />
+ <meta name="apple-mobile-web-app-capable" content="yes" />
+ <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+ <meta name="apple-mobile-web-app-title" content="WohnPlan" />
+ <meta name="description" content="WohnPlan – Dein 2D Raumplaner. Created by MS." />
+ <link rel="manifest" href="./manifest.webmanifest" />
+ <link rel="apple-touch-icon" sizes="180x180" href="./apple-touch-icon.png" />
+ <link rel="icon" href="./favicon.png" type="image/png" />
+ <style>
+:root{--blue:#2877da;--dark:#184e9e;--light:#e9f2ff;--ink:#1d2b3b;--muted:#728399;--line:#dce5ef;--bg:#eff4fa;--white:#fff;--shadow:0 16px 40px rgba(20,54,88,.13)}*{box-sizing:border-box}html,body,#app{margin:0;height:100%;height:100dvh;overflow:hidden}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--bg);touch-action:manipulation}button,input,select{font:inherit}button{border:0;border-radius:11px;padding:10px 13px;cursor:pointer;color:inherit;background:#eef3fa;min-height:40px}button:active{transform:scale(.98)}button:disabled{opacity:.4;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #9fc7fc;outline-offset:2px}input[type="text"],input[type="number"],input[type="search"],select{width:100%;border:1px solid #cbd8e8;border-radius:10px;background:white;padding:11px;font-size:16px;color:var(--ink)}input[type="checkbox"]{accent-color:var(--blue);width:17px;height:17px}.primary{background:var(--blue);color:#fff;font-weight:650}.primary:hover{background:var(--dark)}.outline{border:1px solid #b8d0ee;background:#fff;color:var(--blue)}.danger{background:#fff0f0;color:#ad3840;border:1px solid #f4d2d2}.topbar{height:68px;display:flex;align-items:center;gap:14px;padding:8px 17px;background:white;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px;background:transparent;padding:0;text-align:left;white-space:nowrap}.brand img{width:43px;height:43px;border-radius:12px}.brand-name{font-size:18px;font-weight:800;line-height:1.05}.brand-name small{display:block;font-size:10px;margin-top:5px;color:var(--muted);font-weight:500}.project-title{background:#f3f7fd;font-weight:650;padding:10px 18px;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.save-status{margin-left:auto;color:#657b95;font-size:12px;white-space:nowrap}.top-actions{display:flex;align-items:center;gap:7px}.top-actions>button:not(.primary):not(.outline){font-size:22px;font-weight:650;min-width:41px}.body-layout{height:calc(100dvh - 68px);display:flex;min-height:0}.sidebar{width:248px;min-width:248px;background:white;border-right:1px solid var(--line);padding:17px 12px;overflow:auto;z-index:10}.sidebar-title{display:flex;align-items:center;justify-content:space-between;font-weight:750;font-size:17px;padding:4px 8px 14px}.icon-btn{background:transparent;padding:4px;min-height:28px}.sidebar-title .icon-btn{display:none}.mode-row{display:flex;gap:6px;margin-bottom:18px}.mode{flex:1;white-space:nowrap;background:#f0f4fa;color:#516881;font-size:13px;padding:10px 6px}.mode.active{background:var(--blue);color:white;font-weight:700}.side-section{border-top:1px solid var(--line);padding-top:15px;padding-bottom:16px}.side-section .label{font-weight:750;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:#8796a9;margin:0 8px 8px}.side-action{width:100%;display:flex;gap:10px;text-align:left;align-items:center;background:transparent;border-radius:9px;font-size:14px;min-height:45px;padding:10px}.side-action:hover{background:#eef5ff}.side-action.highlight{background:#e7f0fe;color:#1b64b9;font-weight:700}.toggle{display:flex;align-items:center;gap:10px;padding:9px 7px;font-size:14px}.note{font-size:12px;color:#65788f;line-height:1.5}.note b{color:#344a62}.note p{margin:5px 0}.workspace{min-width:0;min-height:0;flex:1;display:flex;flex-direction:column;position:relative}.workspace-top{height:52px;display:flex;align-items:center;gap:14px;padding:8px 15px;background:#fafdff;border-bottom:1px solid var(--line)}.workspace-top button{background:white;border:1px solid var(--line);padding:6px 12px;min-height:34px}.workspace-mode{font-size:13px;font-weight:800;color:var(--blue)}.scene-info{font-size:12px;color:#687f95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.workspace-top #help-btn{margin-left:auto;border-radius:50%;width:34px}.canvas-wrap{flex:1;position:relative;min-height:200px;background:#f7fbff;overflow:hidden}.canvas-wrap svg{width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}.canvas-wrap svg.dragging{cursor:grabbing}.zoom-controls{position:absolute;right:17px;bottom:18px;display:flex;flex-direction:column;gap:5px}.zoom-controls button{font-size:20px;background:white;box-shadow:0 2px 12px #26558d20;border:1px solid #d9e6f5;width:46px;height:46px}.scale-label{position:absolute;bottom:17px;left:17px;background:#ffffffdf;border:1px solid #dce7f3;border-radius:8px;padding:6px 10px;font-size:12px;color:#667b92;pointer-events:none}.context-bar{min-height:78px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 15px;border-top:1px solid var(--line);background:white;box-shadow:0 -2px 8px #17446b0b}.context-bar>span{font-size:13px;color:#789}.context-bar .divider{height:28px;width:1px;background:#dde7ef}.context-bar button{font-size:13px;padding:9px 12px}.context-bar .selection-label{font-weight:800;color:#203951;margin-right:10px}.context-bar .pill{font-size:12px;border-radius:30px;padding:6px 10px;background:#eef5ff;color:#1b65b0}.mobile-nav{display:none}#modal-root{position:fixed;inset:0;pointer-events:none;z-index:90}.modal-backdrop{pointer-events:auto;position:absolute;inset:0;background:#152b4a7e;display:flex;justify-content:center;align-items:center;padding:max(env(safe-area-inset-top),16px) max(env(safe-area-inset-right),16px) max(env(safe-area-inset-bottom),16px) max(env(safe-area-inset-left),16px)}.modal{background:#fff;border-radius:20px;box-shadow:var(--shadow);width:min(620px,100%);max-height:calc(100dvh - 32px);display:flex;flex-direction:column;overflow:hidden}.modal.large{width:min(1050px,100%)}.modal.full{width:100%;height:100%;max-height:none;border-radius:0}.modal-head{padding:17px 20px;display:flex;align-items:center;gap:14px;justify-content:space-between;border-bottom:1px solid var(--line);flex-shrink:0}.modal-head h2{margin:0;font-size:20px}.modal-body{padding:20px;overflow:auto;overscroll-behavior:contain}.modal-footer{border-top:1px solid var(--line);padding:14px 20px;display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px;flex-shrink:0}.flex{display:flex;align-items:center;gap:9px}.between{justify-content:space-between}.grow{flex:1}.stack{display:flex;flex-direction:column;gap:12px}.field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:650}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.subtext{font-size:12px;color:var(--muted);line-height:1.55}.chiprow{display:flex;gap:7px;flex-wrap:wrap}.chip{background:#f2f6fc;color:#3e5d7e;font-size:13px;padding:9px 13px}.chip.active{background:#d9eaff;color:#0c5cbd;font-weight:750}.catalog-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:15px}.catalog-tools input{max-width:360px;min-width:200px}.catalog-cats{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:12px;margin-bottom:5px}.catalog-cats button{white-space:nowrap}.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(164px,1fr));gap:12px}.gallery-card{text-align:left;border:1px solid #dce7f2;background:white;padding:10px;min-height:208px;display:flex;flex-direction:column;gap:6px}.gallery-card:hover,.project-card:hover{border-color:#72aae9;background:#f9fcff}.gallery-card .preview{height:120px;background:radial-gradient(circle,#fafdff,#eaf3fc);border-radius:10px;overflow:hidden}.gallery-card svg{height:100%;width:100%}.gallery-card strong{font-size:13px;line-height:1.3}.gallery-card small{font-size:11px;color:var(--muted)}.gallery-card .fav{align-self:flex-end;background:transparent;font-size:21px;padding:0;min-height:24px;color:#88a6cc;position:relative}.gallery-card .fav.on{color:#e35077}.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:13px}.project-card{border:1px solid #dae5f1;border-radius:13px;padding:10px;text-align:left;background:#fff;display:flex;flex-direction:column;gap:8px}.project-thumb{width:100%;height:110px;background:#f4f9ff;border-radius:8px;overflow:hidden}.project-thumb svg{width:100%;height:100%}.project-card .title{font-weight:800}.project-card .meta{font-size:11px;color:var(--muted)}.folder-bar{display:flex;gap:7px;overflow:auto;flex-wrap:wrap;margin-bottom:16px}.folder-bar button{font-size:12px}.section-h{margin:18px 0 10px;font-size:15px;font-weight:800}.empty{text-align:center;padding:32px;color:#8494a6}.empty b{color:#344d69}.danger-zone{background:#fff6f6;border:1px solid #ffe0e0;padding:12px;border-radius:10px}.toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:#1b3657;color:white;z-index:99;border-radius:12px;padding:12px 18px;box-shadow:var(--shadow);font-size:13px;max-width:90vw}.preview-stage{background:radial-gradient(circle at 30% 20%,#e7f3ff,#f7fbff);border:1px solid #dceaf8;border-radius:14px;padding:20px;min-height:180px;display:flex;align-items:center;justify-content:center}.preview-stage svg{max-height:210px;width:100%;max-width:320px}.steps{display:grid;gap:13px}.step{border:1px solid #dce8f6;border-radius:12px;padding:14px;display:flex;align-items:center;gap:13px}.step .round{background:var(--blue);color:#fff;border-radius:50%;min-width:30px;height:30px;display:grid;place-items:center;font-weight:800}.hidden{display:none!important}.small-btn{min-height:32px;padding:6px 9px;font-size:12px}.field-hint{font-size:12px;color:#657c95;margin:0}.toolbar-toggle{display:flex;gap:5px}.toolbar-toggle button.active{background:#dcecff;color:#1e65b4}#import-input{display:none}@media(max-width:850px){.sidebar{position:absolute;top:0;bottom:0;left:0;transform:translateX(-105%);transition:transform .18s;box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}.sidebar-title .icon-btn{display:block}.project-title{max-width:160px}.brand-name small{display:none}.topbar{gap:8px}.top-actions .outline{display:none}.save-status{font-size:11px}.workspace-top{height:47px}.context-bar{padding:9px 11px;min-height:76px}.modal-backdrop{padding:0}.modal{width:100%;height:auto;max-height:100dvh;border-radius:16px 16px 0 0;align-self:flex-end}.modal.large{width:100%;height:88dvh}.modal.full{height:100dvh;border-radius:0}.modal-body{padding:14px}.gallery{grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:9px}.gallery-card{min-height:190px}.gallery-card .preview{height:100px}}@media(max-width:590px){.topbar{height:60px;padding:6px 9px}.body-layout{height:calc(100dvh - 60px)}.brand img{width:36px;height:36px}.brand-name{font-size:15px}.project-title{padding:8px;max-width:116px;font-size:12px}.save-status{display:none}.top-actions{margin-left:auto;gap:3px}.top-actions>button{min-width:35px;padding:6px 7px}.top-actions .primary{display:none}.workspace-top .scene-info{display:none}.workspace-top{padding:6px 10px}.context-bar{max-height:120px;overflow:auto;gap:5px}.context-bar button{font-size:12px;padding:7px 9px;min-height:34px}.context-bar .selection-label{font-size:12px}.mobile-nav{display:flex;height:65px;background:#fff;border-top:1px solid var(--line);justify-content:space-around;padding-bottom:env(safe-area-inset-bottom)}.mobile-nav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:transparent;font-size:21px;min-height:52px}.mobile-nav small{font-size:10px}.form-grid{grid-template-columns:1fr}.zoom-controls{right:10px;bottom:11px}.zoom-controls button{width:40px;height:40px}.scale-label{bottom:9px;left:9px;font-size:10px}}@media print{body{background:white!important}.topbar,.sidebar,.workspace-top,.context-bar,.zoom-controls,.scale-label,.mobile-nav,#modal-root{display:none!important}.body-layout,.workspace,.canvas-wrap{position:static;height:auto;width:100%;border:0;overflow:visible}.canvas-wrap{height:90vh!important}.canvas-wrap svg{width:100%;height:90vh}.canvas-wrap svg .selection,.canvas-wrap svg .ghost{display:none!important} @page{size:A4 landscape;margin:12mm}}
+
+</style>
+ <title>WohnPlan · Created by MS</title>
+</head>
+<body>
+<div id="app">
+ <header class="topbar">
+  <button id="brand" class="brand" title="Projekte öffnen"><img src="./icon-192.png" alt="WohnPlan" /><span class="brand-name">WohnPlan<small>Created by MS · Web 1.0</small></span></button>
+  <button class="project-title" id="project-title" title="Projektübersicht öffnen">Mein Grundriss ▾</button>
+  <span class="save-status" id="save-status" aria-live="polite">● Bereit</span>
+  <div class="top-actions">
+   <button id="undo-btn" title="Rückgängig" aria-label="Rückgängig">↶</button><button id="redo-btn" title="Wiederholen" aria-label="Wiederholen">↷</button>
+   <button id="export-btn" class="outline">Export</button><button id="projects-btn" class="primary">Projekte</button>
+  </div>
+ </header>
+ <div class="body-layout">
+  <aside id="sidebar" class="sidebar">
+   <div class="sidebar-title">Werkzeuge <button id="sidebar-close" class="icon-btn" title="Menü schließen">✕</button></div>
+   <div class="mode-row"><button data-mode="planen" class="mode active">📐 Planen</button><button data-mode="einrichten" class="mode">🛋 Einrichten</button></div>
+   <div class="side-section">
+    <div class="label">Räume & Wände</div>
+    <button id="add-room" class="side-action">▢ <span>Raum hinzufügen</span></button>
+    <button id="add-door" class="side-action">🚪 <span>Tür einfügen</span></button>
+    <button id="add-window" class="side-action">▭ <span>Fenster einfügen</span></button>
+   </div>
+   <div class="side-section">
+    <div class="label">Einrichtung</div>
+    <button id="add-furniture" class="side-action highlight">⊞ <span>Möbelkatalog öffnen</span></button>
+    <button id="add-group" class="side-action">❖ <span>Möbelgruppe einfügen</span></button>
+   </div>
+   <div class="side-section">
+    <div class="label">Anzeige</div>
+    <label class="toggle"><input type="checkbox" id="grid-toggle" checked /> Raster anzeigen</label>
+    <label class="toggle"><input type="checkbox" id="snap-toggle" checked /> Magnetisches Raster</label>
+    <label class="toggle"><input type="checkbox" id="measure-toggle" checked /> Bemaßung anzeigen</label>
+   </div>
+   <div class="side-section note"><b>Hinweis</b><p>Objekt antippen und ziehen. Mit den blauen Griffen Möbel vergrößern. Türen und Fenster lassen sich nur entlang ihrer Wand verschieben.</p></div>
+  </aside>
+  <main class="workspace" id="workspace">
+   <div class="workspace-top">
+    <button id="menu-toggle" title="Werkzeugmenü">☰ <span>Werkzeuge</span></button>
+    <span id="mode-label" class="workspace-mode">📐 Planen</span>
+    <span id="scene-info" class="scene-info">Kein Raum</span>
+    <button id="help-btn" title="Einführung anzeigen">?</button>
+   </div>
+   <div class="canvas-wrap" id="canvas-wrap">
+    <svg id="plan-svg" aria-label="2D-Grundriss" role="img" xmlns="http://www.w3.org/2000/svg"></svg>
+    <div class="zoom-controls"><button id="zoom-in" title="Vergrößern">+</button><button id="zoom-out" title="Verkleinern">−</button><button id="zoom-fit" title="Grundriss zentrieren">⌗</button></div>
+    <div class="scale-label" id="scale-label"></div>
+   </div>
+   <div class="context-bar" id="context-bar"><span>Tippe auf einen Raum, ein Möbel, eine Tür oder ein Fenster.</span></div>
+   <nav class="mobile-nav"><button id="m-projects">▦<small>Projekte</small></button><button id="m-rooms">▢<small>Räume</small></button><button id="m-furniture">♧<small>Möbel</small></button><button id="m-export">⇩<small>Export</small></button></nav>
+  </main>
+ </div>
+</div>
+<div id="modal-root"></div>
+<input id="import-input" type="file" accept=".json,application/json" hidden />
+<script>
+// Aus den Möbeldefinitionen von WohnPlan Swift 1.0 übernommen.
+window.WP_CATALOG = [
+ {
+  "id": "sofa",
+  "name": "Sofa · 3-Sitzer",
+  "group": "Wohnen",
+  "subgroup": "Sofas",
+  "style": "sofa",
+  "w": 210,
+  "h": 90,
+  "rug": false
+ },
+ {
+  "id": "sessel",
+  "name": "Sessel",
+  "group": "Wohnen",
+  "subgroup": "Sessel",
+  "style": "armchair",
+  "w": 85,
+  "h": 85,
+  "rug": false
+ },
+ {
+  "id": "couchtisch",
+  "name": "Couchtisch rechteckig",
+  "group": "Wohnen",
+  "subgroup": "Couchtische",
+  "style": "table",
+  "w": 110,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "esstisch",
+  "name": "Esstisch rechteckig",
+  "group": "Essen",
+  "subgroup": "Esstische",
+  "style": "dining",
+  "w": 160,
+  "h": 90,
+  "rug": false
+ },
+ {
+  "id": "bett",
+  "name": "Doppelbett",
+  "group": "Schlafen",
+  "subgroup": "Betten",
+  "style": "bed",
+  "w": 180,
+  "h": 200,
+  "rug": false
+ },
+ {
+  "id": "schrank",
+  "name": "Kleiderschrank",
+  "group": "Schlafen",
+  "subgroup": "Schränke",
+  "style": "cabinet",
+  "w": 180,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "kommode",
+  "name": "Kommode",
+  "group": "Schlafen",
+  "subgroup": "Schränke",
+  "style": "cabinet",
+  "w": 120,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "kueche",
+  "name": "Küchenzeile",
+  "group": "Küche",
+  "subgroup": "Küchenmodule",
+  "style": "kitchen",
+  "w": 240,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "kuehlschrank",
+  "name": "Kühlschrank",
+  "group": "Küche",
+  "subgroup": "Geräte",
+  "style": "appliance",
+  "w": 65,
+  "h": 65,
+  "rug": false
+ },
+ {
+  "id": "spuele",
+  "name": "Küchenspüle",
+  "group": "Küche",
+  "subgroup": "Geräte",
+  "style": "sink",
+  "w": 80,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "dusche",
+  "name": "Dusche",
+  "group": "Bad",
+  "subgroup": "Sanitär",
+  "style": "shower",
+  "w": 90,
+  "h": 90,
+  "rug": false
+ },
+ {
+  "id": "wc",
+  "name": "WC",
+  "group": "Bad",
+  "subgroup": "Sanitär",
+  "style": "toilet",
+  "w": 45,
+  "h": 70,
+  "rug": false
+ },
+ {
+  "id": "schreibtisch",
+  "name": "Schreibtisch",
+  "group": "Büro",
+  "subgroup": "Schreibtische",
+  "style": "desk",
+  "w": 140,
+  "h": 70,
+  "rug": false
+ },
+ {
+  "id": "stuhl",
+  "name": "Stuhl",
+  "group": "Essen",
+  "subgroup": "Stühle & Bänke",
+  "style": "chair",
+  "w": 50,
+  "h": 50,
+  "rug": false
+ },
+ {
+  "id": "eigenes",
+  "name": "Eigenes Möbel",
+  "group": "Sonstiges",
+  "subgroup": "Eigene Möbel",
+  "style": "custom",
+  "w": 100,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "sofaZwei",
+  "name": "Sofa · 2-Sitzer",
+  "group": "Wohnen",
+  "subgroup": "Sofas",
+  "style": "sofa",
+  "w": 160,
+  "h": 90,
+  "rug": false
+ },
+ {
+  "id": "sofaEcke",
+  "name": "Ecksofa · links",
+  "group": "Wohnen",
+  "subgroup": "Sofas",
+  "style": "corner",
+  "w": 250,
+  "h": 170,
+  "rug": false
+ },
+ {
+  "id": "sofaU",
+  "name": "U-Sofa",
+  "group": "Wohnen",
+  "subgroup": "Sofas",
+  "style": "uso",
+  "w": 310,
+  "h": 190,
+  "rug": false
+ },
+ {
+  "id": "sofaSchlaf",
+  "name": "Schlafsofa",
+  "group": "Wohnen",
+  "subgroup": "Sofas",
+  "style": "sofa",
+  "w": 205,
+  "h": 95,
+  "rug": false
+ },
+ {
+  "id": "sofaModul",
+  "name": "Modulsofa",
+  "group": "Wohnen",
+  "subgroup": "Sofas",
+  "style": "sofa",
+  "w": 100,
+  "h": 100,
+  "rug": false
+ },
+ {
+  "id": "hocker",
+  "name": "Hocker",
+  "group": "Wohnen",
+  "subgroup": "Sessel",
+  "style": "chair",
+  "w": 55,
+  "h": 55,
+  "rug": false
+ },
+ {
+  "id": "tvMoebel",
+  "name": "TV-Lowboard",
+  "group": "Wohnen",
+  "subgroup": "TV-Möbel",
+  "style": "cabinet",
+  "w": 160,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "regal",
+  "name": "Wohnzimmerregal",
+  "group": "Wohnen",
+  "subgroup": "Schränke & Regale",
+  "style": "shelf",
+  "w": 100,
+  "h": 35,
+  "rug": false
+ },
+ {
+  "id": "beistelltisch",
+  "name": "Beistelltisch",
+  "group": "Wohnen",
+  "subgroup": "Couchtische",
+  "style": "table",
+  "w": 50,
+  "h": 50,
+  "rug": false
+ },
+ {
+  "id": "teppich",
+  "name": "Teppich rechteckig",
+  "group": "Wohnen",
+  "subgroup": "Teppiche",
+  "style": "rug",
+  "w": 200,
+  "h": 150,
+  "rug": true
+ },
+ {
+  "id": "einzelbett",
+  "name": "Einzelbett",
+  "group": "Schlafen",
+  "subgroup": "Betten",
+  "style": "bed",
+  "w": 90,
+  "h": 200,
+  "rug": false
+ },
+ {
+  "id": "kingbett",
+  "name": "Kingsize-Bett",
+  "group": "Schlafen",
+  "subgroup": "Betten",
+  "style": "bed",
+  "w": 200,
+  "h": 200,
+  "rug": false
+ },
+ {
+  "id": "hochbett",
+  "name": "Hochbett",
+  "group": "Schlafen",
+  "subgroup": "Betten",
+  "style": "bed",
+  "w": 100,
+  "h": 200,
+  "rug": false
+ },
+ {
+  "id": "kinderbett",
+  "name": "Kinderbett",
+  "group": "Kinder",
+  "subgroup": "Kindermöbel",
+  "style": "bed",
+  "w": 75,
+  "h": 140,
+  "rug": false
+ },
+ {
+  "id": "nachttisch",
+  "name": "Nachttisch",
+  "group": "Schlafen",
+  "subgroup": "Schränke",
+  "style": "cabinet",
+  "w": 45,
+  "h": 40,
+  "rug": false
+ },
+ {
+  "id": "sideboard",
+  "name": "Sideboard",
+  "group": "Wohnen",
+  "subgroup": "Schränke & Regale",
+  "style": "cabinet",
+  "w": 160,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "garderobe",
+  "name": "Garderobe",
+  "group": "Flur",
+  "subgroup": "Garderobe",
+  "style": "cabinet",
+  "w": 110,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "esstischRund",
+  "name": "Esstisch rund",
+  "group": "Essen",
+  "subgroup": "Esstische",
+  "style": "roundDining",
+  "w": 120,
+  "h": 120,
+  "rug": false
+ },
+ {
+  "id": "essbank",
+  "name": "Essbank",
+  "group": "Essen",
+  "subgroup": "Stühle & Bänke",
+  "style": "bench",
+  "w": 140,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "barhocker",
+  "name": "Barhocker",
+  "group": "Essen",
+  "subgroup": "Stühle & Bänke",
+  "style": "chair",
+  "w": 45,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "vitrine",
+  "name": "Vitrine",
+  "group": "Wohnen",
+  "subgroup": "Schränke & Regale",
+  "style": "cabinet",
+  "w": 90,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "kuecheninsel",
+  "name": "Kücheninsel",
+  "group": "Küche",
+  "subgroup": "Küchenmodule",
+  "style": "kitchen",
+  "w": 180,
+  "h": 90,
+  "rug": false
+ },
+ {
+  "id": "herd",
+  "name": "Herd",
+  "group": "Küche",
+  "subgroup": "Geräte",
+  "style": "stove",
+  "w": 60,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "geschirrspueler",
+  "name": "Geschirrspüler",
+  "group": "Küche",
+  "subgroup": "Geräte",
+  "style": "appliance",
+  "w": 60,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "waschmaschine",
+  "name": "Waschmaschine",
+  "group": "Bad",
+  "subgroup": "Haushalt",
+  "style": "washer",
+  "w": 60,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "trockner",
+  "name": "Trockner",
+  "group": "Bad",
+  "subgroup": "Haushalt",
+  "style": "washer",
+  "w": 60,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "mikrowelle",
+  "name": "Mikrowelle",
+  "group": "Küche",
+  "subgroup": "Geräte",
+  "style": "appliance",
+  "w": 55,
+  "h": 40,
+  "rug": false
+ },
+ {
+  "id": "badewanne",
+  "name": "Badewanne",
+  "group": "Bad",
+  "subgroup": "Sanitär",
+  "style": "bathtub",
+  "w": 170,
+  "h": 75,
+  "rug": false
+ },
+ {
+  "id": "waschbecken",
+  "name": "Waschbecken",
+  "group": "Bad",
+  "subgroup": "Sanitär",
+  "style": "sink",
+  "w": 65,
+  "h": 50,
+  "rug": false
+ },
+ {
+  "id": "doppelwaschbecken",
+  "name": "Doppelwaschbecken",
+  "group": "Bad",
+  "subgroup": "Sanitär",
+  "style": "doubleSink",
+  "w": 120,
+  "h": 55,
+  "rug": false
+ },
+ {
+  "id": "badschrank",
+  "name": "Badschrank",
+  "group": "Bad",
+  "subgroup": "Badmöbel",
+  "style": "cabinet",
+  "w": 65,
+  "h": 40,
+  "rug": false
+ },
+ {
+  "id": "schreibtischEcke",
+  "name": "Eckschreibtisch",
+  "group": "Büro",
+  "subgroup": "Schreibtische",
+  "style": "cornerDesk",
+  "w": 160,
+  "h": 130,
+  "rug": false
+ },
+ {
+  "id": "buecherregal",
+  "name": "Bücherregal",
+  "group": "Büro",
+  "subgroup": "Aufbewahrung",
+  "style": "shelf",
+  "w": 110,
+  "h": 35,
+  "rug": false
+ },
+ {
+  "id": "buerostuhl",
+  "name": "Bürostuhl",
+  "group": "Büro",
+  "subgroup": "Sitzmöbel",
+  "style": "officeChair",
+  "w": 60,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "aktenschrank",
+  "name": "Aktenschrank",
+  "group": "Büro",
+  "subgroup": "Aufbewahrung",
+  "style": "cabinet",
+  "w": 80,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "pflanze",
+  "name": "Zimmerpflanze",
+  "group": "Sonstiges",
+  "subgroup": "Dekoration",
+  "style": "plant",
+  "w": 55,
+  "h": 55,
+  "rug": false
+ },
+ {
+  "id": "raumteiler",
+  "name": "Raumteiler",
+  "group": "Sonstiges",
+  "subgroup": "Dekoration",
+  "style": "shelf",
+  "w": 160,
+  "h": 35,
+  "rug": false
+ },
+ {
+  "id": "bank",
+  "name": "Sitzbank",
+  "group": "Flur",
+  "subgroup": "Garderobe",
+  "style": "bench",
+  "w": 120,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "klavier",
+  "name": "Klavier",
+  "group": "Sonstiges",
+  "subgroup": "Hobbys",
+  "style": "piano",
+  "w": 150,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "fitnessgeraet",
+  "name": "Fitnessgerät",
+  "group": "Sonstiges",
+  "subgroup": "Hobbys",
+  "style": "fitness",
+  "w": 160,
+  "h": 75,
+  "rug": false
+ },
+ {
+  "id": "sofaVier",
+  "name": "Sofa · 4-Sitzer",
+  "group": "Wohnen",
+  "subgroup": "Sofas",
+  "style": "sofa",
+  "w": 285,
+  "h": 95,
+  "rug": false
+ },
+ {
+  "id": "sofaChester",
+  "name": "Chesterfield-Sofa",
+  "group": "Wohnen",
+  "subgroup": "Sofas",
+  "style": "sofa",
+  "w": 220,
+  "h": 95,
+  "rug": false
+ },
+ {
+  "id": "sofaEckeRechts",
+  "name": "Ecksofa · rechts",
+  "group": "Wohnen",
+  "subgroup": "Sofas",
+  "style": "corner",
+  "w": 250,
+  "h": 170,
+  "rug": false
+ },
+ {
+  "id": "sofaPanorama",
+  "name": "Wohnlandschaft",
+  "group": "Wohnen",
+  "subgroup": "Sofas",
+  "style": "uso",
+  "w": 330,
+  "h": 210,
+  "rug": false
+ },
+ {
+  "id": "relaxsessel",
+  "name": "Relaxsessel",
+  "group": "Wohnen",
+  "subgroup": "Sessel",
+  "style": "armchair",
+  "w": 95,
+  "h": 105,
+  "rug": false
+ },
+ {
+  "id": "ohrensessel",
+  "name": "Ohrensessel",
+  "group": "Wohnen",
+  "subgroup": "Sessel",
+  "style": "armchair",
+  "w": 85,
+  "h": 95,
+  "rug": false
+ },
+ {
+  "id": "fernsehsessel",
+  "name": "Fernsehsessel",
+  "group": "Wohnen",
+  "subgroup": "Sessel",
+  "style": "armchair",
+  "w": 95,
+  "h": 105,
+  "rug": false
+ },
+ {
+  "id": "couchtischRund",
+  "name": "Couchtisch rund",
+  "group": "Wohnen",
+  "subgroup": "Couchtische",
+  "style": "roundTable",
+  "w": 90,
+  "h": 90,
+  "rug": false
+ },
+ {
+  "id": "couchtischOval",
+  "name": "Couchtisch oval",
+  "group": "Wohnen",
+  "subgroup": "Couchtische",
+  "style": "ovalTable",
+  "w": 115,
+  "h": 65,
+  "rug": false
+ },
+ {
+  "id": "wohnwand",
+  "name": "Wohnwand",
+  "group": "Wohnen",
+  "subgroup": "Schränke & Regale",
+  "style": "shelf",
+  "w": 300,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "kamin",
+  "name": "Kamin",
+  "group": "Wohnen",
+  "subgroup": "Sonstiges",
+  "style": "cabinet",
+  "w": 100,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "teppichRund",
+  "name": "Teppich rund",
+  "group": "Wohnen",
+  "subgroup": "Teppiche",
+  "style": "roundRug",
+  "w": 180,
+  "h": 180,
+  "rug": true
+ },
+ {
+  "id": "teppichLaeufer",
+  "name": "Teppichläufer",
+  "group": "Wohnen",
+  "subgroup": "Teppiche",
+  "style": "rug",
+  "w": 80,
+  "h": 240,
+  "rug": true
+ },
+ {
+  "id": "tvKlein",
+  "name": "Fernseher · 32 Zoll",
+  "group": "Elektronik",
+  "subgroup": "Fernseher",
+  "style": "tv",
+  "w": 75,
+  "h": 12,
+  "rug": false
+ },
+ {
+  "id": "tvGross",
+  "name": "Fernseher · 65 Zoll",
+  "group": "Elektronik",
+  "subgroup": "Fernseher",
+  "style": "tv",
+  "w": 145,
+  "h": 14,
+  "rug": false
+ },
+ {
+  "id": "tvWand",
+  "name": "Wandfernseher",
+  "group": "Elektronik",
+  "subgroup": "Fernseher",
+  "style": "tv",
+  "w": 120,
+  "h": 8,
+  "rug": false
+ },
+ {
+  "id": "tvMitLowboard",
+  "name": "Fernseher mit Lowboard",
+  "group": "Elektronik",
+  "subgroup": "Fernseher",
+  "style": "tvUnit",
+  "w": 185,
+  "h": 50,
+  "rug": false
+ },
+ {
+  "id": "lautsprecher",
+  "name": "Standlautsprecher",
+  "group": "Elektronik",
+  "subgroup": "Audio",
+  "style": "speaker",
+  "w": 25,
+  "h": 32,
+  "rug": false
+ },
+ {
+  "id": "soundbar",
+  "name": "Soundbar",
+  "group": "Elektronik",
+  "subgroup": "Audio",
+  "style": "speaker",
+  "w": 100,
+  "h": 15,
+  "rug": false
+ },
+ {
+  "id": "spielekonsole",
+  "name": "Spielekonsole",
+  "group": "Elektronik",
+  "subgroup": "Geräte",
+  "style": "appliance",
+  "w": 34,
+  "h": 25,
+  "rug": false
+ },
+ {
+  "id": "esstischQuadrat",
+  "name": "Esstisch quadratisch",
+  "group": "Essen",
+  "subgroup": "Esstische",
+  "style": "dining",
+  "w": 90,
+  "h": 90,
+  "rug": false
+ },
+ {
+  "id": "esstischOval",
+  "name": "Esstisch oval",
+  "group": "Essen",
+  "subgroup": "Esstische",
+  "style": "ovalDining",
+  "w": 180,
+  "h": 100,
+  "rug": false
+ },
+ {
+  "id": "esstischAusziehbar",
+  "name": "Ausziehbarer Esstisch",
+  "group": "Essen",
+  "subgroup": "Esstische",
+  "style": "dining",
+  "w": 200,
+  "h": 90,
+  "rug": false
+ },
+ {
+  "id": "esstischFamilie",
+  "name": "Familientisch · 8 Plätze",
+  "group": "Essen",
+  "subgroup": "Esstische",
+  "style": "dining",
+  "w": 240,
+  "h": 100,
+  "rug": false
+ },
+ {
+  "id": "bartisch",
+  "name": "Bartisch",
+  "group": "Essen",
+  "subgroup": "Esstische",
+  "style": "dining",
+  "w": 120,
+  "h": 65,
+  "rug": false
+ },
+ {
+  "id": "armlehnstuhl",
+  "name": "Armlehnstuhl",
+  "group": "Essen",
+  "subgroup": "Stühle & Bänke",
+  "style": "chair",
+  "w": 60,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "polsterstuhl",
+  "name": "Polsterstuhl",
+  "group": "Essen",
+  "subgroup": "Stühle & Bänke",
+  "style": "chair",
+  "w": 52,
+  "h": 55,
+  "rug": false
+ },
+ {
+  "id": "eckbank",
+  "name": "Eckbank",
+  "group": "Essen",
+  "subgroup": "Stühle & Bänke",
+  "style": "corner",
+  "w": 180,
+  "h": 140,
+  "rug": false
+ },
+ {
+  "id": "buffetschrank",
+  "name": "Buffetschrank",
+  "group": "Essen",
+  "subgroup": "Schränke & Regale",
+  "style": "cabinet",
+  "w": 180,
+  "h": 50,
+  "rug": false
+ },
+ {
+  "id": "boxspringbett",
+  "name": "Boxspringbett",
+  "group": "Schlafen",
+  "subgroup": "Betten",
+  "style": "bed",
+  "w": 180,
+  "h": 210,
+  "rug": false
+ },
+ {
+  "id": "etagenbett",
+  "name": "Etagenbett",
+  "group": "Kinder",
+  "subgroup": "Kindermöbel",
+  "style": "bed",
+  "w": 100,
+  "h": 200,
+  "rug": false
+ },
+ {
+  "id": "schwebetuerenschrank",
+  "name": "Schwebetürenschrank",
+  "group": "Schlafen",
+  "subgroup": "Schränke",
+  "style": "cabinet",
+  "w": 220,
+  "h": 65,
+  "rug": false
+ },
+ {
+  "id": "eckschrank",
+  "name": "Eckkleiderschrank",
+  "group": "Schlafen",
+  "subgroup": "Schränke",
+  "style": "cornerCabinet",
+  "w": 150,
+  "h": 150,
+  "rug": false
+ },
+ {
+  "id": "schminktisch",
+  "name": "Schminktisch",
+  "group": "Schlafen",
+  "subgroup": "Weitere Möbel",
+  "style": "desk",
+  "w": 110,
+  "h": 50,
+  "rug": false
+ },
+ {
+  "id": "sitztruhe",
+  "name": "Bettbank",
+  "group": "Schlafen",
+  "subgroup": "Weitere Möbel",
+  "style": "bench",
+  "w": 130,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "kuechenEcke",
+  "name": "Küchen-Eckmodul",
+  "group": "Küche",
+  "subgroup": "Küchenmodule",
+  "style": "cornerKitchen",
+  "w": 120,
+  "h": 120,
+  "rug": false
+ },
+ {
+  "id": "kuechenHochschrank",
+  "name": "Küchen-Hochschrank",
+  "group": "Küche",
+  "subgroup": "Küchenmodule",
+  "style": "cabinet",
+  "w": 60,
+  "h": 65,
+  "rug": false
+ },
+ {
+  "id": "kuechenOberschrank",
+  "name": "Küchen-Oberschrank",
+  "group": "Küche",
+  "subgroup": "Küchenmodule",
+  "style": "cabinet",
+  "w": 100,
+  "h": 35,
+  "rug": false
+ },
+ {
+  "id": "backofen",
+  "name": "Backofen",
+  "group": "Küche",
+  "subgroup": "Geräte",
+  "style": "stove",
+  "w": 60,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "dunstabzug",
+  "name": "Dunstabzug",
+  "group": "Küche",
+  "subgroup": "Geräte",
+  "style": "appliance",
+  "w": 60,
+  "h": 45,
+  "rug": false
+ },
+ {
+  "id": "doppelspuele",
+  "name": "Doppelspüle",
+  "group": "Küche",
+  "subgroup": "Geräte",
+  "style": "doubleSink",
+  "w": 120,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "barTheke",
+  "name": "Bartheke",
+  "group": "Küche",
+  "subgroup": "Küchenmodule",
+  "style": "kitchen",
+  "w": 180,
+  "h": 65,
+  "rug": false
+ },
+ {
+  "id": "eckdusche",
+  "name": "Eckdusche",
+  "group": "Bad",
+  "subgroup": "Sanitär",
+  "style": "roundShower",
+  "w": 90,
+  "h": 90,
+  "rug": false
+ },
+ {
+  "id": "duscheGross",
+  "name": "Walk-in-Dusche",
+  "group": "Bad",
+  "subgroup": "Sanitär",
+  "style": "shower",
+  "w": 150,
+  "h": 90,
+  "rug": false
+ },
+ {
+  "id": "badewanneEcke",
+  "name": "Eckbadewanne",
+  "group": "Bad",
+  "subgroup": "Sanitär",
+  "style": "bathtub",
+  "w": 150,
+  "h": 150,
+  "rug": false
+ },
+ {
+  "id": "bidet",
+  "name": "Bidet",
+  "group": "Bad",
+  "subgroup": "Sanitär",
+  "style": "toilet",
+  "w": 40,
+  "h": 65,
+  "rug": false
+ },
+ {
+  "id": "spiegelschrank",
+  "name": "Spiegelschrank",
+  "group": "Bad",
+  "subgroup": "Badmöbel",
+  "style": "cabinet",
+  "w": 90,
+  "h": 20,
+  "rug": false
+ },
+ {
+  "id": "handtuchheizkoerper",
+  "name": "Handtuchheizkörper",
+  "group": "Bad",
+  "subgroup": "Badmöbel",
+  "style": "radiator",
+  "w": 55,
+  "h": 12,
+  "rug": false
+ },
+ {
+  "id": "monitor",
+  "name": "Monitor",
+  "group": "Büro",
+  "subgroup": "Computer",
+  "style": "monitor",
+  "w": 60,
+  "h": 22,
+  "rug": false
+ },
+ {
+  "id": "monitorDoppel",
+  "name": "Doppelmonitor",
+  "group": "Büro",
+  "subgroup": "Computer",
+  "style": "doubleMonitor",
+  "w": 120,
+  "h": 25,
+  "rug": false
+ },
+ {
+  "id": "pc",
+  "name": "Stand-PC",
+  "group": "Büro",
+  "subgroup": "Computer",
+  "style": "pc",
+  "w": 25,
+  "h": 50,
+  "rug": false
+ },
+ {
+  "id": "laptop",
+  "name": "Laptop",
+  "group": "Büro",
+  "subgroup": "Computer",
+  "style": "laptop",
+  "w": 36,
+  "h": 25,
+  "rug": false
+ },
+ {
+  "id": "schreibtischPC",
+  "name": "Schreibtisch mit PC",
+  "group": "Büro",
+  "subgroup": "Arbeitsplätze",
+  "style": "deskComputer",
+  "w": 160,
+  "h": 80,
+  "rug": false
+ },
+ {
+  "id": "schreibtischLaptop",
+  "name": "Laptop-Arbeitsplatz",
+  "group": "Büro",
+  "subgroup": "Arbeitsplätze",
+  "style": "deskLaptop",
+  "w": 130,
+  "h": 65,
+  "rug": false
+ },
+ {
+  "id": "gamingTisch",
+  "name": "Gaming-Tisch",
+  "group": "Büro",
+  "subgroup": "Arbeitsplätze",
+  "style": "deskComputer",
+  "w": 170,
+  "h": 80,
+  "rug": false
+ },
+ {
+  "id": "schreibtischHoehenverstellbar",
+  "name": "Höhenverstellbarer Tisch",
+  "group": "Büro",
+  "subgroup": "Schreibtische",
+  "style": "desk",
+  "w": 150,
+  "h": 75,
+  "rug": false
+ },
+ {
+  "id": "schreibtischDoppel",
+  "name": "Doppelschreibtisch",
+  "group": "Büro",
+  "subgroup": "Schreibtische",
+  "style": "doubleDesk",
+  "w": 250,
+  "h": 80,
+  "rug": false
+ },
+ {
+  "id": "drucker",
+  "name": "Drucker",
+  "group": "Büro",
+  "subgroup": "Computer",
+  "style": "printer",
+  "w": 45,
+  "h": 35,
+  "rug": false
+ },
+ {
+  "id": "rollcontainer",
+  "name": "Rollcontainer",
+  "group": "Büro",
+  "subgroup": "Aufbewahrung",
+  "style": "cabinet",
+  "w": 45,
+  "h": 55,
+  "rug": false
+ },
+ {
+  "id": "wickeltisch",
+  "name": "Wickeltisch",
+  "group": "Kinder",
+  "subgroup": "Kindermöbel",
+  "style": "cabinet",
+  "w": 90,
+  "h": 75,
+  "rug": false
+ },
+ {
+  "id": "kinderschreibtisch",
+  "name": "Kinderschreibtisch",
+  "group": "Kinder",
+  "subgroup": "Kindermöbel",
+  "style": "desk",
+  "w": 100,
+  "h": 60,
+  "rug": false
+ },
+ {
+  "id": "spielzeugregal",
+  "name": "Spielzeugregal",
+  "group": "Kinder",
+  "subgroup": "Kindermöbel",
+  "style": "shelf",
+  "w": 100,
+  "h": 35,
+  "rug": false
+ },
+ {
+  "id": "spielteppich",
+  "name": "Spielteppich",
+  "group": "Kinder",
+  "subgroup": "Dekoration",
+  "style": "rug",
+  "w": 160,
+  "h": 130,
+  "rug": true
+ },
+ {
+  "id": "spielkueche",
+  "name": "Spielküche",
+  "group": "Kinder",
+  "subgroup": "Kindermöbel",
+  "style": "kitchen",
+  "w": 90,
+  "h": 40,
+  "rug": false
+ },
+ {
+  "id": "spielzelt",
+  "name": "Spielzelt",
+  "group": "Kinder",
+  "subgroup": "Dekoration",
+  "style": "roundRug",
+  "w": 115,
+  "h": 115,
+  "rug": true
+ },
+ {
+  "id": "schuhschrank",
+  "name": "Schuhschrank",
+  "group": "Flur",
+  "subgroup": "Garderobe",
+  "style": "cabinet",
+  "w": 95,
+  "h": 35,
+  "rug": false
+ },
+ {
+  "id": "flurspiegel",
+  "name": "Wandspiegel",
+  "group": "Flur",
+  "subgroup": "Garderobe",
+  "style": "mirror",
+  "w": 70,
+  "h": 10,
+  "rug": false
+ },
+ {
+  "id": "schirmstaender",
+  "name": "Schirmständer",
+  "group": "Flur",
+  "subgroup": "Garderobe",
+  "style": "roundTable",
+  "w": 35,
+  "h": 35,
+  "rug": false
+ },
+ {
+  "id": "gartenSofa",
+  "name": "Gartensofa",
+  "group": "Outdoor",
+  "subgroup": "Gartenmöbel",
+  "style": "sofa",
+  "w": 210,
+  "h": 90,
+  "rug": false
+ },
+ {
+  "id": "gartenTisch",
+  "name": "Gartentisch",
+  "group": "Outdoor",
+  "subgroup": "Gartenmöbel",
+  "style": "dining",
+  "w": 160,
+  "h": 90,
+  "rug": false
+ },
+ {
+  "id": "liegestuhl",
+  "name": "Liegestuhl",
+  "group": "Outdoor",
+  "subgroup": "Gartenmöbel",
+  "style": "bed",
+  "w": 70,
+  "h": 180,
+  "rug": false
+ },
+ {
+  "id": "sonnenschirm",
+  "name": "Sonnenschirm",
+  "group": "Outdoor",
+  "subgroup": "Gartenmöbel",
+  "style": "roundRug",
+  "w": 220,
+  "h": 220,
+  "rug": true
+ },
+ {
+  "id": "grill",
+  "name": "Grill",
+  "group": "Outdoor",
+  "subgroup": "Geräte",
+  "style": "stove",
+  "w": 65,
+  "h": 55,
+  "rug": false
+ },
+ {
+  "id": "pflanzkuebel",
+  "name": "Pflanzkübel",
+  "group": "Outdoor",
+  "subgroup": "Dekoration",
+  "style": "plant",
+  "w": 70,
+  "h": 70,
+  "rug": false
+ },
+ {
+  "id": "heizkoerper",
+  "name": "Heizkörper",
+  "group": "Sonstiges",
+  "subgroup": "Ausstattung",
+  "style": "radiator",
+  "w": 140,
+  "h": 15,
+  "rug": false
+ },
+ {
+  "id": "wandschrank",
+  "name": "Einbauschrank",
+  "group": "Sonstiges",
+  "subgroup": "Ausstattung",
+  "style": "cabinet",
+  "w": 170,
+  "h": 50,
+  "rug": false
+ },
+ {
+  "id": "fluegel",
+  "name": "Flügel",
+  "group": "Sonstiges",
+  "subgroup": "Hobbys",
+  "style": "piano",
+  "w": 160,
+  "h": 150,
+  "rug": false
+ }
+];
+
+</script>
+<script>
+/* WohnPlan Web 1.0 | Created by MS
+   Eigenständige Browser-Umsetzung. JSON-Backupformat kompatibel zur Swift-Modellstruktur.
+   Benutzung/Datenspeicherung erfolgt lokal, keine Cloud-Synchronisierung. */
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const svg = $('#plan-svg'), root = $('#modal-root');
+const CATALOG = window.WP_CATALOG || [];
+const byCode = new Map(CATALOG.map(x => [x.id,x]));
+const GROUPS = ['Alle','Favoriten','Zuletzt','Wohnen','Schlafen','Essen','Küche','Bad','Büro','Kinder','Flur','Outdoor','Elektronik','Sonstiges'];
+const icons = {'Wohnen':'🛋️','Schlafen':'🛏️','Essen':'🍽️','Küche':'🍳','Bad':'🛁','Büro':'🖥️','Kinder':'🧸','Flur':'🚪','Outdoor':'🌿','Elektronik':'📺','Sonstiges':'▦','Favoriten':'♥','Zuletzt':'↺','Alle':'▦'};
+const KEY='WohnPlan_Web_1_0_Autosave';
+const uid = () => typeof crypto!=='undefined' && crypto.randomUUID ? crypto.randomUUID() : 'wp-'+Date.now()+'-'+Math.random().toString(16).slice(2);
+const esc = x => String(x??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
+const fmt=n=>Number(n||0).toLocaleString('de-AT',{maximumFractionDigits:1});
+const copy=obj=>JSON.parse(JSON.stringify(obj));
+const snap=x=>ui.snap ? Math.round(x/5)*5 : x;
+const distance=(p,q)=>Math.hypot(p.x-q.x,p.y-q.y);
+const newRoom=(name='Wohnzimmer',form='Rechteck',x=70,y=85,w=480,h=360)=>({id:uid(),name,form,x,y,breite:w,tiefe:h,aussparungBreite:Math.max(70,Math.round(w*.34)),aussparungTiefe:Math.max(70,Math.round(h*.34)),objekte:[],oeffnungen:[],gesperrt:false});
+const newProject=(name='Mein Zuhause',rooms)=>({id:uid(),name,raeume:rooms||[],ordnerID:null});
+const bootstrap=()=>{const p=newProject('Mein Zuhause',[newRoom()]);p.raeume[0].objekte=[{id:uid(),typ:'sofa',name:'Sofa',x:45,y:50,breite:210,tiefe:90,drehung:0,gespiegelt:false,gesperrt:false},{id:uid(),typ:'couchtisch',name:'Couchtisch',x:95,y:185,breite:110,tiefe:60,drehung:0,gespiegelt:false,gesperrt:false}];return {projekte:[p],aktivesProjekt:p.id,favoriten:[],ordner:[],papierkorb:[]}};
+function validFile(v){return v && Array.isArray(v.projekte)&&Array.isArray(v.ordner || [])&&Array.isArray(v.papierkorb || []);}
+function normalize(v){if(!validFile(v))throw Error('Keine gültige WohnPlan-Sicherung');let data={projekte:v.projekte,aktivesProjekt:v.aktivesProjekt,favoriten:v.favoriten||[],ordner:v.ordner||[],papierkorb:v.papierkorb||[]};data.projekte.forEach(p=>{p.raeume=p.raeume||[];p.ordnerID=p.ordnerID??null;p.raeume.forEach(r=>{r.objekte=r.objekte||[];r.oeffnungen=r.oeffnungen||[];r.gesperrt=!!r.gesperrt;r.aussparungBreite=Number(r.aussparungBreite||100);r.aussparungTiefe=Number(r.aussparungTiefe||100);r.oeffnungen.forEach(o=>{o.gespiegelt=!!o.gespiegelt;o.oeffnetNachAussen=!!o.oeffnetNachAussen});r.objekte.forEach(o=>{o.drehung=o.drehung||0;o.gespiegelt=!!o.gespiegelt;o.gesperrt=!!o.gesperrt})})});if(!data.projekte.length){let p=newProject('Neuer Grundriss');data.projekte.push(p);data.aktivesProjekt=p.id}if(!data.projekte.some(p=>p.id===data.aktivesProjekt))data.aktivesProjekt=data.projekte[0].id;return data}
+let data, storageBlocked=false;
+try{const raw=localStorage.getItem(KEY);data=raw?normalize(JSON.parse(raw)):bootstrap()}catch(e){data=bootstrap();storageBlocked=true}
+let ui={selected:null,mode:'planen',grid:true,snap:true,measure:true,zoom:.82,vx:0,vy:0,folder:null,trash:false,catalogGroup:'Alle',catalogSub:'Alle',catalogQuery:'',recent:[],guide:(()=>{try{return !localStorage.getItem('WohnPlan_Web_Guide_Seen')}catch{return true}})(),newItem:null,pendingOpen:null};
+let undo=[],redo=[],saveTimer=0,toastTimer=0,drag=null,activePointers=new Map(),pinch=null;
+function project(){return data.projekte.find(p=>p.id===data.aktivesProjekt) || data.projekte[0]}
+function room(id){return project()?.raeume.find(r=>r.id===id)}
+function selected(){if(!ui.selected)return null;const r=room(ui.selected.room);if(!r)return null;if(ui.selected.kind==='room')return {kind:'room',room:r,value:r};const arr=ui.selected.kind==='furniture'?r.objekte:r.oeffnungen;const value=arr.find(e=>e.id===ui.selected.id);return value?{kind:ui.selected.kind,room:r,value}:null}
+function commit(){undo.push(copy(data));if(undo.length>60)undo.shift();redo=[]}
+function changed(full=true){saveStatus('● Speichern …');clearTimeout(saveTimer);saveTimer=setTimeout(persist,150);if(full)render()}
+function persist(){try{localStorage.setItem(KEY,JSON.stringify(data));saveStatus('✓ Gespeichert')}catch(e){saveStatus('⚠ Speichern fehlgeschlagen');toast('Speicherfehler: Bitte Backup als Datei exportieren.')}}
+function saveStatus(t){$('#save-status').textContent=t}
+function undoAction(){if(!undo.length)return;redo.push(copy(data));data=undo.pop();ui.selected=null;changed()}
+function redoAction(){if(!redo.length)return;undo.push(copy(data));data=redo.pop();ui.selected=null;changed()}
+function toast(msg){document.querySelector('.toast')?.remove();let e=document.createElement('div');e.className='toast';e.textContent=msg;document.body.appendChild(e);clearTimeout(toastTimer);toastTimer=setTimeout(()=>e.remove(),3100)}
+function closeModal(){root.innerHTML=''}
+function modal(title,body,footer='',opts={}){root.innerHTML=`<div class="modal-backdrop" id="modal-backdrop"><section class="modal ${opts.full?'full':opts.large?'large':''}" role="dialog" aria-modal="true" aria-label="${esc(title)}"><header class="modal-head"><h2>${esc(title)}</h2><button class="icon-btn" id="modal-close" aria-label="Schließen">✕</button></header><div class="modal-body" id="modal-body">${body}</div>${footer?`<footer class="modal-footer">${footer}</footer>`:''}</section></div>`;$('#modal-close').onclick=closeModal;$('#modal-backdrop').addEventListener('pointerdown',e=>{if(e.target.id==='modal-backdrop')closeModal()});return $('#modal-body')}
+function download(blob,name){let url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),2500)}
+function backup(){persist();download(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),'WohnPlan-Backup-'+new Date().toISOString().slice(0,10)+'.json');toast('Backup-Datei zum Speichern bereit')}
+function importBackup(){closeModal();$('#import-input').click()}
+$('#import-input').addEventListener('change',async e=>{const file=e.target.files[0];e.target.value='';if(!file)return;try{let parsed=normalize(JSON.parse(await file.text()));if(!confirm(`Sicherung mit ${parsed.projekte.length} Projekten importieren? Deine aktuellen Web-Projekte werden dadurch ersetzt. Bitte vorher ein Backup exportieren.`))return;commit();data=parsed;ui.selected=null;changed();fitScene();toast('WohnPlan-Sicherung importiert')}catch(err){toast('Import fehlgeschlagen: '+err.message)}});
+function currentBounds(){const rs=project()?.raeume||[];if(!rs.length)return{x:0,y:0,w:600,h:420};let minx=Math.min(...rs.map(r=>r.x)),maxx=Math.max(...rs.map(r=>r.x+r.breite)),miny=Math.min(...rs.map(r=>r.y)),maxy=Math.max(...rs.map(r=>r.y+r.tiefe));return{x:minx,y:miny,w:maxx-minx,h:maxy-miny}}
+function fitScene(){let b=currentBounds(),wrap=$('#canvas-wrap').getBoundingClientRect();if(wrap.width<5||wrap.height<5)return;let s=Math.min((wrap.width-70)/Math.max(250,b.w),(wrap.height-75)/Math.max(220,b.h));ui.zoom=clamp(s,.17,2.3);ui.vx=b.x+b.w/2-wrap.width/(2*ui.zoom);ui.vy=b.y+b.h/2-wrap.height/(2*ui.zoom);renderScene()}
+function svgPoint(evt){const pt=svg.createSVGPoint();pt.x=evt.clientX;pt.y=evt.clientY;const m=svg.getScreenCTM();return m?pt.matrixTransform(m.inverse()):{x:0,y:0}}
+function worldRect(){let r=$('#canvas-wrap').getBoundingClientRect();return{x:ui.vx,y:ui.vy,w:Math.max(10,r.width/ui.zoom),h:Math.max(10,r.height/ui.zoom)}}
+function scaleAt(mult,clientX,clientY){const rect=$('#canvas-wrap').getBoundingClientRect(),cx=clientX??rect.left+rect.width/2,cy=clientY??rect.top+rect.height/2,px=(cx-rect.left)/ui.zoom+ui.vx,py=(cy-rect.top)/ui.zoom+ui.vy;ui.zoom=clamp(ui.zoom*mult,.12,4);ui.vx=px-(cx-rect.left)/ui.zoom;ui.vy=py-(cy-rect.top)/ui.zoom;renderScene()}
+function roomPoints(r){const w=r.breite,h=r.tiefe;return r.form==='L-Form' ? [{x:0,y:0},{x:w,y:0},{x:w,y:h-r.aussparungTiefe},{x:w-r.aussparungBreite,y:h-r.aussparungTiefe},{x:w-r.aussparungBreite,y:h},{x:0,y:h}] : [{x:0,y:0},{x:w,y:0},{x:w,y:h},{x:0,y:h}]}
+function roomEdges(r){const pts=roomPoints(r);return pts.map((p,i)=>{let q=pts[(i+1)%pts.length];return{x:r.x+p.x,y:r.y+p.y,dx:q.x-p.x,dy:q.y-p.y,len:Math.hypot(q.x-p.x,q.y-p.y),i}})}
+function openAnchor(r,o){const edge=roomEdges(r)[clamp(o.wand,0,roomEdges(r).length-1)],pos=clamp(o.position,10,Math.max(10,edge.len-o.breite-10)),ux=edge.dx/edge.len,uy=edge.dy/edge.len;return{x:edge.x+ux*pos,y:edge.y+uy*pos,ex:edge.x+ux*(pos+o.breite),ey:edge.y+uy*(pos+o.breite),ux,uy,edge,pos}}
+function roomArea(r){return (r.breite*r.tiefe-(r.form==='L-Form'?r.aussparungBreite*r.aussparungTiefe:0))/10000}
+function isInsideRoom(r,x,y){let a=x-r.x,b=y-r.y;if(a<0||a>r.breite||b<0||b>r.tiefe)return false;return r.form!=='L-Form'||!(a>r.breite-r.aussparungBreite&&b>r.tiefe-r.aussparungTiefe)}
+function newFurniture(code,r){const cat=byCode.get(code);if(!cat)return;const item={id:uid(),typ:code,name:cat.name,x:snap(Math.max(15,(r.breite-cat.w)/2)),y:snap(Math.max(15,(r.tiefe-cat.h)/2)),breite:cat.w,tiefe:cat.h,drehung:0,gespiegelt:false,gesperrt:false};return item}
+function assignMode(v){ui.mode=v;ui.selected=null;document.querySelectorAll('[data-mode]').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===v));$('#mode-label').textContent=v==='planen'?'📐 Planen':'🛋 Einrichten';render()}
+function editable(s){return s&&!s.room.gesperrt&&!s.value.gesperrt}
+function furnitureShape(c,w,h){
+ const style=c?.style||'custom',base='#b8d1e9',deep='#657f9a',lite='#eaf3fc';
+ const R=(x,y,b,d,extra='')=>`<rect x="${x}" y="${y}" width="${b}" height="${d}" rx="3" fill="${base}" stroke="${deep}" stroke-width="1.3" ${extra}/>`;
+ const L=(x,y,b,d,fill=lite)=>`<rect x="${x}" y="${y}" width="${b}" height="${d}" rx="3" fill="${fill}" stroke="${deep}" stroke-width="1"/>`;
+ let s=R(4,4,92,92);
+ switch(style){
+ case 'sofa':case 'armchair':s=R(4,6,92,88)+L(8,10,84,21)+L(8,34,42,48)+L(52,34,40,48);break;
+ case 'corner':s=`<path d="M5 5 H95 V43 H44 V95 H5Z" fill="${base}" stroke="${deep}" stroke-width="2"/>`+L(9,9,37,32)+L(50,9,40,30)+L(9,48,30,42);break;
+ case 'uso':s=`<path d="M5 5 H95 V88 H65 V48 H35 V88 H5Z" fill="${base}" stroke="${deep}" stroke-width="2"/>`+L(9,9,24,36)+L(36,9,28,36)+L(67,9,24,36)+L(9,51,22,32)+L(69,51,22,32);break;
+ case 'bed':s=R(5,5,90,90)+L(9,11,38,20,'#f6fbff')+L(53,11,38,20,'#f6fbff')+`<path d="M6 38H94 M50 38V94" stroke="${deep}" stroke-width="1.8"/>`;break;
+ case 'roundDining':case 'roundTable':case 'roundRug':s=`<circle cx="50" cy="50" r="43" fill="${style==='roundRug'?'#edf1fc':base}" stroke="${deep}" stroke-width="2"/>`+(style==='roundDining'?`<circle cx="50" cy="7" r="8" fill="${lite}" stroke="${deep}"/><circle cx="50" cy="93" r="8" fill="${lite}" stroke="${deep}"/><circle cx="7" cy="50" r="8" fill="${lite}" stroke="${deep}"/><circle cx="93" cy="50" r="8" fill="${lite}" stroke="${deep}"/>`:'');break;
+ case 'ovalDining':case 'ovalTable':s=`<ellipse cx="50" cy="50" rx="44" ry="31" fill="${base}" stroke="${deep}" stroke-width="2"/>`;break;
+ case 'dining':s=R(17,19,66,62)+L(25,3,24,14)+L(52,3,24,14)+L(25,83,24,14)+L(52,83,24,14);break;
+ case 'table':s=R(6,9,88,82)+`<path d="M14 15L86 84 M86 15L14 84" stroke="#ffffff" stroke-opacity=".55" stroke-width="1"/>`;break;
+ case 'chair':case 'officeChair':s=R(18,18,64,64)+L(22,11,56,24)+L(8,34,12,32)+L(80,34,12,32);break;
+ case 'bench':s=R(6,20,88,60)+L(10,24,80,21);break;
+ case 'cabinet':case 'cornerCabinet':case 'shelf':s=R(3,3,94,94)+`<path d="M50 6V94 M7 33H94 M7 66H94" stroke="${deep}" stroke-width="1.4"/>`;break;
+ case 'rug':s=`<rect x="5" y="5" width="90" height="90" rx="4" fill="#dfe6f9" stroke="#9faed4" stroke-width="2" stroke-dasharray="4 3"/><rect x="16" y="16" width="68" height="68" rx="5" fill="none" stroke="#a9b8da" stroke-width="2"/>`;break;
+ case 'desk':case 'deskComputer':case 'deskLaptop':case 'doubleDesk':case 'cornerDesk':s=R(5,5,90,90)+L(19,12,62,28,'#d8e7f5')+(style.includes('Computer')?`<rect x="33" y="17" width="34" height="18" rx="2" fill="#456a92"/><path d="M50 35V42" stroke="${deep}" stroke-width="2"/>`:'');break;
+ case 'monitor':case 'doubleMonitor':case 'tv':s=`<rect x="5" y="14" width="90" height="58" rx="5" fill="#3e638a" stroke="${deep}" stroke-width="2"/><rect x="12" y="21" width="76" height="45" rx="2" fill="#c5dff6"/><path d="M50 72V87 M36 87H64" stroke="${deep}" stroke-width="3"/>`;if(style==='doubleMonitor')s+=`<path d="M50 20V67" stroke="${deep}" stroke-width="3"/>`;break;
+ case 'tvUnit':s=R(5,10,90,80)+`<rect x="12" y="22" width="76" height="32" rx="2" fill="#486986"/><rect x="16" y="60" width="68" height="15" rx="3" fill="#e9f5ff" stroke="${deep}"/>`;break;
+ case 'pc':s=R(17,10,66,80)+`<rect x="25" y="23" width="50" height="18" rx="2" fill="#4c739b"/><circle cx="50" cy="63" r="6" fill="#d6e8fa"/>`;break;
+ case 'laptop':s=`<rect x="12" y="15" width="76" height="56" rx="3" fill="#577ea7"/><rect x="18" y="22" width="64" height="41" rx="2" fill="#c8dff3"/><path d="M8 76H92L85 89H15Z" fill="#8aa9c7" stroke="${deep}"/>`;break;
+ case 'kitchen':case 'cornerKitchen':s=R(5,5,90,90)+`<circle cx="28" cy="30" r="14" fill="${lite}" stroke="${deep}"/><circle cx="71" cy="30" r="14" fill="${lite}" stroke="${deep}"/>`+L(15,55,70,30);break;
+ case 'appliance':case 'stove':case 'washer':s=R(6,6,88,88)+`<circle cx="31" cy="35" r="18" fill="none" stroke="${deep}" stroke-width="2"/><circle cx="69" cy="35" r="18" fill="none" stroke="${deep}" stroke-width="2"/><path d="M12 70H88" stroke="${deep}" stroke-width="2"/>`;break;
+ case 'sink':case 'doubleSink':s=R(5,5,90,90)+L(17,17,66,58,'#effaff')+`<circle cx="50" cy="46" r="5" fill="#769fbb"/>`;if(style==='doubleSink')s+=`<path d="M50 17V75" stroke="${deep}" stroke-width="1"/>`;break;
+ case 'bathtub':s=R(4,4,92,92)+L(13,13,74,74,'#effaff')+`<circle cx="50" cy="50" r="5" fill="#91b6d5"/>`;break;
+ case 'shower':case 'roundShower':s=R(4,4,92,92)+`<path d="M9 92A82 82 0 0 1 91 10" stroke="${deep}" fill="none" stroke-width="2"/><circle cx="75" cy="25" r="5" fill="#739dbb"/>`;break;
+ case 'toilet':s=`<ellipse cx="50" cy="55" rx="30" ry="38" fill="#f7fbff" stroke="${deep}" stroke-width="3"/><rect x="24" y="5" width="52" height="22" rx="5" fill="${base}" stroke="${deep}" stroke-width="2"/>`;break;
+ case 'plant':s=`<circle cx="50" cy="50" r="43" fill="#d6e2d5" stroke="#6f9c83" stroke-width="2"/>`+Array.from({length:6},(_,i)=>`<ellipse cx="50" cy="26" rx="12" ry="22" fill="#76ae89" transform="rotate(${i*60} 50 50)"/>`).join('')+`<circle cx="50" cy="50" r="10" fill="#4c8466"/>`;break;
+ case 'mirror':s=R(6,6,88,88)+L(14,14,72,72,'#d9efff');break;
+ case 'radiator':s=R(5,5,90,90)+Array.from({length:6},(_,i)=>`<path d="M${17+i*13} 8V90" stroke="${deep}" stroke-width="2"/>`).join('');break;
+ case 'speaker':s=R(20,4,60,92)+`<circle cx="50" cy="62" r="21" fill="${lite}" stroke="${deep}"/><circle cx="50" cy="25" r="9" fill="${lite}" stroke="${deep}"/>`;break;
+ case 'piano':s=R(6,6,88,88)+Array.from({length:7},(_,i)=>`<rect x="${9+i*12.3}" y="11" width="12" height="45" fill="#fff" stroke="${deep}" stroke-width=".5"/>`).join('');break;
+ default:s=R(7,7,86,86)+`<path d="M15 15L85 85 M85 15L15 85" stroke="${deep}" stroke-width="1"/>`;
+ }
+ return `<svg x="0" y="0" width="${w}" height="${h}" viewBox="0 0 100 100" preserveAspectRatio="none" style="overflow:visible">${s}</svg>`;
+}
+function drawFurniture(r,o,thumb=false){const c=byCode.get(o.typ)||{style:'custom'},x=r.x+o.x,y=r.y+o.y,w=Math.max(12,o.breite),h=Math.max(12,o.tiefe),cx=x+w/2,cy=y+h/2;let sel=selected(),active=sel?.kind==='furniture'&&sel.value.id===o.id&&!thumb;let bad=false;
+ if(!thumb&&!c.rug){bad=!isInsideRoom(r,x+2,y+2)||!isInsideRoom(r,x+w-2,y+h-2);bad ||= r.objekte.some(other=>other.id!==o.id&&!byCode.get(other.typ)?.rug && x<r.x+other.x+other.breite-5&&x+w>r.x+other.x+5&&y<r.y+other.y+other.tiefe-5&&y+h>r.y+other.y+5)}
+ let shape=`<g data-kind="furniture" data-room="${r.id}" data-id="${o.id}" transform="rotate(${o.drehung||0} ${cx} ${cy})"><g transform="translate(${x} ${y})">${o.gespiegelt?`<g transform="translate(${w} 0) scale(-1 1)">${furnitureShape(c,w,h)}</g>`:furnitureShape(c,w,h)}</g><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="transparent" stroke="${bad?'#eb6565':'none'}" stroke-width="3" stroke-dasharray="7 5"/>${o.gesperrt?`<text x="${x+6}" y="${y+15}" font-size="14">🔒</text>`:''}</g>`;
+ if(active){const radius=10/ui.zoom;shape+=`<g transform="rotate(${o.drehung||0} ${cx} ${cy})" class="selection"><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="#2877da" stroke-width="${2/ui.zoom}" stroke-dasharray="${6/ui.zoom} ${4/ui.zoom}"/>${!o.gesperrt&&!r.gesperrt?([['nw',x,y],['ne',x+w,y],['se',x+w,y+h],['sw',x,y+h]].map(([k,hx,hy])=>`<circle data-kind="resize" data-room="${r.id}" data-id="${o.id}" data-handle="${k}" cx="${hx}" cy="${hy}" r="${radius*1.8}" fill="transparent"/><rect data-kind="resize" data-room="${r.id}" data-id="${o.id}" data-handle="${k}" x="${hx-radius*.75}" y="${hy-radius*.75}" width="${radius*1.5}" height="${radius*1.5}" rx="${radius*.3}" fill="#2877da" stroke="white" stroke-width="${2/ui.zoom}"/>`).join('')):''}</g>`}
+ return shape;
+}
+function drawRoom(r,thumb=false){const pts=roomPoints(r),pstr=pts.map(p=>`${r.x+p.x},${r.y+p.y}`).join(' '),sel=selected(),active=sel?.kind==='room'&&sel.value.id===r.id&&!thumb;let out=`<polygon data-kind="room" data-room="${r.id}" points="${pstr}" fill="${active?'#e0efff':'#edf4fb'}" stroke="none"/>`;
+ const edges=roomEdges(r), openings=r.oeffnungen||[];
+ edges.forEach(e=>{
+  const cut= openings.filter(o=>o.wand===e.i).map(o=>({a:clamp(o.position,0,e.len),b:clamp(o.position+o.breite,0,e.len)})).sort((a,b)=>a.a-b.a);
+  let cursor=0,seg=(a,b)=>{if(b-a<=.1)return '';const ux=e.dx/e.len,uy=e.dy/e.len;return `<path d="M${e.x+ux*a} ${e.y+uy*a}L${e.x+ux*b} ${e.y+uy*b}" stroke="${r.gesperrt?'#7e8da4':'#314b66'}" stroke-width="${thumb?8:8}" stroke-linecap="square" fill="none"/>`};
+  cut.forEach(q=>{out+=seg(cursor,q.a);cursor=Math.max(cursor,q.b)});out+=seg(cursor,e.len);
+  if(ui.measure&&!thumb){const mx=e.x+e.dx/2,my=e.y+e.dy/2, nx=-e.dy/e.len,ny=e.dx/e.len;out+=`<text x="${mx-nx*20}" y="${my-ny*20}" font-size="11" text-anchor="middle" dominant-baseline="middle" fill="#6588aa" transform="rotate(${Math.atan2(e.dy,e.dx)*180/Math.PI} ${mx-nx*20} ${my-ny*20})">${fmt(e.len)} cm</text>`}
+ });
+ if(!thumb){out+=`<text x="${r.x+r.breite*.40}" y="${r.y+r.tiefe*.49}" text-anchor="middle" fill="#7185a0" font-size="17" font-weight="650" pointer-events="none">${esc(r.name)} · ${fmt(roomArea(r))} m²</text>`}
+ openings.forEach(o=>out+=drawOpening(r,o,thumb));
+ r.objekte.filter(o=>byCode.get(o.typ)?.rug).forEach(o=>out+=drawFurniture(r,o,thumb));
+ r.objekte.filter(o=>!byCode.get(o.typ)?.rug).forEach(o=>out+=drawFurniture(r,o,thumb));
+ if(active){const handles=[['top',r.x+r.breite/2,r.y],['right',r.x+r.breite,r.y+r.tiefe/2],['bottom',r.x+r.breite/2,r.y+r.tiefe],['left',r.x,r.y+r.tiefe/2]];out+=`<g class="selection">${!r.gesperrt?handles.map(([k,x,y])=>`<circle data-kind="wall-resize" data-room="${r.id}" data-handle="${k}" cx="${x}" cy="${y}" r="${18/ui.zoom}" fill="transparent"/><circle data-kind="wall-resize" data-room="${r.id}" data-handle="${k}" cx="${x}" cy="${y}" r="${7/ui.zoom}" fill="#2877da" stroke="white" stroke-width="${2/ui.zoom}"/>`).join(''):''}</g>`}
+ return out;
+}
+function drawOpening(r,o,thumb=false){const a=openAnchor(r,o),s=selected(),isSelected=s?.kind==='opening'&&s.value.id===o.id&&!thumb;
+ let out=`<g data-kind="opening" data-room="${r.id}" data-id="${o.id}">`;
+ if(o.typ==='Fenster'){
+ const nx=-a.uy*5,ny=a.ux*5;
+ out+=`<path d="M${a.x+nx} ${a.y+ny}L${a.ex+nx} ${a.ey+ny} M${a.x-nx} ${a.y-ny}L${a.ex-nx} ${a.ey-ny}" fill="none" stroke="#2592dd" stroke-width="2.5"/>`;
+ }else{
+ const h=o.gespiegelt?{x:a.ex,y:a.ey}:{x:a.x,y:a.y};const far=o.gespiegelt?{x:a.x,y:a.y}:{x:a.ex,y:a.ey};const sign=o.oeffnetNachAussen?-1:1;const inward={x:-a.uy*sign,y:a.ux*sign},tip={x:h.x+inward.x*o.breite,y:h.y+inward.y*o.breite};
+ out+=`<path d="M${h.x} ${h.y}L${tip.x} ${tip.y}" fill="none" stroke="#496d97" stroke-width="2.3"/><path d="M${far.x} ${far.y}A${o.breite} ${o.breite} 0 0 ${o.gespiegelt!==o.oeffnetNachAussen?1:0} ${tip.x} ${tip.y}" fill="none" stroke="#829fbd" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+ }
+ out+=`<path d="M${a.x} ${a.y}L${a.ex} ${a.ey}" fill="none" stroke="#377ed2" stroke-opacity="${isSelected?'.7':'.1'}" stroke-width="${isSelected?8:5}"/>`;
+ if(!thumb){out+=`<path d="M${a.x} ${a.y}L${a.ex} ${a.ey}" stroke="transparent" stroke-width="${Math.max(24,30/ui.zoom)}" fill="none"/>`}
+ if(isSelected){out+=`<circle cx="${(a.x+a.ex)/2}" cy="${(a.y+a.ey)/2}" r="${8/ui.zoom}" fill="#2877da" stroke="white" stroke-width="${2/ui.zoom}"/>`}
+ return out+'</g>';
+}
+function renderScene(){const wr=worldRect();svg.setAttribute('viewBox',`${wr.x} ${wr.y} ${wr.w} ${wr.h}`);svg.innerHTML=`<defs><pattern id="wp-grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="#aac8e7" stroke-width=".9" opacity=".36"/></pattern><pattern id="wp-grid-small" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="#d5e4f4" stroke-width=".55" opacity=".5"/></pattern></defs><rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="#f8fbff"/>${ui.grid?`<rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="url(#wp-grid-small)"/><rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="url(#wp-grid)"/>`:''}${(project()?.raeume||[]).map(r=>drawRoom(r)).join('')}${ui.newItem?drawPreviewItem():''}`;
+ $('#scale-label').textContent=`Raster 10/50 cm · ${Math.round(ui.zoom*100)}%`;$('#scene-info').textContent=`${project()?.raeume.length||0} Räume · ${fmt(project()?.raeume.reduce((a,r)=>a+roomArea(r),0))} m²`;
+}
+function drawPreviewItem(){const v=ui.newItem;if(v.type==='furniture'){const c=byCode.get(v.code);if(!c)return '';return `<g class="ghost" opacity=".63" transform="translate(${v.x} ${v.y})">${furnitureShape(c,c.w,c.h)}</g>`}return ''}
+function renderContext(){const bar=$('#context-bar'),s=selected();if(!s){bar.innerHTML='<span>Tippe ein Element an · Auf freier Fläche ziehen: Grundriss verschieben · Zwei Finger: Zoomen</span>';return}
+ let v=s.value,parts=[`<b class="selection-label">${esc(s.kind==='room'?v.name:s.kind==='furniture'?v.name:v.typ)}</b>`];
+ const B=(text,action,cls='')=>`<button data-ctx="${action}" class="${cls}">${text}</button>`;
+ if(s.kind==='room'){parts.push(`<span class="pill">${fmt(roomArea(v))} m²</span>`,B('Maße','edit'),B(v.gesperrt?'🔓 Entsperren':'🔒 Sperren','lock'),B('Verschieben','move'),B('Löschen','delete','danger'))}
+ if(s.kind==='furniture'){parts.push(`<span class="pill">${fmt(v.breite)} × ${fmt(v.tiefe)} cm</span>`,B('✎ Größe','edit'),B('↻ Drehen','rotate'),B('⇄ Spiegeln','mirror'),B('⊕ Kopieren','duplicate'),B(v.gesperrt?'🔓':'🔒','lock'),B('🗑','delete','danger'))}
+ if(s.kind==='opening'){parts.push(`<span class="pill">${fmt(v.position)} cm ab Ecke</span>`,B('✎ Position','edit'));if(v.typ==='Tür')parts.push(B('⇄ Anschlag','mirror'),B(v.oeffnetNachAussen?'Nach innen':'Nach außen','swing'));parts.push(B('🗑','delete','danger'))}
+ bar.innerHTML=parts.join('');bar.querySelectorAll('[data-ctx]').forEach(b=>b.onclick=()=>contextAction(b.dataset.ctx));
+}
+function render(){let p=project();$('#project-title').textContent=(p?.name||'Kein Projekt')+' ▾';$('#undo-btn').disabled=!undo.length;$('#redo-btn').disabled=!redo.length;renderScene();renderContext()}
+function chooseRoom(){const rs=project()?.raeume||[];if(!rs.length){toast('Bitte zuerst einen Raum hinzufügen');return null}const s=selected();return s?.room||rs[0]}
+function contextAction(action){const s=selected();if(!s)return;const v=s.value,r=s.room;
+ if(action==='edit')return editSelected();
+ if(action==='move'){toast('Ziehe den Raum direkt auf der Planfläche.');return}
+ if(action==='delete'){
+  if(v.gesperrt||r.gesperrt){toast('Dieses Element ist gesperrt');return}
+  if(!confirm(`„${s.kind==='room'?v.name:s.kind==='furniture'?v.name:v.typ}“ löschen?`))return;
+  commit();if(s.kind==='room')project().raeume=project().raeume.filter(o=>o.id!==v.id);else if(s.kind==='furniture')r.objekte=r.objekte.filter(o=>o.id!==v.id);else r.oeffnungen=r.oeffnungen.filter(o=>o.id!==v.id);ui.selected=null;changed();return;
+ }
+ if(action==='lock'){commit();v.gesperrt=!v.gesperrt;changed();return}
+ if(r.gesperrt||v.gesperrt){toast('Erst entsperren');return}
+ commit();
+ if(action==='rotate')v.drehung=((v.drehung||0)+90)%360;
+ if(action==='mirror')v.gespiegelt=!v.gespiegelt;
+ if(action==='swing')v.oeffnetNachAussen=!v.oeffnetNachAussen;
+ if(action==='duplicate'){
+  const n=copy(v);n.id=uid();n.x+=25;n.y+=25;r.objekte.push(n);ui.selected={kind:'furniture',room:r.id,id:n.id}
+ }
+ changed();
+}
+function editSelected(){const s=selected();if(!s)return;const r=s.room,v=s.value;
+ if(s.kind==='room'){
+  modal('Raum bearbeiten',`<div class="stack"><label class="field">Raumname<input id="e-name" value="${esc(v.name)}" /></label><div class="form-grid"><label class="field">Länge (cm)<input id="e-w" type="number" min="100" value="${fmt(v.breite).replace(',','.')}" /></label><label class="field">Breite (cm)<input id="e-h" type="number" min="100" value="${fmt(v.tiefe).replace(',','.')}" /></label></div><label class="field">Raumform<select id="e-shape"><option ${v.form==='Rechteck'?'selected':''}>Rechteck</option><option ${v.form==='L-Form'?'selected':''}>L-Form</option></select></label><div class="form-grid"><label class="field">L-Aussparung Breite (cm)<input id="e-cutw" type="number" value="${v.aussparungBreite}" min="20" /></label><label class="field">L-Aussparung Tiefe (cm)<input id="e-cuth" type="number" value="${v.aussparungTiefe}" min="20" /></label></div><p class="subtext">Die Außenwände kannst du auch direkt an den blauen Punkten verschieben. Raumfläche: ${fmt(roomArea(v))} m².</p></div>`,`<button id="e-cancel">Abbrechen</button><button id="e-save" class="primary">Übernehmen</button>`);
+ }else if(s.kind==='furniture'){
+  modal('Möbel bearbeiten',`<div class="stack"><label class="field">Bezeichnung<input id="e-name" value="${esc(v.name)}" /></label><div class="form-grid"><label class="field">Breite (cm)<input id="e-w" type="number" min="10" value="${v.breite}" /></label><label class="field">Tiefe (cm)<input id="e-h" type="number" min="10" value="${v.tiefe}" /></label></div><div class="form-grid"><label class="field">Position X (cm)<input id="e-x" type="number" value="${v.x}" /></label><label class="field">Position Y (cm)<input id="e-y" type="number" value="${v.y}" /></label></div><div class="flex"><button id="e-nudge-left">← 5 cm</button><button id="e-nudge-up">↑ 5 cm</button><button id="e-nudge-right">→ 5 cm</button><button id="e-nudge-down">↓ 5 cm</button></div><p class="subtext">Du kannst Breite und Tiefe auch direkt an den vier blauen Ziehpunkten verändern.</p></div>`,`<button id="e-cancel">Abbrechen</button><button id="e-save" class="primary">Übernehmen</button>`);
+  [['left',-5,0],['up',0,-5],['right',5,0],['down',0,5]].forEach(([k,dx,dy])=>$('#e-nudge-'+k).onclick=()=>{$('#e-x').value=Number($('#e-x').value)+dx;$('#e-y').value=Number($('#e-y').value)+dy});
+ }else{
+  const edges=roomEdges(r);modal((v.typ==='Tür'?'Tür':'Fenster')+' bearbeiten',`<div class="stack"><label class="field">Wand<select id="e-edge">${edges.map(e=>`<option value="${e.i}" ${e.i===v.wand?'selected':''}>Wand ${e.i+1} (${fmt(e.len)} cm)</option>`).join('')}</select></label><div class="form-grid"><label class="field">Abstand ab Wandanfang (cm)<input id="e-pos" type="number" min="0" value="${v.position}" /></label><label class="field">${v.typ==='Tür'?'Türbreite':'Fensterbreite'} (cm)<input id="e-w" type="number" min="30" value="${v.breite}" /></label></div>${v.typ==='Tür'?`<label class="field">Öffnungsrichtung<select id="e-swing"><option value="in" ${!v.oeffnetNachAussen?'selected':''}>Nach innen</option><option value="out" ${v.oeffnetNachAussen?'selected':''}>Nach außen</option></select></label><label class="field">Anschlag<select id="e-mirror"><option value="false" ${!v.gespiegelt?'selected':''}>Links</option><option value="true" ${v.gespiegelt?'selected':''}>Rechts</option></select></label>`:''}<p class="subtext">Tür und Fenster können im Grundriss mit dem Finger entlang ihrer Wand gezogen werden.</p></div>`,`<button id="e-cancel">Abbrechen</button><button id="e-save" class="primary">Übernehmen</button>`);
+ }
+ $('#e-cancel').onclick=closeModal;
+ $('#e-save').onclick=()=>{
+  if(r.gesperrt||v.gesperrt){toast('Bitte erst entsperren');return}
+  commit();if(s.kind==='room'){v.name=$('#e-name').value.trim()||'Raum';v.breite=clamp(Number($('#e-w').value)||300,100,5000);v.tiefe=clamp(Number($('#e-h').value)||300,100,5000);v.form=$('#e-shape').value;v.aussparungBreite=clamp(Number($('#e-cutw').value)||100,20,v.breite-50);v.aussparungTiefe=clamp(Number($('#e-cuth').value)||100,20,v.tiefe-50);v.oeffnungen.forEach(o=>{const edge=roomEdges(v)[o.wand];o.breite=clamp(o.breite,30,Math.max(30,edge.len-20));o.position=clamp(o.position,10,Math.max(10,edge.len-o.breite-10))});}
+  else if(s.kind==='furniture'){v.name=$('#e-name').value.trim()||v.name;v.breite=clamp(Number($('#e-w').value)||50,10,3500);v.tiefe=clamp(Number($('#e-h').value)||50,10,3500);v.x=Number($('#e-x').value)||0;v.y=Number($('#e-y').value)||0}
+  else{v.wand=Number($('#e-edge').value);const edge=roomEdges(r)[v.wand];v.breite=clamp(Number($('#e-w').value)||80,30,Math.max(30,edge.len-20));v.position=clamp(Number($('#e-pos').value)||0,10,Math.max(10,edge.len-v.breite-10));if(v.typ==='Tür'){v.oeffnetNachAussen=$('#e-swing').value==='out';v.gespiegelt=$('#e-mirror').value==='true'}}
+  closeModal();changed();
+ };
+}
+function roomTemplate(){const t={"Wohnzimmer":[500,400],"Schlafzimmer":[400,360],"Küche":[360,300],"Badezimmer":[250,260],"Kinderzimmer":[370,340],"Büro":[350,300],"Esszimmer":[420,350],"Flur":[450,170]};
+ modal('Neuen Raum erstellen',`<div class="stack"><label class="field">Vorlage<select id="r-template">${Object.keys(t).map(k=>`<option>${k}</option>`).join('')}<option>Individuell</option></select></label><label class="field">Raumname<input id="r-name" value="Wohnzimmer"/></label><label class="field">Form<select id="r-shape"><option>Rechteck</option><option>L-Form</option></select></label><div class="form-grid"><label class="field">Länge in cm<input id="r-w" type="number" min="100" value="500" /></label><label class="field">Breite in cm<input id="r-h" type="number" min="100" value="400" /></label></div><p class="subtext">Mehrere Räume lassen sich nebeneinander anordnen. Rechtecke und L-Formen sind möglich.</p></div>`,`<button id="r-cancel">Abbrechen</button><button id="r-create" class="primary">Raum hinzufügen</button>`);
+ $('#r-template').onchange=()=>{const k=$('#r-template').value;$('#r-name').value=k==='Individuell'?'Neuer Raum':k;if(t[k]){$('#r-w').value=t[k][0];$('#r-h').value=t[k][1]}};
+ $('#r-cancel').onclick=closeModal;$('#r-create').onclick=()=>{let w=clamp(+$('#r-w').value||400,100,5000),h=clamp(+$('#r-h').value||300,100,5000),bounds=currentBounds();let x=project().raeume.length?bounds.x+bounds.w+50:70,y=project().raeume.length?bounds.y:85;const r=newRoom($('#r-name').value||'Neuer Raum',$('#r-shape').value,x,y,w,h);commit();project().raeume.push(r);ui.selected={kind:'room',room:r.id};closeModal();changed();fitScene();toast('Raum hinzugefügt')}
+}
+function openingDialog(type){const r=chooseRoom();if(!r)return;if(r.gesperrt){toast('Raum ist gesperrt');return}const edges=roomEdges(r);let name=type==='Tür'?'Tür einsetzen':'Fenster einsetzen';modal(name,`<div class="stack"><p class="subtext">Wähle eine Wand und die ungefähre Position. Danach kannst du das Element direkt mit dem Finger entlang der Wand verschieben.</p><label class="field">Wand<select id="o-wall">${edges.map(e=>`<option value="${e.i}">Wand ${e.i+1} · ${fmt(e.len)} cm</option>`).join('')}</select></label><div class="form-grid"><label class="field">Breite in cm<input id="o-width" type="number" min="30" value="${type==='Tür'?90:120}" /></label><label class="field">Position ab Wandanfang (cm)<input id="o-pos" type="number" min="10" value="60" /></label></div>${type==='Tür'?'<label class="field">Öffnet<select id="o-swing"><option value="in">Nach innen</option><option value="out">Nach außen</option></select></label>':''}<div class="preview-stage"><svg id="opening-preview" viewBox="${r.x-25} ${r.y-25} ${r.breite+50} ${r.tiefe+50}"></svg></div></div>`,`<button id="o-cancel">Abbrechen</button><button id="o-insert" class="primary">Einsetzen</button>`);
+ const generate=()=>{const idx=Number($('#o-wall').value),edge=edges[idx],width=clamp(+$('#o-width').value||90,30,Math.max(30,edge.len-20)),pos=clamp(+$('#o-pos').value||10,10,Math.max(10,edge.len-width-10));return {id:uid(),typ:type,wand:idx,position:pos,breite:width,gespiegelt:false,oeffnetNachAussen:$('#o-swing')?.value==='out'}};
+ const preview=()=>{let tmp=copy(r);tmp.oeffnungen=[...r.oeffnungen,generate()];$('#opening-preview').innerHTML=drawRoom(tmp,true)};['o-wall','o-width','o-pos','o-swing'].forEach(k=>$('#'+k)?.addEventListener('input',preview));preview();
+ $('#o-cancel').onclick=closeModal;$('#o-insert').onclick=()=>{let op=generate();commit();r.oeffnungen.push(op);ui.selected={kind:'opening',room:r.id,id:op.id};closeModal();changed()};
+}
+function catalogModal(){let group=ui.catalogGroup,sub='Alle';const body=modal('Möbelkatalog · 2D-Vorschau',`<div class="catalog-tools"><input id="catalog-search" type="search" placeholder="Möbel suchen: Sofa, TV, Esstisch …" value="${esc(ui.catalogQuery)}" /><button id="catalog-clear">Suche löschen</button></div><div class="catalog-cats" id="catalog-cats"></div><div id="catalog-subs" class="chiprow" style="margin-bottom:12px"></div><div id="catalog-gallery" class="gallery"></div><p class="subtext">Das Möbel erscheint nach der Auswahl als Vorschau im Plan. Tippe dann an die gewünschte Stelle zum Einfügen.</p>`, '', {full:true});
+ function list(){let q=$('#catalog-search').value.trim().toLowerCase();let items=CATALOG.filter(c=>(group==='Alle'||(group==='Favoriten'?data.favoriten.includes(c.id):group==='Zuletzt'?ui.recent.includes(c.id):c.group===group))&&(!q||[c.name,c.group,c.subgroup].join(' ').toLowerCase().includes(q)));let subs=[...new Set(items.map(c=>c.subgroup))];if(sub!=='Alle'&&!subs.includes(sub))sub='Alle';$('#catalog-cats').innerHTML=GROUPS.map(g=>`<button class="chip ${g===group?'active':''}" data-group="${esc(g)}">${icons[g]||'▦'} ${esc(g)}</button>`).join('');$('#catalog-subs').innerHTML=['Alle',...subs].map(s=>`<button class="chip ${s===sub?'active':''}" data-sub="${esc(s)}">${esc(s)}</button>`).join('');if(sub!=='Alle')items=items.filter(c=>c.subgroup===sub);$('#catalog-gallery').innerHTML=items.length?items.map(c=>`<button class="gallery-card" data-item="${c.id}"><span class="fav ${data.favoriten.includes(c.id)?'on':''}" data-fav="${c.id}" aria-label="Favorit">${data.favoriten.includes(c.id)?'♥':'♡'}</span><div class="preview"><svg viewBox="0 0 140 115"><g transform="translate(30 8)">${furnitureShape(c,80,90)}</g></svg></div><strong>${esc(c.name)}</strong><small>${fmt(c.w)} × ${fmt(c.h)} cm · ${esc(c.subgroup)}</small></button>`).join(''):'<div class="empty">Keine Möbel gefunden. Ändere die Suche oder Kategorie.</div>';
+ $('#catalog-cats').querySelectorAll('[data-group]').forEach(b=>b.onclick=()=>{group=b.dataset.group;sub='Alle';ui.catalogGroup=group;list()});$('#catalog-subs').querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{sub=b.dataset.sub;list()});$('#catalog-gallery').querySelectorAll('[data-fav]').forEach(el=>el.onclick=e=>{e.stopPropagation();let id=el.dataset.fav;commit();data.favoriten.includes(id)?data.favoriten=data.favoriten.filter(x=>x!==id):data.favoriten.push(id);changed(false);list()});$('#catalog-gallery').querySelectorAll('[data-item]').forEach(b=>b.onclick=()=>{const r=chooseRoom();if(!r)return;const c=byCode.get(b.dataset.item);ui.recent=[c.id,...ui.recent.filter(x=>x!==c.id)].slice(0,20);ui.newItem={type:'furniture',code:c.id,x:r.x+Math.max(15,(r.breite-c.w)/2),y:r.y+Math.max(15,(r.tiefe-c.h)/2),room:r.id};closeModal();ui.mode='einrichten';assignMode('einrichten');toast('Vorschau verschieben und in den Raum tippen.');renderScene()})}
+ $('#catalog-search').oninput=()=>{ui.catalogQuery=$('#catalog-search').value;list()};$('#catalog-clear').onclick=()=>{$('#catalog-search').value='';ui.catalogQuery='';list()};list();
+}
+function addGroup(){let groups=[['Sofaecke',[['sofa',0,0],['couchtisch',70,130],['sessel',250,10]]],['Essgruppe · 4 Personen',[['esstisch',65,60],['stuhl',0,75],['stuhl',245,75],['stuhl',110,0],['stuhl',110,170]]],['Arbeitsplatz',[['schreibtischPC',0,0],['buerostuhl',55,105],['regal',220,5]]],['Schlafzimmer-Set',[['bett',35,45],['nachttisch',-20,85],['nachttisch',230,85],['kommode',40,280]]]];
+ modal('Möbelgruppe auswählen',`<div class="stack">${groups.map((g,i)=>`<button class="side-action" data-groupinsert="${i}">❖ <span><b>${esc(g[0])}</b><br><small>${g[1].length} Möbel gleichzeitig einfügen</small></span></button>`).join('')}</div>`);
+ root.querySelectorAll('[data-groupinsert]').forEach(b=>b.onclick=()=>{let r=chooseRoom();if(!r)return;let set=groups[Number(b.dataset.groupinsert)][1];commit();set.forEach(([id,dx,dy])=>{let o=newFurniture(id,r);if(!o)return;o.x=clamp(snap((r.breite-330)/2+dx),0,r.breite-o.breite);o.y=clamp(snap((r.tiefe-360)/2+dy),0,r.tiefe-o.tiefe);r.objekte.push(o)});closeModal();changed();toast('Möbelgruppe eingefügt')});
+}
+function projectThumb(p){let rs=p.raeume||[];if(!rs.length)return '<svg viewBox="0 0 300 140"><text x="150" y="80" text-anchor="middle" fill="#9cacc0" font-size="16">Leerer Grundriss</text></svg>';let x=Math.min(...rs.map(r=>r.x)),y=Math.min(...rs.map(r=>r.y)),maxx=Math.max(...rs.map(r=>r.x+r.breite)),maxy=Math.max(...rs.map(r=>r.y+r.tiefe));let w=maxx-x,h=maxy-y,pad=30;return `<svg viewBox="${x-pad} ${y-pad} ${Math.max(200,w+pad*2)} ${Math.max(140,h+pad*2)}" preserveAspectRatio="xMidYMid meet"><rect x="${x-pad}" y="${y-pad}" width="${w+pad*2}" height="${h+pad*2}" fill="#f7fbff"/>${rs.map(r=>{let pstr=roomPoints(r).map(q=>`${r.x+q.x},${r.y+q.y}`).join(' ');return `<polygon points="${pstr}" fill="#eaf3fd" stroke="#3b5874" stroke-width="8"/>`+r.objekte.slice(0,24).map(o=>`<rect x="${r.x+o.x}" y="${r.y+o.y}" width="${o.breite}" height="${o.tiefe}" rx="6" fill="${byCode.get(o.typ)?.rug?'#dce6f8':'#9dc5e8'}" stroke="#789ab7" stroke-width="2"/>`).join('')}).join('')}</svg>`}
+function projectOverview(){ui.selected=null;const body=modal('Deine WohnPlan-Projekte',`<div class="flex between" style="flex-wrap:wrap;margin-bottom:13px"><div class="flex"><button class="primary" id="new-project">＋ Neuer Grundriss</button><button class="outline" id="new-folder">＋ Neuer Ordner</button></div><button id="show-trash" class="outline">🗑 Papierkorb (${data.papierkorb.length})</button></div><div id="folder-bar" class="folder-bar"></div><div class="project-grid" id="project-grid"></div>`, '', {large:true});
+ function show(){let folders=[{id:'all',name:'Alle Projekte'},{id:'root',name:'Ohne Ordner'},...data.ordner];$('#folder-bar').innerHTML=folders.map(f=>`<button data-folder="${f.id}" class="chip ${ui.folder===f.id||(!ui.folder&&f.id==='all')?'active':''}">${f.id==='all'?'▦ ':f.id==='root'?'▢ ':'📁 '}${esc(f.name)}</button>`).join('');$('#folder-bar').querySelectorAll('[data-folder]').forEach(b=>b.onclick=()=>{ui.folder=b.dataset.folder;ui.trash=false;show()});$('#show-trash').classList.toggle('primary',ui.trash);$('#show-trash').textContent=ui.trash?'↩ Zurück zu Projekten':`🗑 Papierkorb (${data.papierkorb.length})`;
+ const entries=ui.trash?data.papierkorb:data.projekte.filter(p=>!ui.folder||ui.folder==='all'||(ui.folder==='root'?!p.ordnerID:p.ordnerID===ui.folder));
+ $('#project-grid').innerHTML=entries.length?entries.map(p=>`<div class="project-card"><div class="project-thumb" data-open="${p.id}">${projectThumb(p)}</div><div class="title">${esc(p.name)}</div><div class="meta">${p.raeume.length} Räume · ${fmt(p.raeume.reduce((a,r)=>a+roomArea(r),0))} m²</div><div class="flex" style="flex-wrap:wrap"><button class="small-btn ${p.id===data.aktivesProjekt?'primary':'outline'}" data-open="${p.id}" ${ui.trash?'disabled':''}>${p.id===data.aktivesProjekt?'Geöffnet':'Öffnen'}</button>${ui.trash?`<button class="small-btn" data-restore="${p.id}">Wiederherstellen</button><button class="small-btn danger" data-purge="${p.id}">Endgültig löschen</button>`:`<button class="small-btn" data-duplicate="${p.id}">Kopieren</button><button class="small-btn" data-options="${p.id}">•••</button>`}</div></div>`).join(''):'<div class="empty"><b>Keine Projekte in dieser Ansicht.</b><p>Erstelle einen neuen Grundriss oder wähle einen anderen Ordner.</p></div>';
+ $('#project-grid').querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{if(ui.trash)return;data.aktivesProjekt=b.dataset.open;ui.selected=null;closeModal();changed();fitScene()});
+ $('#project-grid').querySelectorAll('[data-duplicate]').forEach(b=>b.onclick=()=>{commit();const p=data.projekte.find(x=>x.id===b.dataset.duplicate);if(!p)return;let q=copy(p);q.id=uid();q.name=p.name+' – Kopie';q.raeume.forEach(r=>{r.id=uid();r.objekte.forEach(o=>o.id=uid());r.oeffnungen.forEach(o=>o.id=uid())});data.projekte.push(q);changed(false);show()});
+ $('#project-grid').querySelectorAll('[data-options]').forEach(b=>b.onclick=()=>{const p=data.projekte.find(x=>x.id===b.dataset.options);projectOptions(p,show)});
+ $('#project-grid').querySelectorAll('[data-restore]').forEach(b=>b.onclick=()=>{commit();let p=data.papierkorb.find(x=>x.id===b.dataset.restore);data.papierkorb=data.papierkorb.filter(x=>x.id!==p.id);data.projekte.push(p);changed(false);show();toast('Projekt wiederhergestellt')});
+ $('#project-grid').querySelectorAll('[data-purge]').forEach(b=>b.onclick=()=>{if(!confirm('Dieses Projekt endgültig löschen? Das kann nicht rückgängig gemacht werden.'))return;commit();data.papierkorb=data.papierkorb.filter(x=>x.id!==b.dataset.purge);changed(false);show()});
+ }
+ $('#show-trash').onclick=()=>{ui.trash=!ui.trash;show()};
+ $('#new-project').onclick=()=>{modal('Neuer Grundriss',`<div class="stack"><label class="field">Projektname<input id="new-p-name" value="Neuer Grundriss" /></label><label class="field">Ordner<select id="new-p-folder"><option value="">Ohne Ordner</option>${data.ordner.map(f=>`<option value="${f.id}">${esc(f.name)}</option>`).join('')}</select></label><p class="subtext">Jedes Projekt startet mit einer leeren Zeichenfläche. Danach kannst du Räume oder Raumvorlagen hinzufügen.</p></div>`,`<button id="p-cancel">Abbrechen</button><button id="p-create" class="primary">Erstellen</button>`);$('#p-cancel').onclick=projectOverview;$('#p-create').onclick=()=>{let p=newProject($('#new-p-name').value.trim()||'Neuer Grundriss');p.ordnerID=$('#new-p-folder').value||null;commit();data.projekte.push(p);data.aktivesProjekt=p.id;closeModal();changed();fitScene();toast('Neuer Grundriss erstellt')}};
+ $('#new-folder').onclick=()=>{modal('Projektordner anlegen',`<label class="field">Ordnername<input id="folder-name" placeholder="z. B. Mein Haus" /></label>`,`<button id="folder-cancel">Abbrechen</button><button id="folder-save" class="primary">Ordner anlegen</button>`);$('#folder-cancel').onclick=projectOverview;$('#folder-save').onclick=()=>{let name=$('#folder-name').value.trim();if(!name)return;commit();data.ordner.push({id:uid(),name});changed(false);projectOverview()}};
+ show();
+}
+function projectOptions(p,returnTo){modal('Projekt bearbeiten',`<div class="stack"><label class="field">Projektname<input id="p-name" value="${esc(p.name)}" /></label><label class="field">In Ordner verschieben<select id="p-folder"><option value="">Ohne Ordner</option>${data.ordner.map(f=>`<option value="${f.id}" ${p.ordnerID===f.id?'selected':''}>${esc(f.name)}</option>`).join('')}</select></label><div class="danger-zone"><b>Projekt löschen</b><p class="subtext">Das Projekt wird zunächst in den Papierkorb verschoben und kann dort wiederhergestellt werden.</p><button class="danger" id="p-trash">In Papierkorb verschieben</button></div></div>`,`<button id="p-cancel">Abbrechen</button><button id="p-save" class="primary">Speichern</button>`);
+ $('#p-cancel').onclick=returnTo;$('#p-save').onclick=()=>{commit();p.name=$('#p-name').value.trim()||'Projekt';p.ordnerID=$('#p-folder').value||null;changed(false);returnTo()};$('#p-trash').onclick=()=>{if(!confirm('Projekt in den Papierkorb verschieben?'))return;commit();data.projekte=data.projekte.filter(x=>x.id!==p.id);data.papierkorb.push(p);if(!data.projekte.length){let newP=newProject('Neuer Grundriss');data.projekte.push(newP)}if(data.aktivesProjekt===p.id)data.aktivesProjekt=data.projekte[0].id;changed();returnTo()}
+}
+function exportModal(){modal('Export & Sicherheit',`<div class="stack"><p class="subtext">Mit einem Backup kannst du WohnPlan-Projekte zwischen iPad und Windows übertragen. Alle Änderungen werden auch lokal im jeweiligen Browser gespeichert.</p><button class="side-action" id="ex-backup">💾 <span><b>Projekt-Backup als JSON</b><br><small>Für andere Geräte und als zusätzliche Sicherung</small></span></button><button class="side-action" id="ex-import">📥 <span><b>Backup importieren</b><br><small>Ersetzt nach Bestätigung die Web-Projekte</small></span></button><button class="side-action" id="ex-image">🖼️ <span><b>Grundriss als PNG speichern</b><br><small>Sauberes Bild des gesamten Plans</small></span></button><button class="side-action" id="ex-print">🖨️ <span><b>Drucken / als PDF sichern</b><br><small>Im Druckdialog „Als PDF speichern“ auswählen</small></span></button></div>`);
+ $('#ex-backup').onclick=()=>{backup()};$('#ex-import').onclick=importBackup;$('#ex-image').onclick=()=>{closeModal();exportPNG()};$('#ex-print').onclick=()=>{closeModal();fitScene();setTimeout(()=>window.print(),120)};
+}
+function exportSVG(){const b=currentBounds(),pad=70,W=b.w+pad*2,H=b.h+pad*2,prev=ui.selected;ui.selected=null;const content=(project()?.raeume||[]).map(r=>drawRoom(r,true)+`<text x="${r.x+30}" y="${r.y+30}" fill="#385f85" font-size="18" font-weight="700">${esc(r.name)} · ${fmt(roomArea(r))} m²</text>`).join('');ui.selected=prev;return `<svg xmlns="http://www.w3.org/2000/svg" width="${Math.ceil(W*2)}" height="${Math.ceil(H*2)}" viewBox="${b.x-pad} ${b.y-pad} ${W} ${H}"><rect x="${b.x-pad}" y="${b.y-pad}" width="${W}" height="${H}" fill="#ffffff"/>${content}<text x="${b.x+b.w/2}" y="${b.y-pad+25}" text-anchor="middle" font-family="sans-serif" fill="#274f82" font-size="21" font-weight="bold">${esc(project()?.name||'WohnPlan')}</text><text x="${b.x+b.w/2}" y="${b.y+b.h+pad-15}" text-anchor="middle" font-family="sans-serif" fill="#90a3b8" font-size="13">WohnPlan · Created by MS</text></svg>`}
+async function exportPNG(){try{let xml=exportSVG(),img=new Image(),url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));img.onload=()=>{let cv=document.createElement('canvas');cv.width=img.naturalWidth;cv.height=img.naturalHeight;let ctx=cv.getContext('2d');ctx.drawImage(img,0,0);URL.revokeObjectURL(url);cv.toBlob(blob=>blob?download(blob,(project()?.name||'WohnPlan')+'.png'):toast('Bildexport nicht verfügbar'),'image/png')};img.onerror=()=>{URL.revokeObjectURL(url);toast('Bildexport nicht möglich')};img.src=url}catch(e){toast('PNG-Fehler: '+e.message)}}
+function showHelp(){modal('Willkommen bei WohnPlan! 🏠',`<div class="steps"><div class="step"><span class="round">1</span><div><b>Räume planen</b><p class="subtext">Mit „Raum hinzufügen“ ein Rechteck oder eine L-Form anlegen und Maße eingeben.</p></div></div><div class="step"><span class="round">2</span><div><b>Möbel einrichten</b><p class="subtext">Vollbild-Möbelkatalog öffnen, 2D-Vorschau auswählen und an der gewünschten Stelle einsetzen.</p></div></div><div class="step"><span class="round">3</span><div><b>Direkt mit dem Finger arbeiten</b><p class="subtext">Möbel ziehen, an blauen Ecken vergrößern, Türen und Fenster an Wänden verschieben. Mit zwei Fingern zoomen.</p></div></div><div class="step"><span class="round">4</span><div><b>Automatisch speichern</b><p class="subtext">WohnPlan speichert lokal in diesem Browser. Exportiere regelmäßig ein Backup für den Gerätewechsel und zur Datensicherung.</p></div></div></div>`,`<button class="primary" id="help-done">Loslegen!</button>`);$('#help-done').onclick=()=>{try{localStorage.setItem('WohnPlan_Web_Guide_Seen','yes')}catch{}closeModal()}}
+function beginPointer(e){
+ if(e.button!==0 && e.pointerType==='mouse')return;
+ const p=svgPoint(e);activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});svg.setPointerCapture(e.pointerId);
+ if(activePointers.size>=2){const a=[...activePointers.values()];const mid={x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2},rect=$('#canvas-wrap').getBoundingClientRect();pinch={dist:distance(a[0],a[1]),zoom:ui.zoom,worldX:ui.vx+(mid.x-rect.left)/ui.zoom,worldY:ui.vy+(mid.y-rect.top)/ui.zoom};drag=null;return}
+ if(ui.newItem){drag={kind:'place',start:p,last:p,move:false};return}
+ const target=e.target.closest('[data-kind]');let kind=target?.dataset.kind||'pan',rid=target?.dataset.room||null,id=target?.dataset.id||null,handle=target?.dataset.handle||null;
+ if(kind==='resize'||kind==='wall-resize'){} else if(kind==='furniture'){ui.selected={kind:'furniture',room:rid,id}}else if(kind==='opening'){ui.selected={kind:'opening',room:rid,id}}else if(kind==='room'){ui.selected={kind:'room',room:rid}}else{ui.selected=null;kind='pan'}
+ renderContext();
+ const s=selected(),start=s?copy(s.value):null;
+ drag={kind,room:rid,id,handle,start:p,last:p,startClient:{x:e.clientX,y:e.clientY},startView:{x:ui.vx,y:ui.vy},original:start,changed:false};
+ if(kind==='furniture'||kind==='opening'||kind==='room')renderScene();
+}
+function movePointer(e){if(!activePointers.has(e.pointerId))return;activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
+ if(activePointers.size>=2){let a=[...activePointers.values()];if(!pinch)return;const d=distance(a[0],a[1]),rect=$('#canvas-wrap').getBoundingClientRect(),mid={x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2};ui.zoom=clamp(pinch.zoom*d/Math.max(1,pinch.dist),.12,4);ui.vx=pinch.worldX-(mid.x-rect.left)/ui.zoom;ui.vy=pinch.worldY-(mid.y-rect.top)/ui.zoom;renderScene();return}
+ const point=svgPoint(e);if(ui.newItem){let r=room(ui.newItem.room);if(r){let c=byCode.get(ui.newItem.code);ui.newItem.x=snap(clamp(point.x-c.w/2,r.x,r.x+r.breite-c.w));ui.newItem.y=snap(clamp(point.y-c.h/2,r.y,r.y+r.tiefe-c.h));renderScene()}return}
+ if(!drag)return;const r=room(drag.room),p=point,dx=p.x-drag.start.x,dy=p.y-drag.start.y;
+ if(drag.kind==='pan'){ui.vx=drag.startView.x-(e.clientX-drag.startClient.x)/ui.zoom;ui.vy=drag.startView.y-(e.clientY-drag.startClient.y)/ui.zoom;renderScene();return}
+ if(!r||r.gesperrt)return;
+ if(drag.kind==='room'){const v=r;if(v.gesperrt)return;v.x=snap(drag.original.x+dx);v.y=snap(drag.original.y+dy);drag.changed=true;renderScene();return}
+ if(drag.kind==='furniture'){const v=r.objekte.find(o=>o.id===drag.id);if(!v||v.gesperrt)return;v.x=snap(drag.original.x+dx);v.y=snap(drag.original.y+dy);drag.changed=true;renderScene();return}
+ if(drag.kind==='opening'){const v=r.oeffnungen.find(o=>o.id===drag.id);if(!v)return;const edge=roomEdges(r)[v.wand],projected=(dx*edge.dx+dy*edge.dy)/edge.len;v.position=snap(clamp(drag.original.position+projected,10,Math.max(10,edge.len-v.breite-10)));drag.changed=true;renderScene();return}
+ if(drag.kind==='wall-resize'){
+  const v=r,orig=drag.original,h=drag.handle,min=120;
+  if(h==='right')v.breite=snap(Math.max(min,orig.breite+dx));
+  if(h==='bottom')v.tiefe=snap(Math.max(min,orig.tiefe+dy));
+  if(h==='left'){let shift=clamp(snap(dx),-10000,orig.breite-min);v.x=orig.x+shift;v.breite=orig.breite-shift}
+  if(h==='top'){let shift=clamp(snap(dy),-10000,orig.tiefe-min);v.y=orig.y+shift;v.tiefe=orig.tiefe-shift}
+  v.aussparungBreite=Math.min(v.aussparungBreite,v.breite-50);v.aussparungTiefe=Math.min(v.aussparungTiefe,v.tiefe-50);drag.changed=true;renderScene();return;
+ }
+ if(drag.kind==='resize'){
+  const v=r.objekte.find(o=>o.id===drag.id);if(!v||v.gesperrt)return;const orig=drag.original,a=(orig.drehung||0)*Math.PI/180,lx=Math.cos(a)*dx+Math.sin(a)*dy,ly=-Math.sin(a)*dx+Math.cos(a)*dy;
+  let ox=0,oy=0,w=orig.breite,h=orig.tiefe;
+  if(drag.handle.includes('w')){ox=snap(clamp(lx,-10000,w-20));w-=ox}else{w=Math.max(20,snap(w+lx))}
+  if(drag.handle.includes('n')){oy=snap(clamp(ly,-10000,h-20));h-=oy}else{h=Math.max(20,snap(h+ly))}
+  v.breite=w;v.tiefe=h;v.x=orig.x+ox;v.y=orig.y+oy;drag.changed=true;renderScene();return;
+ }
+}
+function endPointer(e){if(!activePointers.has(e.pointerId))return;activePointers.delete(e.pointerId);if(activePointers.size<2)pinch=null;
+ if(ui.newItem&&drag?.kind==='place'){
+  const r=room(ui.newItem.room),c=byCode.get(ui.newItem.code);
+  if(r&&!r.gesperrt&&c){commit();const o=newFurniture(c.id,r);o.x=clamp(ui.newItem.x-r.x,0,Math.max(0,r.breite-o.breite));o.y=clamp(ui.newItem.y-r.y,0,Math.max(0,r.tiefe-o.tiefe));r.objekte.push(o);ui.selected={kind:'furniture',room:r.id,id:o.id};ui.newItem=null;changed();toast('Möbel eingesetzt')} else toast('Kein Raum ausgewählt');drag=null;return;
+ }
+ if(drag?.changed){const prev=copy(data);const r=room(drag.room);if(r&&drag.original){if(drag.kind==='room'||drag.kind==='wall-resize'){let rr=prev.projekte.find(p=>p.id===data.aktivesProjekt)?.raeume.find(x=>x.id===drag.room);if(rr)Object.assign(rr,drag.original)}else if(drag.kind==='furniture'||drag.kind==='resize'){let o=prev.projekte.find(p=>p.id===data.aktivesProjekt)?.raeume.find(x=>x.id===drag.room)?.objekte.find(o=>o.id===drag.id);if(o)Object.assign(o,drag.original)}else if(drag.kind==='opening'){let o=prev.projekte.find(p=>p.id===data.aktivesProjekt)?.raeume.find(x=>x.id===drag.room)?.oeffnungen.find(o=>o.id===drag.id);if(o)Object.assign(o,drag.original)}}undo.push(prev);if(undo.length>60)undo.shift();redo=[];changed()}
+ else renderContext();drag=null;
+}
+svg.addEventListener('pointerdown',beginPointer);svg.addEventListener('pointermove',movePointer);svg.addEventListener('pointerup',endPointer);svg.addEventListener('pointercancel',endPointer);
+svg.addEventListener('wheel',e=>{e.preventDefault();scaleAt(e.deltaY<0?1.12:1/1.12,e.clientX,e.clientY)},{passive:false});
+$('#zoom-in').onclick=()=>scaleAt(1.2);$('#zoom-out').onclick=()=>scaleAt(1/1.2);$('#zoom-fit').onclick=fitScene;
+$('#brand').onclick=projectOverview;$('#project-title').onclick=projectOverview;$('#projects-btn').onclick=projectOverview;$('#m-projects').onclick=projectOverview;
+$('#export-btn').onclick=exportModal;$('#m-export').onclick=exportModal;
+$('#undo-btn').onclick=undoAction;$('#redo-btn').onclick=redoAction;
+$('#add-room').onclick=roomTemplate;$('#m-rooms').onclick=roomTemplate;
+$('#add-door').onclick=()=>openingDialog('Tür');$('#add-window').onclick=()=>openingDialog('Fenster');
+$('#add-furniture').onclick=catalogModal;$('#m-furniture').onclick=catalogModal;
+$('#add-group').onclick=addGroup;
+$('#help-btn').onclick=showHelp;
+$('#grid-toggle').onchange=e=>{ui.grid=e.target.checked;renderScene()};$('#snap-toggle').onchange=e=>ui.snap=e.target.checked;$('#measure-toggle').onchange=e=>{ui.measure=e.target.checked;renderScene()};
+$('#menu-toggle').onclick=()=>$('#sidebar').classList.toggle('open');$('#sidebar-close').onclick=()=>$('#sidebar').classList.remove('open');
+document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>assignMode(b.dataset.mode));
+window.addEventListener('keydown',e=>{
+ if(root.firstChild || ['INPUT','TEXTAREA','SELECT'].includes(document.activeElement?.tagName))return;
+ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='z'){e.preventDefault();e.shiftKey?redoAction():undoAction();return}
+ if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='y'){e.preventDefault();redoAction();return}
+ const s=selected();if(!s)return;
+ if(['Delete','Backspace'].includes(e.key)){e.preventDefault();contextAction('delete');return}
+ const deltas={ArrowLeft:[-1,0],ArrowRight:[1,0],ArrowUp:[0,-1],ArrowDown:[0,1]};if(!deltas[e.key])return;
+ if(s.kind==='furniture'&&!s.value.gesperrt&&!s.room.gesperrt){e.preventDefault();commit();s.value.x+=deltas[e.key][0]*(e.shiftKey?10:1);s.value.y+=deltas[e.key][1]*(e.shiftKey?10:1);changed()}
+});
+window.addEventListener('beforeunload',persist);window.addEventListener('pagehide',persist);
+window.addEventListener('resize',renderScene);window.addEventListener('orientationchange',()=>setTimeout(renderScene,150));
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+render();setTimeout(fitScene,70);if(ui.guide)setTimeout(showHelp,450);if(storageBlocked)setTimeout(()=>toast('Lokaler Speicher ist nicht verfügbar – bitte Backup exportieren.'),1400);
+})();
+
+</script>
+</body>
+</html>
