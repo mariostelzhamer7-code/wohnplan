@@ -1639,10 +1639,11 @@ async function exportPDF() {
       '<div class="flex" style="flex-wrap:wrap">' +
       '<button id="pdf-share" class="primary">📤 '+L('Teilen / In Dateien sichern','Share / Save to Files')+'</button>' +
       '<a id="pdf-direct" class="outline" style="padding:12px;border-radius:10px;text-decoration:none" download="'+esc(filename)+'">⬇ '+L('PDF herunterladen','Download PDF')+'</a>' +
+      '<a id="pdf-open" class="outline" target="_blank" rel="noopener" style="padding:12px;border-radius:10px;text-decoration:none">👁 '+L('PDF öffnen','Open PDF')+'</a>' +
       '</div><p class="settings-info">'+L('Falls der Download in der Home-Bildschirm-App nicht startet, verwende den Teilen-Button.',
         'If downloading does not work in the Home Screen app, use the Share button.')+'</p></div>',
         '<button id="pdf-close">'+L('Schließen','Close')+'</button>');
-    $('#pdf-direct').href=url;
+    $('#pdf-direct').href=url;$('#pdf-open').href=url;
     $('#pdf-share').onclick=async()=>{
       try {
         const file=new File([pdf],filename,{type:'application/pdf'});
