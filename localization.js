@@ -275,7 +275,7 @@
     if (!node) return;
     if (node.nodeType === 3) { translateTextNode(node); return; }
     if (node.nodeType !== 1) return;
-    if (node.matches('svg,script,style')) return;
+    if (node.closest('svg,script,style')) return;
     translateAttributes(node);
     for (var child = node.firstChild; child; child = child.nextSibling) walk(child);
   }
