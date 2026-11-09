@@ -1501,7 +1501,7 @@ function furnitureShape(c,w,h,color){
  return `<svg x="0" y="0" width="${w}" height="${h}" viewBox="0 0 100 100" preserveAspectRatio="none" style="overflow:visible">${s}</svg>`;
 }
 function drawFurniture(r,o,thumb=false){const c=byCode.get(o.typ)||{style:'custom'},x=r.x+o.x,y=r.y+o.y,w=Math.max(12,o.breite),h=Math.max(12,o.tiefe),cx=x+w/2,cy=y+h/2;let sel=selected(),active=sel?.kind==='furniture'&&sel.value.id===o.id&&!thumb;let bad=false;
- if(!thumb&&!c.rug){bad=window.WP_13.outsideRoom(r,o);bad ||= r.objekte.some(other=>other.id!==o.id&&!other.ausgeblendet&&!byCode.get(other.typ)?.rug && window.WP_13.level(other,byCode.get(other.typ))===window.WP_13.level(o,c) && window.WP_13.overlaps(o,other))}
+ if(!thumb&&!c.rug){bad=window.WP_13.outsideRoom(r,o);bad ||= r.objekte.some(other=>other.id!==o.id&&!other.ausgeblendet&&!byCode.get(other.typ)?.rug && window.WP_13.level(other,byCode.get(other.typ))===window.WP_13.level(o,c) && window.WP_13.overlaps(o,other));bad ||= (r.oeffnungen||[]).some(door=>door.typ==='Tür'&&window.WP_13.isDoorBlocked(r,door,o,openAnchor))}
  let shape=`<g data-kind="furniture" data-room="${r.id}" data-id="${o.id}" transform="rotate(${o.drehung||0} ${cx} ${cy})"><g transform="translate(${x} ${y})">${o.gespiegelt?`<g transform="translate(${w} 0) scale(-1 1)">${furnitureShape(c,w,h,o.farbe)}</g>`:furnitureShape(c,w,h,o.farbe)}</g><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="transparent" stroke="${bad?'#eb6565':'none'}" stroke-width="3" stroke-dasharray="7 5"/>${o.gesperrt?`<text x="${x+6}" y="${y+15}" font-size="14">🔒</text>`:''}</g>`;
  if(active){const radius=10/ui.zoom;shape+=`<g transform="rotate(${o.drehung||0} ${cx} ${cy})" class="selection"><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="#2877da" stroke-width="${2/ui.zoom}" stroke-dasharray="${6/ui.zoom} ${4/ui.zoom}"/>${!o.gesperrt&&!r.gesperrt?([['nw',x,y],['ne',x+w,y],['se',x+w,y+h],['sw',x,y+h]].map(([k,hx,hy])=>`<circle data-kind="resize" data-room="${r.id}" data-id="${o.id}" data-handle="${k}" cx="${hx}" cy="${hy}" r="${radius*1.8}" fill="transparent"/><rect data-kind="resize" data-room="${r.id}" data-id="${o.id}" data-handle="${k}" x="${hx-radius*.75}" y="${hy-radius*.75}" width="${radius*1.5}" height="${radius*1.5}" rx="${radius*.3}" fill="#2877da" stroke="white" stroke-width="${2/ui.zoom}"/>`).join('')):''}</g>`}
  return shape;
@@ -1582,7 +1582,7 @@ function editSelected(){const s=selected();if(!s)return;const r=s.room,v=s.value
  $('#e-save').onclick=()=>{
   if(r.gesperrt||v.gesperrt){toast('Bitte erst entsperren');return}
   commit();if(s.kind==='room'){v.name=$('#e-name').value.trim()||'Raum';v.breite=clamp(Number($('#e-w').value)||300,100,5000);v.tiefe=clamp(Number($('#e-h').value)||300,100,5000);v.form=$('#e-shape').value;v.aussparungBreite=clamp(Number($('#e-cutw').value)||100,20,v.breite-50);v.aussparungTiefe=clamp(Number($('#e-cuth').value)||100,20,v.tiefe-50);v.oeffnungen.forEach(o=>{const edge=roomEdges(v)[o.wand];o.breite=clamp(o.breite,30,Math.max(30,edge.len-20));o.position=clamp(o.position,10,Math.max(10,edge.len-o.breite-10))});}
-  else if(s.kind==='furniture'){v.name=$('#e-name').value.trim()||v.name;v.breite=clamp(Number($('#e-w').value)||50,10,3500);v.tiefe=clamp(Number($('#e-h').value)||50,10,3500);v.x=Number($('#e-x').value)||0;v.y=Number($('#e-y').value)||0}
+  else if(s.kind==='furniture'){v.name=$('#e-name').value.trim()||v.name;v.breite=clamp(Number($('#e-w').value)||50,10,3500);v.tiefe=clamp(Number($('#e-h').value)||50,10,3500);const loc=window.WP_13.exactPosition(r,v,{x:Number($('#e-x').value)||0,y:Number($('#e-y').value)||0});v.x=loc.x;v.y=loc.y}
   else{v.wand=Number($('#e-edge').value);const edge=roomEdges(r)[v.wand];v.breite=clamp(Number($('#e-w').value)||80,30,Math.max(30,edge.len-20));v.position=clamp(Number($('#e-pos').value)||0,10,Math.max(10,edge.len-v.breite-10));if(v.typ==='Tür'){v.oeffnetNachAussen=$('#e-swing').value==='out';v.gespiegelt=$('#e-mirror').value==='true'}}
   closeModal();changed();
  };
@@ -1612,7 +1612,7 @@ function projectOverview(){ui.selected=null;const body=modal('Deine WohnPlan-Pro
  const entries=ui.trash?data.papierkorb:data.projekte.filter(p=>!ui.folder||ui.folder==='all'||(ui.folder==='root'?!p.ordnerID:p.ordnerID===ui.folder));
  $('#project-grid').innerHTML=entries.length?entries.map(p=>`<div class="project-card"><div class="project-thumb" data-open="${p.id}">${projectThumb(p)}</div><div class="title">${esc(p.name)}</div><div class="meta">${p.raeume.length} Räume · ${fmt(p.raeume.reduce((a,r)=>a+roomArea(r),0))} m²</div><div class="flex" style="flex-wrap:wrap"><button class="small-btn ${p.id===data.aktivesProjekt?'primary':'outline'}" data-open="${p.id}" ${ui.trash?'disabled':''}>${p.id===data.aktivesProjekt?'Geöffnet':'Öffnen'}</button>${ui.trash?`<button class="small-btn" data-restore="${p.id}">Wiederherstellen</button><button class="small-btn danger" data-purge="${p.id}">Endgültig löschen</button>`:`<button class="small-btn" data-duplicate="${p.id}">Kopieren</button><button class="small-btn" data-options="${p.id}">•••</button>`}</div></div>`).join(''):'<div class="empty"><b>Keine Projekte in dieser Ansicht.</b><p>Erstelle einen neuen Grundriss oder wähle einen anderen Ordner.</p></div>';
  $('#project-grid').querySelectorAll('[data-open]').forEach(b=>b.onclick=()=>{if(ui.trash)return;data.aktivesProjekt=b.dataset.open;ui.selected=null;closeModal();changed();fitScene()});
- $('#project-grid').querySelectorAll('[data-duplicate]').forEach(b=>b.onclick=()=>{commit();const p=data.projekte.find(x=>x.id===b.dataset.duplicate);if(!p)return;let q=copy(p);q.id=uid();q.name=p.name+' – Kopie';q.raeume.forEach(r=>{r.id=uid();r.objekte.forEach(o=>o.id=uid());r.oeffnungen.forEach(o=>o.id=uid())});data.projekte.push(q);changed(false);show()});
+ $('#project-grid').querySelectorAll('[data-duplicate]').forEach(b=>b.onclick=()=>{commit();const p=data.projekte.find(x=>x.id===b.dataset.duplicate);if(!p)return;let q=copy(p);q.id=uid();q.name=p.name+' – Kopie';q.raeume.forEach(r=>{r.id=uid();const idMap=new Map(r.objekte.map(o=>[o.id,uid()]));r.objekte.forEach(o=>{const oldID=o.id;o.id=idMap.get(oldID);if(o.aufObjektID)o.aufObjektID=idMap.get(o.aufObjektID)||null});r.oeffnungen.forEach(o=>o.id=uid())});data.projekte.push(q);changed(false);show()});
  $('#project-grid').querySelectorAll('[data-options]').forEach(b=>b.onclick=()=>{const p=data.projekte.find(x=>x.id===b.dataset.options);projectOptions(p,show)});
  $('#project-grid').querySelectorAll('[data-restore]').forEach(b=>b.onclick=()=>{commit();let p=data.papierkorb.find(x=>x.id===b.dataset.restore);data.papierkorb=data.papierkorb.filter(x=>x.id!==p.id);data.projekte.push(p);changed(false);show();toast('Projekt wiederhergestellt')});
  $('#project-grid').querySelectorAll('[data-purge]').forEach(b=>b.onclick=()=>{if(!confirm(window.WP_I18N?.translate('Dieses Projekt endgültig löschen? Das kann nicht rückgängig gemacht werden.')))return;commit();data.papierkorb=data.papierkorb.filter(x=>x.id!==b.dataset.purge);changed(false);show()});
@@ -1689,9 +1689,9 @@ function colorModal(){
  $('#wp13-color-cancel').onclick=closeModal;
  $('#wp13-color-save').onclick=()=>{commit();choice.value[key]=picker.value;closeModal();changed();toast(wp13L('Farbe übernommen','Colour applied'))};
 }
-function layersModal(){
+function layersModal(roomID){
  let selection=selected();
- let r=selection?.room||chooseRoom();
+ let r=(roomID?room(roomID):null)||selection?.room||chooseRoom();
  if(!r)return;
  const items=r.objekte.slice().sort((a,b)=>window.WP_13.level(b,byCode.get(b.typ))-window.WP_13.level(a,byCode.get(a.typ)));
  const layerNote=wp13L('Ebene 0 = Hintergrund, Ebene 1 = Möbel, höhere Ebenen = darüber. Teppiche bleiben ganz hinten.',
@@ -1722,7 +1722,7 @@ function layersModal(){
    delete item.aufObjektID;
    item.ebene=Math.max(0,Math.min(9,window.WP_13.level(item,byCode.get(item.typ))+(button.dataset.action==='up'?1:-1)));
   }
-  changed();layersModal();
+  changed();layersModal(r.id);
  });
  const support=$('#wp13-support');
  if(support)support.onchange=()=>{
@@ -1737,7 +1737,7 @@ function layersModal(){
    current.value.x=parent.x+(parent.breite-current.value.breite)/2;
    current.value.y=parent.y+(parent.tiefe-current.value.tiefe)/2;
   }else{delete current.value.aufObjektID;current.value.ebene=1}
-  changed();layersModal();
+  changed();layersModal(r.id);
  };
 }
 function projectAudit(){
