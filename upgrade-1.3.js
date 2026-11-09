@@ -149,6 +149,42 @@
   else if(id==='fluegel'||id==='klavier')s=P(id==='fluegel'?'M5 12Q95 -3 90 57Q78 91 25 95L5 60Z':'M1 1H99V99H1Z',base)+Array.from({length:8},(_,i)=>R(9+i*10.3,69,10,27,white,0)).join('');
   else if(id==='fitnessgeraet')s=R(4,4,92,92,light2)+C(21,28,16,dark)+C(79,72,16,dark)+P('M21 28L79 72 M78 20L25 81','none',ink,5);
   else s=R(1,1,98,98,base,5)+R(9,9,82,82,light2,4)+P('M16 50H84','none',ink,2);
+  // Extra features distinguish closely related models in catalog previews as well as plans.
+  switch(id){
+   case 'gartenSofa':s+=P('M6 37H94 M6 70H94','none',white,2);break;
+   case 'armlehnstuhl':s+=P('M8 35V80 M92 35V80','none',white,4);break;
+   case 'gartenTisch':s+=C(50,50,7,light2)+P('M50 10V90 M10 50H90','none',white,2);break;
+   case 'kuechenOberschrank':s+=R(6,6,88,15,light2,1)+R(6,80,88,14,light2,1);break;
+   case 'wandschrank':s+=P('M50 2V98 M38 43H62','none',white,4);break;
+   case 'kuecheninsel':s+=C(30,48,13,white)+C(70,48,13,white)+C(25,93,6,light2)+C(75,93,6,light2);break;
+   case 'spielkueche':s+=R(20,44,60,37,'#f2cbd2',5)+C(50,17,7,'#fbd69b');break;
+   case 'waschbecken':s+=P('M33 12Q50 -1 67 12 M50 13V26','none',ink,4);break;
+   case 'eckdusche':s+=P('M4 4H96V96','none',ink,4);break;
+   case 'schreibtischHoehenverstellbar':s+=P('M15 88V55 M85 88V55','none',ink,5)+T(50,93,'↕',17);break;
+   case 'kinderschreibtisch':s+=C(20,22,7,'#e4b989')+C(80,22,7,'#e4b989');break;
+   case 'polsterstuhl':s+=R(25,39,50,34,'#e9bdba',7);break;
+   case 'eckbank':s+=P('M13 13H88 M14 27H34 M61 27H87 M14 51V92','none',white,4);break;
+   case 'sofaPanorama':s+=R(36,45,30,25,light2,6);break;
+   case 'barhocker':s+=P('M23 72H77 M35 68V86 M65 68V86','none',ink,3);break;
+   case 'teppichLaeufer':s+=Array.from({length:4},(_,i)=>P('M12 '+(23+i*17)+'H88','none',dark,1.4)).join('');break;
+   case 'spielteppich':s+=C(50,49,17,'#e8c3a2')+C(28,31,9,'#dceaa9')+C(72,68,11,'#c6aedc');break;
+   case 'garderobe':s+=Array.from({length:4},(_,i)=>C(14+i*24,56,5,white)).join('');break;
+   case 'badschrank':s+=P('M8 9H92 M8 91H92','none',white,5);break;
+   case 'aktenschrank':s+=Array.from({length:3},(_,i)=>R(15+i*25,10,17,70,light2,1)).join('');break;
+   case 'buffetschrank':s+=R(9,60,82,29,light2)+P('M50 60V88');break;
+   case 'bank':s+=Array.from({length:4},(_,i)=>P('M11 '+(31+i*10)+'H89','none',ink,1.5)).join('');break;
+   case 'spiegelschrank':s+=P('M11 84L84 11','none',white,5);break;
+   case 'doppelwaschbecken':s+=C(28,28,4,'#3c9ac9')+C(71,28,4,'#3c9ac9');break;
+   case 'relaxsessel':s+=P('M12 78L24 95H76L88 78','none',ink,3);break;
+   case 'fernsehsessel':s+=R(35,80,30,14,light2);break;
+   case 'tvKlein':s+=R(17,28,66,36,light2,2);break;
+   case 'tvGross':s+=R(4,23,92,47,light2,2);break;
+   case 'monitor':s+=P('M41 82H59 M50 73V93','none',ink,3);break;
+   case 'soundbar':s=R(1,35,98,29,base,9)+Array.from({length:9},(_,i)=>C(15+i*9,50,2,ink)).join('');break;
+   case 'handtuchheizkoerper':s+=P('M7 18H93 M7 49H93 M7 80H93','none',white,5);break;
+   case 'gamingTisch':s+=P('M15 69L50 84L85 69','none','#87b4f0',4)+C(50,30,7,'#78a5e8');break;
+   default:break;
+  }
   return s;
  }
  function level(item,cat){
