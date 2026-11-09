@@ -48,3 +48,180 @@ body[data-theme=dark] #check-project{background:#263950!important;color:#ecf5ff!
  #app::before{display:none!important}
  #check-project{display:none!important}
 }
+
+
+/* WohnPlan 1.3.1 – Dark mode readability and consistent controls.
+   Do not override user-selected furniture and room colours. */
+html:has(body[data-theme="dark"]){
+  background:#101a29;
+  color-scheme:dark;
+}
+body[data-theme="dark"]{
+  color-scheme:dark;
+  --wp-panel:#172538;
+  --wp-soft:#263950;
+  --wp-canvas:#111d2c;
+  --ink:#edf4ff;
+  --muted:#b1c4d9;
+  --line:#3d536d;
+}
+body[data-theme="dark"] .context-bar,
+body[data-theme="dark"] .modal,
+body[data-theme="dark"] .modal-head,
+body[data-theme="dark"] .modal-body,
+body[data-theme="dark"] .modal-footer{
+  color:#edf4ff!important;
+  background:#172538!important;
+}
+body[data-theme="dark"] .context-bar button:not(.primary):not(.danger),
+body[data-theme="dark"] .modal-footer button:not(.primary):not(.danger),
+body[data-theme="dark"] .modal-body button:not(.primary):not(.danger):not(.chip):not(.gallery-card):not(.project-card):not(.fav):not(.wp13-color),
+body[data-theme="dark"] .wp13-layer-row button:not(.primary):not(.danger),
+body[data-theme="dark"] .wp13-problem button:not(.primary):not(.danger),
+body[data-theme="dark"] .toolbar-toggle button:not(.active),
+body[data-theme="dark"] .small-btn:not(.primary):not(.danger){
+  background:#29435e!important;
+  color:#f1f7ff!important;
+  border:1px solid #536d89!important;
+}
+body[data-theme="dark"] .context-bar button:not(.primary):not(.danger):hover,
+body[data-theme="dark"] .modal-footer button:not(.primary):not(.danger):hover,
+body[data-theme="dark"] .modal-body button:not(.primary):not(.danger):not(.chip):not(.gallery-card):not(.project-card):not(.fav):not(.wp13-color):hover,
+body[data-theme="dark"] .wp13-layer-row button:hover,
+body[data-theme="dark"] .small-btn:not(.primary):not(.danger):hover{
+  background:#365575!important;
+  border-color:#7b9cbf!important;
+}
+body[data-theme="dark"] button:disabled{
+  opacity:.55;
+  cursor:default;
+}
+body[data-theme="dark"] .context-bar .selection-label,
+body[data-theme="dark"] .modal-head h2,
+body[data-theme="dark"] .settings-card h3,
+body[data-theme="dark"] .gallery-card strong,
+body[data-theme="dark"] .project-card .title,
+body[data-theme="dark"] .wp13-layer-name,
+body[data-theme="dark"] .note b,
+body[data-theme="dark"] .empty b{
+  color:#f3f8ff!important;
+}
+body[data-theme="dark"] .context-bar .pill,
+body[data-theme="dark"] .chip.active,
+body[data-theme="dark"] .toolbar-toggle button.active{
+  background:#244d77!important;
+  color:#f1f7ff!important;
+  border-color:#477cae!important;
+}
+body[data-theme="dark"] .context-bar>span,
+body[data-theme="dark"] .field-hint,
+body[data-theme="dark"] .empty,
+body[data-theme="dark"] .note,
+body[data-theme="dark"] .subtext,
+body[data-theme="dark"] .settings-info,
+body[data-theme="dark"] .project-card .meta,
+body[data-theme="dark"] .gallery-card small,
+body[data-theme="dark"] .wp13-layer-name small{
+  color:#b1c4d9!important;
+}
+body[data-theme="dark"] .workspace-mode{color:#8ac1ff!important}
+body[data-theme="dark"] .side-action:hover:not(.highlight){
+  background:#314962!important;
+  color:#f2f7ff!important;
+}
+body[data-theme="dark"] .gallery-card,
+body[data-theme="dark"] .project-card{
+  background:#22354c!important;
+  color:#eef5ff!important;
+  border-color:#3b536f!important;
+}
+body[data-theme="dark"] .gallery-card:hover,
+body[data-theme="dark"] .project-card:hover{
+  background:#2b4360!important;
+  border-color:#6f9ecc!important;
+}
+body[data-theme="dark"] .gallery-card .preview,
+body[data-theme="dark"] .project-thumb,
+body[data-theme="dark"] .preview-stage{
+  background:#2c4561!important;
+  border-color:#3b536f!important;
+}
+body[data-theme="dark"] .gallery-card .fav:not(.on){color:#b8cbe2!important}
+body[data-theme="dark"] .gallery-card .fav.on{color:#ff84aa!important}
+body[data-theme="dark"] input:not([type="checkbox"]):not([type="radio"]):not([type="color"]):not([type="file"]),
+body[data-theme="dark"] select,
+body[data-theme="dark"] textarea{
+  background:#263950!important;
+  color:#f3f8ff!important;
+  border:1px solid #536d89!important;
+}
+body[data-theme="dark"] input::placeholder,
+body[data-theme="dark"] textarea::placeholder{
+  color:#aec2d8!important;
+  opacity:1;
+}
+body[data-theme="dark"] select option{
+  background:#20344b;
+  color:#edf4ff;
+}
+body[data-theme="dark"] .danger-zone{
+  background:#482a36!important;
+  color:#ffe6eb!important;
+  border-color:#80505c!important;
+}
+body[data-theme="dark"] .danger-zone *{color:inherit}
+body[data-theme="dark"] .modal-body .step,
+body[data-theme="dark"] .settings-card,
+body[data-theme="dark"] .wp13-layer-row,
+body[data-theme="dark"] .wp13-problem{
+  background:#22354c!important;
+  border-color:#3d536d!important;
+  color:#edf4ff!important;
+}
+body[data-theme="dark"] .modal-body .step .round{
+  background:#2877da!important;
+  color:white!important;
+}
+body[data-theme="dark"] .modal-body .outline,
+body[data-theme="dark"] .modal-footer .outline{
+  background:#29435e!important;
+  color:#eef5ff!important;
+  border-color:#536d89!important;
+}
+body[data-theme="dark"] .modal-body a.outline{
+  color:#eef5ff!important;
+}
+body[data-theme="dark"] .modal-body .primary,
+body[data-theme="dark"] .modal-footer .primary{
+  background:#2877da!important;
+  color:#ffffff!important;
+  border-color:#2877da!important;
+}
+body[data-theme="dark"] .modal-body .danger,
+body[data-theme="dark"] .modal-footer .danger,
+body[data-theme="dark"] .context-bar .danger{
+  background:#663645!important;
+  color:#ffe6eb!important;
+  border-color:#976475!important;
+}
+body[data-theme="dark"] .gallery-card .fav,
+body[data-theme="dark"] .wp13-color{
+  background:transparent;
+  border-color:transparent;
+}
+body[data-theme="dark"] .scale-label,
+body[data-theme="dark"] .zoom-controls button,
+body[data-theme="dark"] .workspace-top button:not(.primary){
+  background:#263950!important;
+  color:#edf4ff!important;
+  border-color:#536d89!important;
+}
+body[data-theme="dark"] .topbar,
+body[data-theme="dark"] #app::before{
+  background:#172538!important;
+}
+@media (display-mode:standalone){
+  html:has(body[data-theme="dark"]),body[data-theme="dark"]{
+    background:#101a29!important;
+  }
+}
