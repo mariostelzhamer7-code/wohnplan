@@ -16,17 +16,18 @@
 
 </style>
  <link rel="stylesheet" href="./upgrade-1.2.css" />
+ <link rel="stylesheet" href="./upgrade-1.3.css" />
  <title>WohnPlan · Created by MS</title>
 </head>
 <body>
 <div id="app">
  <header class="topbar">
-  <button id="brand" class="brand" title="Projekte öffnen"><img src="./icon-192.png" alt="WohnPlan" /><span class="brand-name">WohnPlan<small>Created by MS · Web 1.2</small></span></button>
+  <button id="brand" class="brand" title="Projekte öffnen"><img src="./icon-192.png" alt="WohnPlan" /><span class="brand-name">WohnPlan<small>Created by MS · Web 1.3</small></span></button>
   <button class="project-title" id="project-title" title="Projektübersicht öffnen">Mein Grundriss ▾</button>
   <span class="save-status" id="save-status" aria-live="polite">● Bereit</span>
   <div class="top-actions">
    <button id="undo-btn" title="Rückgängig" aria-label="Rückgängig">↶</button><button id="redo-btn" title="Wiederholen" aria-label="Wiederholen">↷</button>
-   <button id="export-btn" class="outline">Export</button><button id="settings-btn" class="settings-action" title="Einstellungen" aria-label="Einstellungen">⚙ <span>Einstellungen</span></button><button id="projects-btn" class="primary">Projekte</button>
+   <button id="check-project" class="outline" title="Projektprüfung">✓ Prüfen</button><button id="export-btn" class="outline">Export</button><button id="settings-btn" class="settings-action" title="Einstellungen" aria-label="Einstellungen">⚙ <span>Einstellungen</span></button><button id="projects-btn" class="primary">Projekte</button>
   </div>
  </header>
  <div class="body-layout">
@@ -43,9 +44,11 @@
     <div class="label">Einrichtung</div>
     <button id="add-furniture" class="side-action highlight">⊞ <span>Möbelkatalog öffnen</span></button>
     <button id="add-group" class="side-action">❖ <span>Möbelgruppe einfügen</span></button>
+     <button id="layers-btn" class="side-action">▤ <span>Ebenen verwalten</span></button>
    </div>
    <div class="side-section">
     <div class="label">Anzeige</div>
+     <button id="check-sidebar" class="side-action">✓ <span>Projekt prüfen</span></button>
     <label class="toggle"><input type="checkbox" id="grid-toggle" checked /> Raster anzeigen</label>
     <label class="toggle"><input type="checkbox" id="snap-toggle" checked /> Magnetisches Raster</label>
     <label class="toggle"><input type="checkbox" id="measure-toggle" checked /> Bemaßung anzeigen</label>
@@ -1399,6 +1402,7 @@ window.WP_CATALOG = [
 </script>
 <script src="./localization.js"></script>
 <script src="./upgrade-1.2.js"></script>
+<script src="./upgrade-1.3.js"></script>
 <script>
 /* WohnPlan Web 1.0.1 | Created by MS
    Eigenständige Browser-Umsetzung. JSON-Backupformat kompatibel zur Swift-Modellstruktur.
@@ -1457,7 +1461,8 @@ function isInsideRoom(r,x,y){let a=x-r.x,b=y-r.y;if(a<0||a>r.breite||b<0||b>r.ti
 function newFurniture(code,r){const cat=byCode.get(code);if(!cat)return;const item={id:uid(),typ:code,name:cat.name,x:snap(Math.max(15,(r.breite-cat.w)/2)),y:snap(Math.max(15,(r.tiefe-cat.h)/2)),breite:cat.w,tiefe:cat.h,drehung:0,gespiegelt:false,gesperrt:false};return item}
 function assignMode(v){ui.mode=v;ui.selected=null;$('#sidebar').dataset.activeMode=v;document.querySelectorAll('[data-mode]').forEach(btn=>btn.classList.toggle('active',btn.dataset.mode===v));$('#mode-label').textContent=v==='planen'?'📐 Planen':'🛋 Einrichten';render()}
 function editable(s){return s&&!s.room.gesperrt&&!s.value.gesperrt}
-function furnitureShape(c,w,h){
+function furnitureShape(c,w,h,color){
+ if(window.WP_13){return `<svg x="0" y="0" width="${w}" height="${h}" viewBox="0 0 100 100" preserveAspectRatio="none" style="overflow:visible">${window.WP_13.drawShape(c,color)}</svg>`}
  const style=c?.style||'custom',base='#b8d1e9',deep='#657f9a',lite='#eaf3fc';
  const R=(x,y,b,d,extra='')=>`<rect x="${x}" y="${y}" width="${b}" height="${d}" rx="3" fill="${base}" stroke="${deep}" stroke-width="1.3" ${extra}/>`;
  const L=(x,y,b,d,fill=lite)=>`<rect x="${x}" y="${y}" width="${b}" height="${d}" rx="3" fill="${fill}" stroke="${deep}" stroke-width="1"/>`;
@@ -1496,12 +1501,12 @@ function furnitureShape(c,w,h){
  return `<svg x="0" y="0" width="${w}" height="${h}" viewBox="0 0 100 100" preserveAspectRatio="none" style="overflow:visible">${s}</svg>`;
 }
 function drawFurniture(r,o,thumb=false){const c=byCode.get(o.typ)||{style:'custom'},x=r.x+o.x,y=r.y+o.y,w=Math.max(12,o.breite),h=Math.max(12,o.tiefe),cx=x+w/2,cy=y+h/2;let sel=selected(),active=sel?.kind==='furniture'&&sel.value.id===o.id&&!thumb;let bad=false;
- if(!thumb&&!c.rug){bad=!isInsideRoom(r,x+2,y+2)||!isInsideRoom(r,x+w-2,y+h-2);bad ||= r.objekte.some(other=>other.id!==o.id&&!byCode.get(other.typ)?.rug && x<r.x+other.x+other.breite-5&&x+w>r.x+other.x+5&&y<r.y+other.y+other.tiefe-5&&y+h>r.y+other.y+5)}
- let shape=`<g data-kind="furniture" data-room="${r.id}" data-id="${o.id}" transform="rotate(${o.drehung||0} ${cx} ${cy})"><g transform="translate(${x} ${y})">${o.gespiegelt?`<g transform="translate(${w} 0) scale(-1 1)">${furnitureShape(c,w,h)}</g>`:furnitureShape(c,w,h)}</g><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="transparent" stroke="${bad?'#eb6565':'none'}" stroke-width="3" stroke-dasharray="7 5"/>${o.gesperrt?`<text x="${x+6}" y="${y+15}" font-size="14">🔒</text>`:''}</g>`;
+ if(!thumb&&!c.rug){bad=window.WP_13.outsideRoom(r,o);bad ||= r.objekte.some(other=>other.id!==o.id&&!other.ausgeblendet&&!byCode.get(other.typ)?.rug && window.WP_13.level(other,byCode.get(other.typ))===window.WP_13.level(o,c) && window.WP_13.overlaps(o,other))}
+ let shape=`<g data-kind="furniture" data-room="${r.id}" data-id="${o.id}" transform="rotate(${o.drehung||0} ${cx} ${cy})"><g transform="translate(${x} ${y})">${o.gespiegelt?`<g transform="translate(${w} 0) scale(-1 1)">${furnitureShape(c,w,h,o.farbe)}</g>`:furnitureShape(c,w,h,o.farbe)}</g><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="transparent" stroke="${bad?'#eb6565':'none'}" stroke-width="3" stroke-dasharray="7 5"/>${o.gesperrt?`<text x="${x+6}" y="${y+15}" font-size="14">🔒</text>`:''}</g>`;
  if(active){const radius=10/ui.zoom;shape+=`<g transform="rotate(${o.drehung||0} ${cx} ${cy})" class="selection"><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="#2877da" stroke-width="${2/ui.zoom}" stroke-dasharray="${6/ui.zoom} ${4/ui.zoom}"/>${!o.gesperrt&&!r.gesperrt?([['nw',x,y],['ne',x+w,y],['se',x+w,y+h],['sw',x,y+h]].map(([k,hx,hy])=>`<circle data-kind="resize" data-room="${r.id}" data-id="${o.id}" data-handle="${k}" cx="${hx}" cy="${hy}" r="${radius*1.8}" fill="transparent"/><rect data-kind="resize" data-room="${r.id}" data-id="${o.id}" data-handle="${k}" x="${hx-radius*.75}" y="${hy-radius*.75}" width="${radius*1.5}" height="${radius*1.5}" rx="${radius*.3}" fill="#2877da" stroke="white" stroke-width="${2/ui.zoom}"/>`).join('')):''}</g>`}
  return shape;
 }
-function drawRoom(r,thumb=false){const pts=roomPoints(r),pstr=pts.map(p=>`${r.x+p.x},${r.y+p.y}`).join(' '),sel=selected(),active=sel?.kind==='room'&&sel.value.id===r.id&&!thumb;let out=`<polygon data-kind="room" data-room="${r.id}" points="${pstr}" fill="${!thumb&&document.body.dataset.theme==='dark'?(active?'#324e72':'#273c56'):(active?'#e0efff':'#edf4fb')}" stroke="none"/>`;
+function drawRoom(r,thumb=false){const pts=roomPoints(r),pstr=pts.map(p=>`${r.x+p.x},${r.y+p.y}`).join(' '),sel=selected(),active=sel?.kind==='room'&&sel.value.id===r.id&&!thumb;let out=`<polygon data-kind="room" data-room="${r.id}" points="${pstr}" fill="${r.bodenfarbe||(!thumb&&document.body.dataset.theme==='dark'?(active?'#324e72':'#273c56'):(active?'#e0efff':'#edf4fb'))}" stroke="none"/>`;
  const edges=roomEdges(r), openings=r.oeffnungen||[];
  edges.forEach(e=>{
   const cut= openings.filter(o=>o.wand===e.i).map(o=>({a:clamp(o.position,0,e.len),b:clamp(o.position+o.breite,0,e.len)})).sort((a,b)=>a.a-b.a);
@@ -1511,8 +1516,7 @@ function drawRoom(r,thumb=false){const pts=roomPoints(r),pstr=pts.map(p=>`${r.x+
  });
  if(!thumb){out+=`<text x="${r.x+r.breite*.40}" y="${r.y+r.tiefe*.49}" text-anchor="middle" fill="${document.body.dataset.theme==='dark'?'#cadcf0':'#7185a0'}" font-size="17" font-weight="650" pointer-events="none">${esc(r.name)} · ${fmt(roomArea(r))} m²</text>`}
  openings.forEach(o=>out+=drawOpening(r,o,thumb));
- r.objekte.filter(o=>byCode.get(o.typ)?.rug).forEach(o=>out+=drawFurniture(r,o,thumb));
- r.objekte.filter(o=>!byCode.get(o.typ)?.rug).forEach(o=>out+=drawFurniture(r,o,thumb));
+ r.objekte.map((o,i)=>({o,i})).filter(({o})=>!o.ausgeblendet).sort((a,b)=>window.WP_13.level(a.o,byCode.get(a.o.typ))-window.WP_13.level(b.o,byCode.get(b.o.typ))||a.i-b.i).forEach(({o})=>out+=drawFurniture(r,o,thumb));
  if(active){const handles=[['top',r.x+r.breite/2,r.y],['right',r.x+r.breite,r.y+r.tiefe/2],['bottom',r.x+r.breite/2,r.y+r.tiefe],['left',r.x,r.y+r.tiefe/2]];out+=`<g class="selection">${!r.gesperrt?handles.map(([k,x,y])=>`<circle data-kind="wall-resize" data-room="${r.id}" data-handle="${k}" cx="${x}" cy="${y}" r="${18/ui.zoom}" fill="transparent"/><circle data-kind="wall-resize" data-room="${r.id}" data-handle="${k}" cx="${x}" cy="${y}" r="${7/ui.zoom}" fill="#2877da" stroke="white" stroke-width="${2/ui.zoom}"/>`).join(''):''}</g>`}
  return out;
 }
@@ -1537,8 +1541,8 @@ function drawPreviewItem(){const v=ui.newItem;if(v.type==='furniture'){const c=b
 function renderContext(){const bar=$('#context-bar'),s=selected();if(!s){bar.innerHTML='<span>Tippe ein Element an · Auf freier Fläche ziehen: Grundriss verschieben · Zwei Finger: Zoomen</span>';return}
  let v=s.value,parts=[`<b class="selection-label">${esc(s.kind==='room'?v.name:s.kind==='furniture'?v.name:v.typ)}</b>`];
  const B=(text,action,cls='')=>`<button data-ctx="${action}" class="${cls}">${text}</button>`;
- if(s.kind==='room'){parts.push(`<span class="pill">${fmt(roomArea(v))} m²</span>`,B('Maße','edit'),B(v.gesperrt?'🔓 Entsperren':'🔒 Sperren','lock'),B('Verschieben','move'),B('Löschen','delete','danger'))}
- if(s.kind==='furniture'){parts.push(`<span class="pill">${fmt(v.breite)} × ${fmt(v.tiefe)} cm</span>`,B('✎ Größe','edit'),B('↻ Drehen','rotate'),B('⇄ Spiegeln','mirror'),B('⊕ Kopieren','duplicate'),B(v.gesperrt?'🔓':'🔒','lock'),B('🗑','delete','danger'))}
+ if(s.kind==='room'){parts.push(`<span class="pill">${fmt(roomArea(v))} m²</span>`,B('🎨 Bodenfarbe','color'),B('Maße','edit'),B(v.gesperrt?'🔓 Entsperren':'🔒 Sperren','lock'),B('Verschieben','move'),B('Löschen','delete','danger'))}
+ if(s.kind==='furniture'){parts.push(`<span class="pill">${fmt(v.breite)} × ${fmt(v.tiefe)} cm</span>`,B('🎨 Farbe','color'),B('▤ Ebenen','layers'),B('✎ Größe','edit'),B('↻ Drehen','rotate'),B('⇄ Spiegeln','mirror'),B('⊕ Kopieren','duplicate'),B(v.gesperrt?'🔓':'🔒','lock'),B('🗑','delete','danger'))}
  if(s.kind==='opening'){parts.push(`<span class="pill">${fmt(v.position)} cm ab Ecke</span>`,B('✎ Position','edit'));if(v.typ==='Tür')parts.push(B('⇄ Anschlag','mirror'),B(v.oeffnetNachAussen?'Nach innen':'Nach außen','swing'));parts.push(B('🗑','delete','danger'))}
  bar.innerHTML=parts.join('');bar.querySelectorAll('[data-ctx]').forEach(b=>b.onclick=()=>contextAction(b.dataset.ctx));
 }
@@ -1546,11 +1550,13 @@ function render(){let p=project();$('#project-title').textContent=(p?.name||'Kei
 function chooseRoom(){const rs=project()?.raeume||[];if(!rs.length){toast('Bitte zuerst einen Raum hinzufügen');return null}const s=selected();return s?.room||rs[0]}
 function contextAction(action){const s=selected();if(!s)return;const v=s.value,r=s.room;
  if(action==='edit')return editSelected();
+ if(action==='color')return colorModal();
+ if(action==='layers')return layersModal();
  if(action==='move'){toast('Ziehe den Raum direkt auf der Planfläche.');return}
  if(action==='delete'){
   if(v.gesperrt||r.gesperrt){toast('Dieses Element ist gesperrt');return}
   if(!confirm(window.WP_I18N?.language()==='en' ? `Delete “${s.kind==='room'?v.name:s.kind==='furniture'?v.name:v.typ}”?` : `„${s.kind==='room'?v.name:s.kind==='furniture'?v.name:v.typ}“ löschen?`))return;
-  commit();if(s.kind==='room')project().raeume=project().raeume.filter(o=>o.id!==v.id);else if(s.kind==='furniture')r.objekte=r.objekte.filter(o=>o.id!==v.id);else r.oeffnungen=r.oeffnungen.filter(o=>o.id!==v.id);ui.selected=null;changed();return;
+  commit();if(s.kind==='room')project().raeume=project().raeume.filter(o=>o.id!==v.id);else if(s.kind==='furniture'){r.objekte=r.objekte.filter(o=>o.id!==v.id);r.objekte.filter(o=>o.aufObjektID===v.id).forEach(o=>{delete o.aufObjektID})}else r.oeffnungen=r.oeffnungen.filter(o=>o.id!==v.id);ui.selected=null;changed();return;
  }
  if(action==='lock'){commit();v.gesperrt=!v.gesperrt;changed();return}
  if(r.gesperrt||v.gesperrt){toast('Erst entsperren');return}
@@ -1559,7 +1565,7 @@ function contextAction(action){const s=selected();if(!s)return;const v=s.value,r
  if(action==='mirror')v.gespiegelt=!v.gespiegelt;
  if(action==='swing')v.oeffnetNachAussen=!v.oeffnetNachAussen;
  if(action==='duplicate'){
-  const n=copy(v);n.id=uid();n.x+=25;n.y+=25;r.objekte.push(n);ui.selected={kind:'furniture',room:r.id,id:n.id}
+  const n=copy(v);n.id=uid();n.x+=25;n.y+=25;delete n.aufObjektID;r.objekte.push(n);ui.selected={kind:'furniture',room:r.id,id:n.id}
  }
  changed();
 }
@@ -1700,7 +1706,10 @@ function settingsModal() {
     '<label class="field">'+L('Sprache','Language')+'<select id="s12-language"><option value="de">Deutsch</option><option value="en">English</option></select></label>' +
     '<details style="margin-top:14px" open class="release-notes"><summary style="cursor:pointer;font-weight:750;padding:8px 0">'+L('Versionshinweise','Release notes')+'</summary>' +
     '<div style="padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--wp-soft,#f8fbff)">' +
-    '<b>WohnPlan Web 1.2 · Created by MS</b><ul style="line-height:1.7;margin-bottom:0">' +
+    '<b>WohnPlan Web 1.3 · Created by MS</b><ul style="line-height:1.7;margin-bottom:0">' +
+    '<li>'+L('Neue Möbelzeichnungen, Ebenen und Möbelfarben','New furniture drawings, layers and furniture colours')+'</li>' +
+    '<li>'+L('Präzise Eckplatzierung, Abstandsanzeigen und Wandausrichtung','Exact corner positioning, distances and wall snapping')+'</li>' +
+    '<li>'+L('Türfreiraum- und Projektprüfung','Door clearance and project validation')+'</li>' + +
     '<li>'+L('PDF-Export für iPad und Computer überarbeitet','Rebuilt PDF export for iPad and computers')+'</li>' +
     '<li>'+L('Helles und dunkles Design','Light and dark themes')+'</li>' +
     '<li>'+L('Rastergröße 5, 10, 25 und 50 cm','Grid spacing of 5, 10, 25 or 50 cm')+'</li>' +
@@ -1741,17 +1750,17 @@ function beginPointer(e){
  if(kind==='resize'||kind==='wall-resize'){} else if(kind==='furniture'){ui.selected={kind:'furniture',room:rid,id}}else if(kind==='opening'){ui.selected={kind:'opening',room:rid,id}}else if(kind==='room'){ui.selected={kind:'room',room:rid}}else{ui.selected=null;kind='pan'}
  renderContext();
  const s=selected(),start=s?copy(s.value):null;
- drag={kind,room:rid,id,handle,start:p,last:p,startClient:{x:e.clientX,y:e.clientY},startView:{x:ui.vx,y:ui.vy},original:start,changed:false};
+ drag={kind,room:rid,id,handle,start:p,last:p,startClient:{x:e.clientX,y:e.clientY},startView:{x:ui.vx,y:ui.vy},original:start,before:kind!=='pan'?copy(data):null,changed:false};
  if(kind==='furniture'||kind==='opening'||kind==='room')renderScene();
 }
 function movePointer(e){if(!activePointers.has(e.pointerId))return;activePointers.set(e.pointerId,{x:e.clientX,y:e.clientY});
  if(activePointers.size>=2){let a=[...activePointers.values()];if(!pinch)return;const d=distance(a[0],a[1]),rect=$('#canvas-wrap').getBoundingClientRect(),mid={x:(a[0].x+a[1].x)/2,y:(a[0].y+a[1].y)/2};ui.zoom=clamp(pinch.zoom*d/Math.max(1,pinch.dist),.12,4);ui.vx=pinch.worldX-(mid.x-rect.left)/ui.zoom;ui.vy=pinch.worldY-(mid.y-rect.top)/ui.zoom;renderScene();return}
- const point=svgPoint(e);if(ui.newItem){let r=room(ui.newItem.room);if(r){let c=byCode.get(ui.newItem.code);ui.newItem.x=snap(clamp(point.x-c.w/2,r.x,r.x+r.breite-c.w));ui.newItem.y=snap(clamp(point.y-c.h/2,r.y,r.y+r.tiefe-c.h));renderScene()}return}
+ const point=svgPoint(e);if(ui.newItem){let r=room(ui.newItem.room);if(r){let c=byCode.get(ui.newItem.code);const aligned=window.WP_13.exactPosition(r,{breite:c.w,tiefe:c.h,drehung:0},{x:snap(point.x-r.x-c.w/2),y:snap(point.y-r.y-c.h/2)});ui.newItem.x=r.x+aligned.x;ui.newItem.y=r.y+aligned.y;renderScene()}return}
  if(!drag)return;const r=room(drag.room),p=point,dx=p.x-drag.start.x,dy=p.y-drag.start.y;
  if(drag.kind==='pan'){ui.vx=drag.startView.x-(e.clientX-drag.startClient.x)/ui.zoom;ui.vy=drag.startView.y-(e.clientY-drag.startClient.y)/ui.zoom;renderScene();return}
  if(!r||r.gesperrt)return;
  if(drag.kind==='room'){const v=r;if(v.gesperrt)return;v.x=snap(drag.original.x+dx);v.y=snap(drag.original.y+dy);drag.changed=true;renderScene();return}
- if(drag.kind==='furniture'){const v=r.objekte.find(o=>o.id===drag.id);if(!v||v.gesperrt)return;v.x=snap(drag.original.x+dx);v.y=snap(drag.original.y+dy);drag.changed=true;renderScene();return}
+ if(drag.kind==='furniture'){const v=r.objekte.find(o=>o.id===drag.id);if(!v||v.gesperrt)return;const loc=window.WP_13.exactPosition(r,v,{x:snap(drag.original.x+dx),y:snap(drag.original.y+dy)});v.x=loc.x;v.y=loc.y;const oldRoom=drag.before?.projekte.find(p=>p.id===data.aktivesProjekt)?.raeume.find(z=>z.id===r.id);for(const child of r.objekte.filter(child=>child.aufObjektID===v.id)){const old=oldRoom?.objekte.find(z=>z.id===child.id);if(old&&!child.gesperrt){child.x=old.x+(v.x-drag.original.x);child.y=old.y+(v.y-drag.original.y)}}drag.changed=true;renderScene();return}
  if(drag.kind==='opening'){const v=r.oeffnungen.find(o=>o.id===drag.id);if(!v)return;const edge=roomEdges(r)[v.wand],projected=(dx*edge.dx+dy*edge.dy)/edge.len;v.position=snap(clamp(drag.original.position+projected,10,Math.max(10,edge.len-v.breite-10)));drag.changed=true;renderScene();return}
  if(drag.kind==='wall-resize'){
   const v=r,orig=drag.original,h=drag.handle,min=120;
@@ -1772,9 +1781,9 @@ function movePointer(e){if(!activePointers.has(e.pointerId))return;activePointer
 function endPointer(e){if(!activePointers.has(e.pointerId))return;activePointers.delete(e.pointerId);if(activePointers.size<2)pinch=null;
  if(ui.newItem&&drag?.kind==='place'){
   const r=room(ui.newItem.room),c=byCode.get(ui.newItem.code);
-  if(r&&!r.gesperrt&&c){commit();const o=newFurniture(c.id,r);o.x=clamp(ui.newItem.x-r.x,0,Math.max(0,r.breite-o.breite));o.y=clamp(ui.newItem.y-r.y,0,Math.max(0,r.tiefe-o.tiefe));r.objekte.push(o);ui.selected={kind:'furniture',room:r.id,id:o.id};ui.newItem=null;changed();toast('Möbel eingesetzt')} else toast('Kein Raum ausgewählt');drag=null;return;
+  if(r&&!r.gesperrt&&c){commit();const o=newFurniture(c.id,r);const aligned=window.WP_13.exactPosition(r,o,{x:ui.newItem.x-r.x,y:ui.newItem.y-r.y});o.x=aligned.x;o.y=aligned.y;r.objekte.push(o);ui.selected={kind:'furniture',room:r.id,id:o.id};ui.newItem=null;changed();toast('Möbel eingesetzt')} else toast('Kein Raum ausgewählt');drag=null;return;
  }
- if(drag?.changed){const prev=copy(data);const r=room(drag.room);if(r&&drag.original){if(drag.kind==='room'||drag.kind==='wall-resize'){let rr=prev.projekte.find(p=>p.id===data.aktivesProjekt)?.raeume.find(x=>x.id===drag.room);if(rr)Object.assign(rr,drag.original)}else if(drag.kind==='furniture'||drag.kind==='resize'){let o=prev.projekte.find(p=>p.id===data.aktivesProjekt)?.raeume.find(x=>x.id===drag.room)?.objekte.find(o=>o.id===drag.id);if(o)Object.assign(o,drag.original)}else if(drag.kind==='opening'){let o=prev.projekte.find(p=>p.id===data.aktivesProjekt)?.raeume.find(x=>x.id===drag.room)?.oeffnungen.find(o=>o.id===drag.id);if(o)Object.assign(o,drag.original)}}undo.push(prev);if(undo.length>60)undo.shift();redo=[];changed()}
+ if(drag?.changed){undo.push(drag.before||copy(data));if(undo.length>60)undo.shift();redo=[];changed()}
  else renderContext();drag=null;
 }
 svg.addEventListener('pointerdown',beginPointer);svg.addEventListener('pointermove',movePointer);svg.addEventListener('pointerup',endPointer);svg.addEventListener('pointercancel',endPointer);
@@ -1787,7 +1796,7 @@ $('#add-room').onclick=roomTemplate;$('#m-rooms').onclick=()=>{if(ui.mode!=='pla
 $('#add-door').onclick=()=>openingDialog('Tür');$('#add-window').onclick=()=>openingDialog('Fenster');
 $('#add-furniture').onclick=catalogModal;$('#m-furniture').onclick=()=>{if(ui.mode!=='einrichten')assignMode('einrichten');catalogModal()};
 $('#add-group').onclick=addGroup;
-$('#help-btn').onclick=showHelp;$('#settings-btn').onclick=settingsModal;
+$('#help-btn').onclick=showHelp;$('#settings-btn').onclick=settingsModal;$('#layers-btn').onclick=layersModal;$('#check-project').onclick=projectAudit;$('#check-sidebar').onclick=projectAudit;
 $('#grid-toggle').onchange=e=>{ui.grid=e.target.checked;renderScene()};$('#snap-toggle').onchange=e=>ui.snap=e.target.checked;$('#measure-toggle').onchange=e=>{ui.measure=e.target.checked;renderScene()};
 $('#menu-toggle').onclick=()=>$('#sidebar').classList.toggle('open');$('#sidebar-close').onclick=()=>$('#sidebar').classList.remove('open');
 document.querySelectorAll('[data-mode]').forEach(b=>b.onclick=()=>assignMode(b.dataset.mode));
