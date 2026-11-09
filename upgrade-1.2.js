@@ -41,7 +41,7 @@
       const url = URL.createObjectURL(blob);
       const img = new Image();
       const timeout = setTimeout(() => { URL.revokeObjectURL(url); reject(Error('SVG-Zeitüberschreitung')); }, 15000);
-      img.onload = () => { clearTimeout(timeout); URL.revokeObjectURL(url); resolve(img); };
+      img.onload = () => { clearTimeout(timeout); img._wohnplanSVGURL = url; resolve(img); };
       img.onerror = () => { clearTimeout(timeout); URL.revokeObjectURL(url); reject(Error('Grundriss konnte nicht als Bild geladen werden')); };
       img.src = url;
     });
@@ -101,6 +101,7 @@
     context.fillStyle='#ffffff';
     context.fillRect(0,0,w,h);
     context.drawImage(image,0,0,w,h);
+    if (image._wohnplanSVGURL) URL.revokeObjectURL(image._wohnplanSVGURL);
     const jpegBase64 = canvas.toDataURL('image/jpeg',0.88).split(',')[1];
     if (!jpegBase64) throw Error('JPEG-Kodierung fehlgeschlagen');
     const binary = atob(jpegBase64);
