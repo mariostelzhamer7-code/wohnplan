@@ -15,12 +15,13 @@
 :root{--blue:#2877da;--dark:#184e9e;--light:#e9f2ff;--ink:#1d2b3b;--muted:#728399;--line:#dce5ef;--bg:#eff4fa;--white:#fff;--shadow:0 16px 40px rgba(20,54,88,.13)}*{box-sizing:border-box}html,body,#app{margin:0;height:100%;height:100dvh;overflow:hidden}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",system-ui,sans-serif;color:var(--ink);background:var(--bg);touch-action:manipulation}button,input,select{font:inherit}button{border:0;border-radius:11px;padding:10px 13px;cursor:pointer;color:inherit;background:#eef3fa;min-height:40px}button:active{transform:scale(.98)}button:disabled{opacity:.4;cursor:default}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #9fc7fc;outline-offset:2px}input[type="text"],input[type="number"],input[type="search"],select{width:100%;border:1px solid #cbd8e8;border-radius:10px;background:white;padding:11px;font-size:16px;color:var(--ink)}input[type="checkbox"]{accent-color:var(--blue);width:17px;height:17px}.primary{background:var(--blue);color:#fff;font-weight:650}.primary:hover{background:var(--dark)}.outline{border:1px solid #b8d0ee;background:#fff;color:var(--blue)}.danger{background:#fff0f0;color:#ad3840;border:1px solid #f4d2d2}.topbar{height:68px;display:flex;align-items:center;gap:14px;padding:8px 17px;background:white;border-bottom:1px solid var(--line)}.brand{display:flex;align-items:center;gap:10px;background:transparent;padding:0;text-align:left;white-space:nowrap}.brand img{width:43px;height:43px;border-radius:12px}.brand-name{font-size:18px;font-weight:800;line-height:1.05}.brand-name small{display:block;font-size:10px;margin-top:5px;color:var(--muted);font-weight:500}.project-title{background:#f3f7fd;font-weight:650;padding:10px 18px;max-width:260px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.save-status{margin-left:auto;color:#657b95;font-size:12px;white-space:nowrap}.top-actions{display:flex;align-items:center;gap:7px}.top-actions>button:not(.primary):not(.outline){font-size:22px;font-weight:650;min-width:41px}.body-layout{height:calc(100dvh - 68px);display:flex;min-height:0}.sidebar{width:248px;min-width:248px;background:white;border-right:1px solid var(--line);padding:17px 12px;overflow:auto;z-index:10}.sidebar-title{display:flex;align-items:center;justify-content:space-between;font-weight:750;font-size:17px;padding:4px 8px 14px}.icon-btn{background:transparent;padding:4px;min-height:28px}.sidebar-title .icon-btn{display:none}.mode-row{display:flex;gap:6px;margin-bottom:18px}.mode{flex:1;white-space:nowrap;background:#f0f4fa;color:#516881;font-size:13px;padding:10px 6px}.mode.active{background:var(--blue);color:white;font-weight:700}.side-section{border-top:1px solid var(--line);padding-top:15px;padding-bottom:16px}#sidebar[data-active-mode="planen"] .furnish-only,#sidebar[data-active-mode="einrichten"] .plan-only{display:none!important}.settings-action{font-size:13px!important;background:#eef4fc;color:#235d9d;min-width:42px}.settings-action span{white-space:nowrap}@media(max-width:1050px){.settings-action span{display:none}}.side-section .label{font-weight:750;font-size:12px;text-transform:uppercase;letter-spacing:.07em;color:#8796a9;margin:0 8px 8px}.side-action{width:100%;display:flex;gap:10px;text-align:left;align-items:center;background:transparent;border-radius:9px;font-size:14px;min-height:45px;padding:10px}.side-action:hover{background:#eef5ff}.side-action.highlight{background:#e7f0fe;color:#1b64b9;font-weight:700}.toggle{display:flex;align-items:center;gap:10px;padding:9px 7px;font-size:14px}.note{font-size:12px;color:#65788f;line-height:1.5}.note b{color:#344a62}.note p{margin:5px 0}.workspace{min-width:0;min-height:0;flex:1;display:flex;flex-direction:column;position:relative}.workspace-top{height:52px;display:flex;align-items:center;gap:14px;padding:8px 15px;background:#fafdff;border-bottom:1px solid var(--line)}.workspace-top button{background:white;border:1px solid var(--line);padding:6px 12px;min-height:34px}.workspace-mode{font-size:13px;font-weight:800;color:var(--blue)}.scene-info{font-size:12px;color:#687f95;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.workspace-top #help-btn{margin-left:auto;border-radius:50%;width:34px}.canvas-wrap{flex:1;position:relative;min-height:200px;background:#f7fbff;overflow:hidden}.canvas-wrap svg{width:100%;height:100%;display:block;touch-action:none;user-select:none;-webkit-user-select:none;cursor:grab}.canvas-wrap svg.dragging{cursor:grabbing}.zoom-controls{position:absolute;right:17px;bottom:18px;display:flex;flex-direction:column;gap:5px}.zoom-controls button{font-size:20px;background:white;box-shadow:0 2px 12px #26558d20;border:1px solid #d9e6f5;width:46px;height:46px}.scale-label{position:absolute;bottom:17px;left:17px;background:#ffffffdf;border:1px solid #dce7f3;border-radius:8px;padding:6px 10px;font-size:12px;color:#667b92;pointer-events:none}.context-bar{min-height:78px;display:flex;align-items:center;flex-wrap:wrap;gap:8px;padding:12px 15px;border-top:1px solid var(--line);background:white;box-shadow:0 -2px 8px #17446b0b}.context-bar>span{font-size:13px;color:#789}.context-bar .divider{height:28px;width:1px;background:#dde7ef}.context-bar button{font-size:13px;padding:9px 12px}.context-bar .selection-label{font-weight:800;color:#203951;margin-right:10px}.context-bar .pill{font-size:12px;border-radius:30px;padding:6px 10px;background:#eef5ff;color:#1b65b0}.mobile-nav{display:none}#modal-root{position:fixed;inset:0;pointer-events:none;z-index:90}.modal-backdrop{pointer-events:auto;position:absolute;inset:0;background:#152b4a7e;display:flex;justify-content:center;align-items:center;padding:max(env(safe-area-inset-top),16px) max(env(safe-area-inset-right),16px) max(env(safe-area-inset-bottom),16px) max(env(safe-area-inset-left),16px)}.modal{background:#fff;border-radius:20px;box-shadow:var(--shadow);width:min(620px,100%);max-height:calc(100dvh - 32px);display:flex;flex-direction:column;overflow:hidden}.modal.large{width:min(1050px,100%)}.modal.full{width:100%;height:100%;max-height:none;border-radius:0}.modal-head{padding:17px 20px;display:flex;align-items:center;gap:14px;justify-content:space-between;border-bottom:1px solid var(--line);flex-shrink:0}.modal-head h2{margin:0;font-size:20px}.modal-body{padding:20px;overflow:auto;overscroll-behavior:contain}.modal-footer{border-top:1px solid var(--line);padding:14px 20px;display:flex;justify-content:flex-end;flex-wrap:wrap;gap:10px;flex-shrink:0}.flex{display:flex;align-items:center;gap:9px}.between{justify-content:space-between}.grow{flex:1}.stack{display:flex;flex-direction:column;gap:12px}.field{display:flex;flex-direction:column;gap:6px;font-size:13px;font-weight:650}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:13px}.subtext{font-size:12px;color:var(--muted);line-height:1.55}.chiprow{display:flex;gap:7px;flex-wrap:wrap}.chip{background:#f2f6fc;color:#3e5d7e;font-size:13px;padding:9px 13px}.chip.active{background:#d9eaff;color:#0c5cbd;font-weight:750}.catalog-tools{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:15px}.catalog-tools input{max-width:360px;min-width:200px}.catalog-cats{display:flex;gap:6px;flex-wrap:nowrap;overflow-x:auto;padding-bottom:12px;margin-bottom:5px}.catalog-cats button{white-space:nowrap}.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(164px,1fr));gap:12px}.gallery-card{text-align:left;border:1px solid #dce7f2;background:white;padding:10px;min-height:208px;display:flex;flex-direction:column;gap:6px}.gallery-card:hover,.project-card:hover{border-color:#72aae9;background:#f9fcff}.gallery-card .preview{height:120px;background:radial-gradient(circle,#fafdff,#eaf3fc);border-radius:10px;overflow:hidden}.gallery-card svg{height:100%;width:100%}.gallery-card strong{font-size:13px;line-height:1.3}.gallery-card small{font-size:11px;color:var(--muted)}.gallery-card .fav{align-self:flex-end;background:transparent;font-size:21px;padding:0;min-height:24px;color:#88a6cc;position:relative}.gallery-card .fav.on{color:#e35077}.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:13px}.project-card{border:1px solid #dae5f1;border-radius:13px;padding:10px;text-align:left;background:#fff;display:flex;flex-direction:column;gap:8px}.project-thumb{width:100%;height:110px;background:#f4f9ff;border-radius:8px;overflow:hidden}.project-thumb svg{width:100%;height:100%}.project-card .title{font-weight:800}.project-card .meta{font-size:11px;color:var(--muted)}.folder-bar{display:flex;gap:7px;overflow:auto;flex-wrap:wrap;margin-bottom:16px}.folder-bar button{font-size:12px}.section-h{margin:18px 0 10px;font-size:15px;font-weight:800}.empty{text-align:center;padding:32px;color:#8494a6}.empty b{color:#344d69}.danger-zone{background:#fff6f6;border:1px solid #ffe0e0;padding:12px;border-radius:10px}.toast{position:fixed;bottom:110px;left:50%;transform:translateX(-50%);background:#1b3657;color:white;z-index:99;border-radius:12px;padding:12px 18px;box-shadow:var(--shadow);font-size:13px;max-width:90vw}.preview-stage{background:radial-gradient(circle at 30% 20%,#e7f3ff,#f7fbff);border:1px solid #dceaf8;border-radius:14px;padding:20px;min-height:180px;display:flex;align-items:center;justify-content:center}.preview-stage svg{max-height:210px;width:100%;max-width:320px}.steps{display:grid;gap:13px}.step{border:1px solid #dce8f6;border-radius:12px;padding:14px;display:flex;align-items:center;gap:13px}.step .round{background:var(--blue);color:#fff;border-radius:50%;min-width:30px;height:30px;display:grid;place-items:center;font-weight:800}.hidden{display:none!important}.small-btn{min-height:32px;padding:6px 9px;font-size:12px}.field-hint{font-size:12px;color:#657c95;margin:0}.toolbar-toggle{display:flex;gap:5px}.toolbar-toggle button.active{background:#dcecff;color:#1e65b4}#import-input{display:none}@media(max-width:850px){.sidebar{position:absolute;top:0;bottom:0;left:0;transform:translateX(-105%);transition:transform .18s;box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}.sidebar-title .icon-btn{display:block}.project-title{max-width:160px}.brand-name small{display:none}.topbar{gap:8px}.top-actions .outline{display:none}.save-status{font-size:11px}.workspace-top{height:47px}.context-bar{padding:9px 11px;min-height:76px}.modal-backdrop{padding:0}.modal{width:100%;height:auto;max-height:100dvh;border-radius:16px 16px 0 0;align-self:flex-end}.modal.large{width:100%;height:88dvh}.modal.full{height:100dvh;border-radius:0}.modal-body{padding:14px}.gallery{grid-template-columns:repeat(auto-fill,minmax(135px,1fr));gap:9px}.gallery-card{min-height:190px}.gallery-card .preview{height:100px}}@media(max-width:590px){.topbar{height:60px;padding:6px 9px}.body-layout{height:calc(100dvh - 60px)}.brand img{width:36px;height:36px}.brand-name{font-size:15px}.project-title{padding:8px;max-width:116px;font-size:12px}.save-status{display:none}.top-actions{margin-left:auto;gap:3px}.top-actions>button{min-width:35px;padding:6px 7px}.top-actions .primary{display:none}.workspace-top .scene-info{display:none}.workspace-top{padding:6px 10px}.context-bar{max-height:120px;overflow:auto;gap:5px}.context-bar button{font-size:12px;padding:7px 9px;min-height:34px}.context-bar .selection-label{font-size:12px}.mobile-nav{display:flex;height:65px;background:#fff;border-top:1px solid var(--line);justify-content:space-around;padding-bottom:env(safe-area-inset-bottom)}.mobile-nav button{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:transparent;font-size:21px;min-height:52px}.mobile-nav small{font-size:10px}.form-grid{grid-template-columns:1fr}.zoom-controls{right:10px;bottom:11px}.zoom-controls button{width:40px;height:40px}.scale-label{bottom:9px;left:9px;font-size:10px}}@media print{body{background:white!important}.topbar,.sidebar,.workspace-top,.context-bar,.zoom-controls,.scale-label,.mobile-nav,#modal-root{display:none!important}.body-layout,.workspace,.canvas-wrap{position:static;height:auto;width:100%;border:0;overflow:visible}.canvas-wrap{height:90vh!important}.canvas-wrap svg{width:100%;height:90vh}.canvas-wrap svg .selection,.canvas-wrap svg .ghost{display:none!important} @page{size:A4 landscape;margin:12mm}}
 
 </style>
+ <link rel="stylesheet" href="./upgrade-1.2.css" />
  <title>WohnPlan · Created by MS</title>
 </head>
 <body>
 <div id="app">
  <header class="topbar">
-  <button id="brand" class="brand" title="Projekte öffnen"><img src="./icon-192.png" alt="WohnPlan" /><span class="brand-name">WohnPlan<small>Created by MS · Web 1.0.1</small></span></button>
+  <button id="brand" class="brand" title="Projekte öffnen"><img src="./icon-192.png" alt="WohnPlan" /><span class="brand-name">WohnPlan<small>Created by MS · Web 1.2</small></span></button>
   <button class="project-title" id="project-title" title="Projektübersicht öffnen">Mein Grundriss ▾</button>
   <span class="save-status" id="save-status" aria-live="polite">● Bereit</span>
   <div class="top-actions">
@@ -1397,6 +1398,7 @@ window.WP_CATALOG = [
 
 </script>
 <script src="./localization.js"></script>
+<script src="./upgrade-1.2.js"></script>
 <script>
 /* WohnPlan Web 1.0.1 | Created by MS
    Eigenständige Browser-Umsetzung. JSON-Backupformat kompatibel zur Swift-Modellstruktur.
@@ -1415,7 +1417,7 @@ const esc = x => String(x??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','
 const clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
 const fmt=n=>Number(n||0).toLocaleString(window.WP_I18N?.language()==='en'?'en-GB':'de-AT',{maximumFractionDigits:1});
 const copy=obj=>JSON.parse(JSON.stringify(obj));
-const snap=x=>ui.snap ? Math.round(x/5)*5 : x;
+const snap=x=>ui.snap ? Math.round(x/window.WP_12.get().gridSize)*window.WP_12.get().gridSize : x;
 const distance=(p,q)=>Math.hypot(p.x-q.x,p.y-q.y);
 const newRoom=(name='Wohnzimmer',form='Rechteck',x=70,y=85,w=480,h=360)=>({id:uid(),name,form,x,y,breite:w,tiefe:h,aussparungBreite:Math.max(70,Math.round(w*.34)),aussparungTiefe:Math.max(70,Math.round(h*.34)),objekte:[],oeffnungen:[],gesperrt:false});
 const newProject=(name='Mein Zuhause',rooms)=>({id:uid(),name,raeume:rooms||[],ordnerID:null});
@@ -1499,15 +1501,15 @@ function drawFurniture(r,o,thumb=false){const c=byCode.get(o.typ)||{style:'custo
  if(active){const radius=10/ui.zoom;shape+=`<g transform="rotate(${o.drehung||0} ${cx} ${cy})" class="selection"><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="#2877da" stroke-width="${2/ui.zoom}" stroke-dasharray="${6/ui.zoom} ${4/ui.zoom}"/>${!o.gesperrt&&!r.gesperrt?([['nw',x,y],['ne',x+w,y],['se',x+w,y+h],['sw',x,y+h]].map(([k,hx,hy])=>`<circle data-kind="resize" data-room="${r.id}" data-id="${o.id}" data-handle="${k}" cx="${hx}" cy="${hy}" r="${radius*1.8}" fill="transparent"/><rect data-kind="resize" data-room="${r.id}" data-id="${o.id}" data-handle="${k}" x="${hx-radius*.75}" y="${hy-radius*.75}" width="${radius*1.5}" height="${radius*1.5}" rx="${radius*.3}" fill="#2877da" stroke="white" stroke-width="${2/ui.zoom}"/>`).join('')):''}</g>`}
  return shape;
 }
-function drawRoom(r,thumb=false){const pts=roomPoints(r),pstr=pts.map(p=>`${r.x+p.x},${r.y+p.y}`).join(' '),sel=selected(),active=sel?.kind==='room'&&sel.value.id===r.id&&!thumb;let out=`<polygon data-kind="room" data-room="${r.id}" points="${pstr}" fill="${active?'#e0efff':'#edf4fb'}" stroke="none"/>`;
+function drawRoom(r,thumb=false){const pts=roomPoints(r),pstr=pts.map(p=>`${r.x+p.x},${r.y+p.y}`).join(' '),sel=selected(),active=sel?.kind==='room'&&sel.value.id===r.id&&!thumb;let out=`<polygon data-kind="room" data-room="${r.id}" points="${pstr}" fill="${!thumb&&document.body.dataset.theme==='dark'?(active?'#324e72':'#273c56'):(active?'#e0efff':'#edf4fb')}" stroke="none"/>`;
  const edges=roomEdges(r), openings=r.oeffnungen||[];
  edges.forEach(e=>{
   const cut= openings.filter(o=>o.wand===e.i).map(o=>({a:clamp(o.position,0,e.len),b:clamp(o.position+o.breite,0,e.len)})).sort((a,b)=>a.a-b.a);
-  let cursor=0,seg=(a,b)=>{if(b-a<=.1)return '';const ux=e.dx/e.len,uy=e.dy/e.len;return `<path d="M${e.x+ux*a} ${e.y+uy*a}L${e.x+ux*b} ${e.y+uy*b}" stroke="${r.gesperrt?'#7e8da4':'#314b66'}" stroke-width="${thumb?8:8}" stroke-linecap="square" fill="none"/>`};
+  let cursor=0,seg=(a,b)=>{if(b-a<=.1)return '';const ux=e.dx/e.len,uy=e.dy/e.len;return `<path d="M${e.x+ux*a} ${e.y+uy*a}L${e.x+ux*b} ${e.y+uy*b}" stroke="${r.gesperrt?'#7e8da4':(!thumb&&document.body.dataset.theme==='dark'?'#b2cce6':'#314b66')}" stroke-width="${thumb?8:8}" stroke-linecap="square" fill="none"/>`};
   cut.forEach(q=>{out+=seg(cursor,q.a);cursor=Math.max(cursor,q.b)});out+=seg(cursor,e.len);
   if(ui.measure&&!thumb){const mx=e.x+e.dx/2,my=e.y+e.dy/2, nx=-e.dy/e.len,ny=e.dx/e.len;out+=`<text x="${mx-nx*20}" y="${my-ny*20}" font-size="11" text-anchor="middle" dominant-baseline="middle" fill="#6588aa" transform="rotate(${Math.atan2(e.dy,e.dx)*180/Math.PI} ${mx-nx*20} ${my-ny*20})">${fmt(e.len)} cm</text>`}
  });
- if(!thumb){out+=`<text x="${r.x+r.breite*.40}" y="${r.y+r.tiefe*.49}" text-anchor="middle" fill="#7185a0" font-size="17" font-weight="650" pointer-events="none">${esc(r.name)} · ${fmt(roomArea(r))} m²</text>`}
+ if(!thumb){out+=`<text x="${r.x+r.breite*.40}" y="${r.y+r.tiefe*.49}" text-anchor="middle" fill="${document.body.dataset.theme==='dark'?'#cadcf0':'#7185a0'}" font-size="17" font-weight="650" pointer-events="none">${esc(r.name)} · ${fmt(roomArea(r))} m²</text>`}
  openings.forEach(o=>out+=drawOpening(r,o,thumb));
  r.objekte.filter(o=>byCode.get(o.typ)?.rug).forEach(o=>out+=drawFurniture(r,o,thumb));
  r.objekte.filter(o=>!byCode.get(o.typ)?.rug).forEach(o=>out+=drawFurniture(r,o,thumb));
@@ -1528,8 +1530,8 @@ function drawOpening(r,o,thumb=false){const a=openAnchor(r,o),s=selected(),isSel
  if(isSelected){out+=`<circle cx="${(a.x+a.ex)/2}" cy="${(a.y+a.ey)/2}" r="${8/ui.zoom}" fill="#2877da" stroke="white" stroke-width="${2/ui.zoom}"/>`}
  return out+'</g>';
 }
-function renderScene(){const wr=worldRect();svg.setAttribute('viewBox',`${wr.x} ${wr.y} ${wr.w} ${wr.h}`);svg.innerHTML=`<defs><pattern id="wp-grid" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M 50 0 L 0 0 0 50" fill="none" stroke="#aac8e7" stroke-width=".9" opacity=".36"/></pattern><pattern id="wp-grid-small" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="#d5e4f4" stroke-width=".55" opacity=".5"/></pattern></defs><rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="#f8fbff"/>${ui.grid?`<rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="url(#wp-grid-small)"/><rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="url(#wp-grid)"/>`:''}${(project()?.raeume||[]).map(r=>drawRoom(r)).join('')}${ui.newItem?drawPreviewItem():''}`;
- $('#scale-label').textContent=`Raster 10/50 cm · ${Math.round(ui.zoom*100)}%`;$('#scene-info').textContent=`${project()?.raeume.length||0} Räume · ${fmt(project()?.raeume.reduce((a,r)=>a+roomArea(r),0))} m²`;
+function renderScene(){const grid=window.WP_12.get().gridSize,major=grid*5,dark=document.body.dataset.theme==='dark';const wr=worldRect();svg.setAttribute('viewBox',`${wr.x} ${wr.y} ${wr.w} ${wr.h}`);svg.innerHTML=`<defs><pattern id="wp-grid" width="${major}" height="${major}" patternUnits="userSpaceOnUse"><path d="M ${major} 0 L 0 0 0 ${major}" fill="none" stroke="${dark?'#688baa':'#aac8e7'}" stroke-width=".9" opacity=".45"/></pattern><pattern id="wp-grid-small" width="${grid}" height="${grid}" patternUnits="userSpaceOnUse"><path d="M ${grid} 0 L 0 0 0 ${grid}" fill="none" stroke="${dark?'#506d88':'#d5e4f4'}" stroke-width=".55" opacity=".5"/></pattern></defs><rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="${dark?'#111d2c':'#f8fbff'}"/>${ui.grid?`<rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="url(#wp-grid-small)"/><rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="url(#wp-grid)"/>`:''}${(project()?.raeume||[]).map(r=>drawRoom(r)).join('')}${ui.newItem?drawPreviewItem():''}`;
+ $('#scale-label').textContent=`${window.WP_I18N?.language()==='en'?'Grid':'Raster'} ${grid}/${major} cm · ${Math.round(ui.zoom*100)}%`;$('#scene-info').textContent=`${project()?.raeume.length||0} Räume · ${fmt(project()?.raeume.reduce((a,r)=>a+roomArea(r),0))} m²`;
 }
 function drawPreviewItem(){const v=ui.newItem;if(v.type==='furniture'){const c=byCode.get(v.code);if(!c)return '';return `<g class="ghost" opacity=".63" transform="translate(${v.x} ${v.y})">${furnitureShape(c,c.w,c.h)}</g>`}return ''}
 function renderContext(){const bar=$('#context-bar'),s=selected();if(!s){bar.innerHTML='<span>Tippe ein Element an · Auf freier Fläche ziehen: Grundriss verschieben · Zwei Finger: Zoomen</span>';return}
@@ -1617,34 +1619,116 @@ function projectOverview(){ui.selected=null;const body=modal('Deine WohnPlan-Pro
 function projectOptions(p,returnTo){modal('Projekt bearbeiten',`<div class="stack"><label class="field">Projektname<input id="p-name" value="${esc(p.name)}" /></label><label class="field">In Ordner verschieben<select id="p-folder"><option value="">Ohne Ordner</option>${data.ordner.map(f=>`<option value="${f.id}" ${p.ordnerID===f.id?'selected':''}>${esc(f.name)}</option>`).join('')}</select></label><div class="danger-zone"><b>Projekt löschen</b><p class="subtext">Das Projekt wird zunächst in den Papierkorb verschoben und kann dort wiederhergestellt werden.</p><button class="danger" id="p-trash">In Papierkorb verschieben</button></div></div>`,`<button id="p-cancel">Abbrechen</button><button id="p-save" class="primary">Speichern</button>`);
  $('#p-cancel').onclick=returnTo;$('#p-save').onclick=()=>{commit();p.name=$('#p-name').value.trim()||'Projekt';p.ordnerID=$('#p-folder').value||null;changed(false);returnTo()};$('#p-trash').onclick=()=>{if(!confirm(window.WP_I18N?.translate('Projekt in den Papierkorb verschieben?')))return;commit();data.projekte=data.projekte.filter(x=>x.id!==p.id);data.papierkorb.push(p);if(!data.projekte.length){let newP=newProject('Neuer Grundriss');data.projekte.push(newP)}if(data.aktivesProjekt===p.id)data.aktivesProjekt=data.projekte[0].id;changed();returnTo()}
 }
-function exportModal(){modal('Export & Sicherheit',`<div class="stack"><p class="subtext">Mit einem Backup kannst du WohnPlan-Projekte zwischen iPad und Windows übertragen. Alle Änderungen werden auch lokal im jeweiligen Browser gespeichert.</p><button class="side-action" id="ex-backup">💾 <span><b>Projekt-Backup als JSON</b><br><small>Für andere Geräte und als zusätzliche Sicherung</small></span></button><button class="side-action" id="ex-import">📥 <span><b>Backup importieren</b><br><small>Ersetzt nach Bestätigung die Web-Projekte</small></span></button><button class="side-action" id="ex-image">🖼️ <span><b>Grundriss als PNG speichern</b><br><small>Sauberes Bild des gesamten Plans</small></span></button><button class="side-action" id="ex-print">🖨️ <span><b>Drucken / als PDF sichern</b><br><small>Im Druckdialog „Als PDF speichern“ auswählen</small></span></button></div>`);
- $('#ex-backup').onclick=()=>{backup()};$('#ex-import').onclick=importBackup;$('#ex-image').onclick=()=>{closeModal();exportPNG()};$('#ex-print').onclick=()=>{closeModal();fitScene();setTimeout(()=>window.print(),120)};
+function exportModal(){modal('Export & Sicherheit',`<div class="stack"><p class="subtext">Mit einem Backup kannst du WohnPlan-Projekte zwischen iPad und Windows übertragen. Alle Änderungen werden auch lokal im jeweiligen Browser gespeichert.</p><button class="side-action" id="ex-backup">💾 <span><b>Projekt-Backup als JSON</b><br><small>Für andere Geräte und als zusätzliche Sicherung</small></span></button><button class="side-action" id="ex-import">📥 <span><b>Backup importieren</b><br><small>Ersetzt nach Bestätigung die Web-Projekte</small></span></button><button class="side-action" id="ex-image">🖼️ <span><b>Grundriss als PNG speichern</b><br><small>Sauberes Bild des gesamten Plans</small></span></button><button class="side-action" id="ex-print">🖨️ <span><b>PDF sichern / drucken</b><br><small>A4/A3-PDF erstellen und über Teilen speichern oder drucken</small></span></button></div>`);
+ $('#ex-backup').onclick=()=>{backup()};$('#ex-import').onclick=importBackup;$('#ex-image').onclick=()=>{closeModal();exportPNG()};$('#ex-print').onclick=exportPDF;
+}
+async function exportPDF() {
+  const L=(de,en)=>window.WP_I18N?.language()==='en'?en:de;
+  const p=window.WP_12.get();
+  const name=window.WP_12.filenameFor(project()?.name||'WohnPlan');
+  modal(L('PDF wird erstellt','Creating PDF'),'<p class="subtext">'+L('WohnPlan erstellt die PDF-Datei aus deinem Grundriss …','Creating the PDF file from your floor plan …')+'</p>');
+  try {
+    const pdf=await window.WP_12.generatePDF(exportSVG(),p);
+    const filename=name+'-'+p.pdfPaper+'-'+(p.pdfOrientation==='landscape'?'Querformat':'Hochformat')+'.pdf';
+    const url=URL.createObjectURL(pdf);
+    modal(L('PDF fertig','PDF ready'),'<div class="stack">' +
+      '<p>'+L('Die PDF-Datei ist fertig. Tippe auf „Teilen / In Dateien sichern“. Auf dem iPad kannst du dann auch „Drucken“ wählen.',
+                   'Your PDF is ready. Tap “Share / Save to Files”. On iPad you can also choose “Print”.')+'</p>' +
+      '<p class="settings-info">'+p.pdfPaper+' · '+(p.pdfOrientation==='landscape'?L('Querformat','Landscape'):L('Hochformat','Portrait'))+
+      ' · '+Math.max(1,Math.round(pdf.size/1024))+' KB</p>' +
+      '<div class="flex" style="flex-wrap:wrap">' +
+      '<button id="pdf-share" class="primary">📤 '+L('Teilen / In Dateien sichern','Share / Save to Files')+'</button>' +
+      '<a id="pdf-direct" class="outline" style="padding:12px;border-radius:10px;text-decoration:none" download="'+esc(filename)+'">⬇ '+L('PDF herunterladen','Download PDF')+'</a>' +
+      '</div><p class="settings-info">'+L('Falls der Download in der Home-Bildschirm-App nicht startet, verwende den Teilen-Button.',
+        'If downloading does not work in the Home Screen app, use the Share button.')+'</p></div>',
+        '<button id="pdf-close">'+L('Schließen','Close')+'</button>');
+    $('#pdf-direct').href=url;
+    $('#pdf-share').onclick=async()=>{
+      try {
+        const file=new File([pdf],filename,{type:'application/pdf'});
+        if(navigator.share && (!navigator.canShare || navigator.canShare({files:[file]}))){
+          await navigator.share({files:[file],title:name});
+        } else {
+          $('#pdf-direct').click();
+        }
+      }catch(e){
+        if(e?.name!=='AbortError'){toast(L('Teilen nicht möglich – verwende „PDF herunterladen“.','Sharing failed – use “Download PDF”.'))}
+      }
+    };
+    $('#pdf-close').onclick=()=>{closeModal();setTimeout(()=>URL.revokeObjectURL(url),90000)};
+  }catch(err){
+    modal(L('PDF konnte nicht erstellt werden','Could not create PDF'),'<p class="subtext">'+esc(err.message||String(err))+'</p>',
+      '<button id="pdf-fail-close" class="primary">'+L('Schließen','Close')+'</button>');
+    $('#pdf-fail-close').onclick=closeModal;
+  }
 }
 function exportSVG(){const b=currentBounds(),pad=70,W=b.w+pad*2,H=b.h+pad*2,prev=ui.selected;ui.selected=null;const content=(project()?.raeume||[]).map(r=>drawRoom(r,true)+`<text x="${r.x+30}" y="${r.y+30}" fill="#385f85" font-size="18" font-weight="700">${esc(r.name)} · ${fmt(roomArea(r))} m²</text>`).join('');ui.selected=prev;return `<svg xmlns="http://www.w3.org/2000/svg" width="${Math.ceil(W*2)}" height="${Math.ceil(H*2)}" viewBox="${b.x-pad} ${b.y-pad} ${W} ${H}"><rect x="${b.x-pad}" y="${b.y-pad}" width="${W}" height="${H}" fill="#ffffff"/>${content}<text x="${b.x+b.w/2}" y="${b.y-pad+25}" text-anchor="middle" font-family="sans-serif" fill="#274f82" font-size="21" font-weight="bold">${esc(project()?.name||'WohnPlan')}</text><text x="${b.x+b.w/2}" y="${b.y+b.h+pad-15}" text-anchor="middle" font-family="sans-serif" fill="#90a3b8" font-size="13">WohnPlan · Created by MS</text></svg>`}
 async function exportPNG(){try{let xml=exportSVG(),img=new Image(),url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));img.onload=()=>{let cv=document.createElement('canvas');cv.width=img.naturalWidth;cv.height=img.naturalHeight;let ctx=cv.getContext('2d');ctx.drawImage(img,0,0);URL.revokeObjectURL(url);cv.toBlob(blob=>blob?download(blob,(project()?.name||'WohnPlan')+'.png'):toast('Bildexport nicht verfügbar'),'image/png')};img.onerror=()=>{URL.revokeObjectURL(url);toast('Bildexport nicht möglich')};img.src=url}catch(e){toast('PNG-Fehler: '+e.message)}}
-function settingsModal(){
-  const language = window.WP_I18N?.language() || 'de';
-  modal('Einstellungen', '<div class="stack">' +
-    '<label class="field">Sprache auswählen<select id="settings-language">' +
-    '<option value="de">Deutsch</option><option value="en">Englisch</option>' +
-    '</select></label>' +
-    '<p class="subtext">Änderungen werden automatisch auf diesem Gerät gespeichert.</p>' +
-    '<details open class="release-notes"><summary style="cursor:pointer;font-weight:750;padding:10px 0">Versionshinweise</summary>' +
-    '<div style="padding:12px;border:1px solid #dce5ef;border-radius:10px;background:#f8fbff">' +
-    '<b>WohnPlan Web 1.0.1 · Created by MS</b>' +
-    '<p>Neuerungen in Version 1.0.1</p>' +
-    '<ul style="line-height:1.7;margin-bottom:8px">' +
-    '<li>Planen: Räume, Türen und Fenster. Einrichten: Möbel und Möbelgruppen.</li>' +
-    '<li>Neue Spracheinstellung: Deutsch und Englisch.</li>' +
-    '<li>Versionshinweise in den Einstellungen.</li>' +
-    '<li>Deine Projekte und Backups bleiben erhalten.</li></ul></div></details></div>',
-    '<button class="primary" id="settings-close">Schließen</button>');
-  $('#settings-language').value=language;
-  $('#settings-language').onchange=()=>{
-    window.WP_I18N?.setLanguage($('#settings-language').value);
-    render();
+function settingsModal() {
+  const pref = window.WP_12.get();
+  const english = window.WP_I18N?.language() === 'en';
+  const L = (de,en) => english ? en : de;
+  let storageBytes=0;
+  try {storageBytes=new Blob([localStorage.getItem(KEY)||'']).size} catch(_) {}
+  const paperOption = name => '<option value="'+name+'" '+(pref.pdfPaper===name?'selected':'')+'>'+name+'</option>';
+  modal(L('Einstellungen','Settings'), '<div class="stack">' +
+    '<section class="settings-card"><h3>🎨 '+L('Darstellung','Appearance')+'</h3>' +
+    '<div class="settings-row"><label class="field">'+L('Design','Theme')+'<select id="s12-theme">' +
+    '<option value="light">'+L('Helles Design (Standard)','Light (default)')+'</option>' +
+    '<option value="dark">'+L('Dunkles Design','Dark')+'</option></select></label>' +
+    '<label class="field">'+L('Rastergröße','Grid spacing')+'<select id="s12-grid">' +
+    [5,10,25,50].map(n=>'<option value="'+n+'">'+n+' cm</option>').join('') +
+    '</select></label></div></section>' +
+    '<section class="settings-card"><h3>🖨️ '+L('PDF & Druck','PDF & print')+'</h3>' +
+    '<div class="settings-row"><label class="field">'+L('Papiergröße','Paper size')+'<select id="s12-paper">'+
+    paperOption('A4')+paperOption('A3')+'</select></label>' +
+    '<label class="field">'+L('Ausrichtung','Orientation')+'<select id="s12-orientation">' +
+    '<option value="portrait">'+L('Hochformat','Portrait')+'</option>' +
+    '<option value="landscape">'+L('Querformat','Landscape')+'</option></select></label></div>' +
+    '<p class="settings-info">'+L('PDFs werden als echte Dateien erstellt. Auf dem iPad kannst du sie im Teilen-Menü sichern oder drucken.','PDFs are generated as files. On iPad, use Share to save or print them.')+'</p></section>' +
+    '<section class="settings-card"><h3>💾 '+L('Daten & Sicherheit','Data & backup')+'</h3>' +
+    '<p class="settings-info">'+data.projekte.length+' '+L('Projekte','projects')+' · '+(storageBytes/1024).toFixed(1)+' KB '+L('lokale Projektdaten','local project data')+
+    '<br>'+L('Projekte werden automatisch auf diesem Gerät gespeichert. Ein Backup schützt bei Geräteverlust oder Browserdaten-Löschung.',
+    'Projects are saved automatically on this device. Export backups to protect against device loss or cleared browser data.')+'</p>' +
+    '<div class="flex" style="flex-wrap:wrap;margin:9px 0"><button id="s12-backup" class="outline">⬇️ '+L('Backup exportieren','Export backup')+'</button>' +
+    '<button id="s12-import" class="outline">📥 '+L('Backup importieren','Import backup')+'</button></div>' +
+    '<button id="s12-reset" class="danger">↺ '+L('Nur Einstellungen zurücksetzen','Reset settings only')+'</button>' +
+    '<p class="settings-info">'+L('Beim Zurücksetzen bleiben Grundrisse, Möbel, Ordner und Backups erhalten.',
+    'Resetting does not remove floor plans, furniture, folders or backups.')+'</p></section>' +
+    '<section class="settings-card"><h3>ℹ️ '+L('Über WohnPlan','About WohnPlan')+'</h3>' +
+    '<label class="field">'+L('Sprache','Language')+'<select id="s12-language"><option value="de">Deutsch</option><option value="en">English</option></select></label>' +
+    '<details style="margin-top:14px" open class="release-notes"><summary style="cursor:pointer;font-weight:750;padding:8px 0">'+L('Versionshinweise','Release notes')+'</summary>' +
+    '<div style="padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--wp-soft,#f8fbff)">' +
+    '<b>WohnPlan Web 1.2 · Created by MS</b><ul style="line-height:1.7;margin-bottom:0">' +
+    '<li>'+L('PDF-Export für iPad und Computer überarbeitet','Rebuilt PDF export for iPad and computers')+'</li>' +
+    '<li>'+L('Helles und dunkles Design','Light and dark themes')+'</li>' +
+    '<li>'+L('Rastergröße 5, 10, 25 und 50 cm','Grid spacing of 5, 10, 25 or 50 cm')+'</li>' +
+    '<li>'+L('A4/A3 und Hoch-/Querformat für PDF','A4/A3 and portrait/landscape PDF options')+'</li>' +
+    '<li>'+L('Backup-Verwaltung und Einstellungen zurücksetzen','Backup tools and reset settings')+'</li>' +
+    '<li>'+L('Kopfzeile für iPad überarbeitet','Improved iPad header')+'</li></ul></div></details></section></div>',
+    '<button id="s12-close" class="primary">'+L('Schließen','Close')+'</button>',{large:true});
+  $('#s12-theme').value=pref.theme;
+  $('#s12-grid').value=String(pref.gridSize);
+  $('#s12-paper').value=pref.pdfPaper;
+  $('#s12-orientation').value=pref.pdfOrientation;
+  $('#s12-language').value=english?'en':'de';
+  $('#s12-theme').onchange=()=>{window.WP_12.update({theme:$('#s12-theme').value});renderScene()};
+  $('#s12-grid').onchange=()=>{window.WP_12.update({gridSize:Number($('#s12-grid').value)});renderScene()};
+  $('#s12-paper').onchange=()=>window.WP_12.update({pdfPaper:$('#s12-paper').value});
+  $('#s12-orientation').onchange=()=>window.WP_12.update({pdfOrientation:$('#s12-orientation').value});
+  $('#s12-language').onchange=()=>{window.WP_I18N.setLanguage($('#s12-language').value);render();settingsModal()};
+  $('#s12-backup').onclick=backup;
+  $('#s12-import').onclick=importBackup;
+  $('#s12-reset').onclick=()=>{
+    if(!confirm(L('Nur persönliche Einstellungen zurücksetzen? Projekte bleiben erhalten.',
+      'Reset only personal settings? Your projects will remain.')))return;
+    window.WP_12.reset();
+    window.WP_I18N.setLanguage('de');
+    ui.grid=true;ui.snap=true;ui.measure=true;
+    $('#grid-toggle').checked=true;$('#snap-toggle').checked=true;$('#measure-toggle').checked=true;
+    render();settingsModal();toast('Einstellungen zurückgesetzt');
   };
-  $('#settings-close').onclick=closeModal;
+  $('#s12-close').onclick=closeModal;
 }
 function showHelp(){modal('Willkommen bei WohnPlan! 🏠',`<div class="steps"><div class="step"><span class="round">1</span><div><b>Räume planen</b><p class="subtext">Mit „Raum hinzufügen“ ein Rechteck oder eine L-Form anlegen und Maße eingeben.</p></div></div><div class="step"><span class="round">2</span><div><b>Möbel einrichten</b><p class="subtext">Vollbild-Möbelkatalog öffnen, 2D-Vorschau auswählen und an der gewünschten Stelle einsetzen.</p></div></div><div class="step"><span class="round">3</span><div><b>Direkt mit dem Finger arbeiten</b><p class="subtext">Möbel ziehen, an blauen Ecken vergrößern, Türen und Fenster an Wänden verschieben. Mit zwei Fingern zoomen.</p></div></div><div class="step"><span class="round">4</span><div><b>Automatisch speichern</b><p class="subtext">WohnPlan speichert lokal in diesem Browser. Exportiere regelmäßig ein Backup für den Gerätewechsel und zur Datensicherung.</p></div></div></div>`,`<button class="primary" id="help-done">Loslegen!</button>`);$('#help-done').onclick=()=>{try{localStorage.setItem('WohnPlan_Web_Guide_Seen','yes')}catch{}closeModal()}}
 function beginPointer(e){
