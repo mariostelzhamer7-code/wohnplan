@@ -1,0 +1,42 @@
+/* WohnPlan Web 1.4 – freeform wall editor | Created by MS */
+.wp14-editor{display:flex;flex-direction:column;gap:12px}
+.wp14-help{font-size:13px;color:var(--muted);line-height:1.55;margin:0}
+.wp14-editor-grid{display:grid;grid-template-columns:minmax(0,1fr) 215px;gap:14px;min-height:400px}
+.wp14-stage{display:flex;min-height:400px;border:1px solid var(--line);background:var(--wp-canvas,#f8fbff);border-radius:14px;overflow:hidden}
+.wp14-stage svg{width:100%;height:100%;min-height:400px;max-height:55dvh;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+.wp14-stage svg [data-vertex]{touch-action:none}
+.wp14-controls{display:flex;flex-direction:column;gap:10px;min-width:0;padding:13px;background:var(--wp-soft,#f0f5fc);border:1px solid var(--line);border-radius:12px;align-self:start}
+.wp14-controls h3{margin:0 0 3px;font-size:16px;color:var(--ink)}
+.wp14-controls label{font-size:12px;color:var(--ink);display:flex;flex-direction:column;gap:5px;font-weight:650}
+.wp14-controls input[type=number]{width:100%;min-width:0}
+.wp14-controls button{min-height:38px;text-align:left;white-space:normal}
+.wp14-tip{font-size:11px;color:var(--muted);line-height:1.5}
+.wp14-summary{font-size:11px;font-weight:750;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
+.wp14-editor-actions{display:flex;align-items:center;gap:8px;justify-content:flex-end;flex-wrap:wrap}
+.wp14-snap{display:flex;align-items:center;gap:7px;margin-right:auto;font-size:12px;color:var(--ink)}
+.wp14-snap input{accent-color:#2877da}
+.wp14-message{min-height:18px;color:var(--muted);font-size:12px}
+.wp14-message.is-error{color:#ad3545;font-weight:700}
+body[data-theme=dark] .wp14-stage{background:#111d2c;border-color:#425a76}
+body[data-theme=dark] .wp14-controls{background:#253950;border-color:#425a76}
+body[data-theme=dark] .wp14-controls h3,
+body[data-theme=dark] .wp14-controls label,
+body[data-theme=dark] .wp14-snap{color:#edf4ff}
+body[data-theme=dark] .wp14-tip,
+body[data-theme=dark] .wp14-help,
+body[data-theme=dark] .wp14-summary{color:#b6c9df}
+body[data-theme=dark] .wp14-message.is-error{color:#ffb4c0}
+@media(max-width:800px){
+ .wp14-editor-grid{grid-template-columns:1fr;min-height:unset}
+ .wp14-stage,.wp14-stage svg{min-height:330px}
+ .wp14-stage svg{max-height:54dvh}
+ .wp14-controls{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));align-items:end}
+ .wp14-controls h3,.wp14-controls .wp14-tip,.wp14-controls .wp14-summary{grid-column:1/-1}
+ .wp14-controls button{min-height:44px}
+}
+@media(max-width:530px){
+ .wp14-stage,.wp14-stage svg{min-height:260px}
+ .wp14-controls{grid-template-columns:1fr 1fr}
+ .wp14-editor-actions .primary{width:100%;order:4}
+ .wp14-snap{width:100%}
+}
