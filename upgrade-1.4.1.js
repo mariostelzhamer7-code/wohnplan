@@ -91,7 +91,7 @@
     }
     // Total width/depth show the complete footprint, not the length of a single wall.
     const width=b.maxX-b.minX,height=b.maxY-b.minY;
-    const totalOffset=clamp(105/zoom,95,148);
+    const totalOffset=clamp(90/zoom,88,110);
     const overall=options.overall!==false && width>0 && height>0;
     if(overall){
       const top=b.minY-totalOffset;
@@ -103,7 +103,7 @@
       elements.push('<text x="'+round(xMid)+'" y="'+round(top-font*.55)+'" font-family="system-ui,sans-serif" font-size="'+font.toFixed(2)+'" font-weight="750" fill="'+txt+'" text-anchor="middle" stroke="'+halo+'" stroke-width="3.3" paint-order="stroke" pointer-events="none">'+esc(totalText)+'</text>');
       const xRight=b.maxX+totalOffset;
       const yMid=(b.minY+b.maxY)/2;
-      const heightText=(language==='en'?'Overall depth: ':'Gesamttiefe: ')+fmt(height);
+      const heightText=(language==='en'?'Depth: ':'Tiefe: ')+fmt(height);
       elements.push('<path d="M'+mark(b.maxX+7,b.minY)+' L'+mark(xRight+5,b.minY)+' M'+mark(b.maxX+7,b.maxY)+' L'+mark(xRight+5,b.maxY)+' M'+mark(xRight,b.minY)+' L'+mark(xRight,b.maxY)+'" stroke="'+stroke+'" stroke-width="1.2" fill="none"/>');
       elements.push('<text x="'+round(xRight+11)+'" y="'+round(yMid)+'" font-family="system-ui,sans-serif" font-size="'+font.toFixed(2)+'" font-weight="750" fill="'+txt+'" text-anchor="start" dominant-baseline="middle" stroke="'+halo+'" stroke-width="3.3" paint-order="stroke" pointer-events="none">'+esc(heightText)+'</text>');
     }
