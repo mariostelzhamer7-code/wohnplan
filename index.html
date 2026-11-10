@@ -23,7 +23,7 @@
 <body>
 <div id="app">
  <header class="topbar">
-  <button id="brand" class="brand" title="Projekte öffnen"><img src="./icon-192.png" alt="WohnPlan" /><span class="brand-name">WohnPlan<small>Created by MS · Web 1.4</small></span></button>
+  <button id="brand" class="brand" title="Projekte öffnen"><img src="./icon-192.png" alt="WohnPlan" /><span class="brand-name">WohnPlan<small>Created by MS · Web 1.4.1</small></span></button>
   <button class="project-title" id="project-title" title="Projektübersicht öffnen">Mein Grundriss ▾</button>
   <span class="save-status" id="save-status" aria-live="polite">● Bereit</span>
   <div class="top-actions">
@@ -1457,6 +1457,31 @@ function worldRect(){let r=$('#canvas-wrap').getBoundingClientRect();return{x:ui
 function scaleAt(mult,clientX,clientY){const rect=$('#canvas-wrap').getBoundingClientRect(),cx=clientX??rect.left+rect.width/2,cy=clientY??rect.top+rect.height/2,px=(cx-rect.left)/ui.zoom+ui.vx,py=(cy-rect.top)/ui.zoom+ui.vy;ui.zoom=clamp(ui.zoom*mult,.12,4);ui.vx=px-(cx-rect.left)/ui.zoom;ui.vy=py-(cy-rect.top)/ui.zoom;renderScene()}
 function roomPoints(r){if(r.form==='Freie Form')return window.WP_14.points(r);const w=r.breite,h=r.tiefe;return r.form==='L-Form' ? [{x:0,y:0},{x:w,y:0},{x:w,y:h-r.aussparungTiefe},{x:w-r.aussparungBreite,y:h-r.aussparungTiefe},{x:w-r.aussparungBreite,y:h},{x:0,y:h}] : [{x:0,y:0},{x:w,y:0},{x:w,y:h},{x:0,y:h}]}
 function roomEdges(r){const pts=roomPoints(r);return pts.map((p,i)=>{let q=pts[(i+1)%pts.length];return{x:r.x+p.x,y:r.y+p.y,dx:q.x-p.x,dy:q.y-p.y,len:Math.hypot(q.x-p.x,q.y-p.y),i}})}
+function dimensionRuns(r){
+ const pts=roomPoints(r), edges=roomEdges(r).filter(e=>e.len>0.01);
+ if(!edges.length)return [];
+ const signed=pts.reduce((sum,p,i)=>{const q=pts[(i+1)%pts.length];return sum+p.x*q.y-q.x*p.y},0);
+ const outward=signed>=0?1:-1;
+ const same=(a,b)=>a.dx*b.dx+a.dy*b.dy>0&&Math.abs(a.dx*b.dy-a.dy*b.dx)<=Math.max(.01,.001*a.len*b.len);
+ const runs=[];
+ for(const e of edges){
+  const prev=runs[runs.length-1];
+  if(prev&&same(prev,e)){prev.dx+=e.dx;prev.dy+=e.dy;prev.len+=e.len}
+  else runs.push({...e});
+ }
+ if(runs.length>1&&same(runs[runs.length-1],runs[0])){
+  const last=runs.pop(),first=runs[0];
+  runs[0]={...last,dx:last.dx+first.dx,dy:last.dy+first.dy,len:last.len+first.len};
+ }
+ return runs.filter(e=>e.len>=35).map(e=>{
+  const mx=e.x+e.dx/2,my=e.y+e.dy/2;
+  const nx=outward*e.dy/e.len,ny=-outward*e.dx/e.len;
+  let angle=Math.atan2(e.dy,e.dx)*180/Math.PI;
+  if(angle>90)angle-=180;
+  if(angle<=-90)angle+=180;
+  return {x:mx+nx*25,y:my+ny*25,angle,len:e.len};
+ });
+}
 function openAnchor(r,o){const edge=roomEdges(r)[clamp(o.wand,0,roomEdges(r).length-1)],pos=clamp(o.position,10,Math.max(10,edge.len-o.breite-10)),ux=edge.dx/edge.len,uy=edge.dy/edge.len;return{x:edge.x+ux*pos,y:edge.y+uy*pos,ex:edge.x+ux*(pos+o.breite),ey:edge.y+uy*(pos+o.breite),ux,uy,edge,pos}}
 function roomArea(r){return r.form==='Freie Form'?window.WP_14.area(r):(r.breite*r.tiefe-(r.form==='L-Form'?r.aussparungBreite*r.aussparungTiefe:0))/10000}
 function isInsideRoom(r,x,y){if(r.form==='Freie Form')return window.WP_14.inside(r,x,y);let a=x-r.x,b=y-r.y;if(a<0||a>r.breite||b<0||b>r.tiefe)return false;return r.form!=='L-Form'||!(a>r.breite-r.aussparungBreite&&b>r.tiefe-r.aussparungTiefe)}
@@ -1502,9 +1527,8 @@ function furnitureShape(c,w,h,color){
  }
  return `<svg x="0" y="0" width="${w}" height="${h}" viewBox="0 0 100 100" preserveAspectRatio="none" style="overflow:visible">${s}</svg>`;
 }
-function drawFurniture(r,o,thumb=false){const c=byCode.get(o.typ)||{style:'custom'},x=r.x+o.x,y=r.y+o.y,w=Math.max(12,o.breite),h=Math.max(12,o.tiefe),cx=x+w/2,cy=y+h/2;let sel=selected(),active=sel?.kind==='furniture'&&sel.value.id===o.id&&!thumb;let bad=false;
- if(!thumb&&!c.rug){bad=r.form==='Freie Form'?!window.WP_14.furnitureInside(r,o):window.WP_13.outsideRoom(r,o);bad ||= r.objekte.some(other=>other.id!==o.id&&!other.ausgeblendet&&!byCode.get(other.typ)?.rug && window.WP_13.level(other,byCode.get(other.typ))===window.WP_13.level(o,c) && window.WP_13.overlaps(o,other));bad ||= (r.oeffnungen||[]).some(door=>door.typ==='Tür'&&window.WP_13.isDoorBlocked(r,door,o,openAnchor))}
- let shape=`<g data-kind="furniture" data-room="${r.id}" data-id="${o.id}" transform="rotate(${o.drehung||0} ${cx} ${cy})"><g transform="translate(${x} ${y})">${o.gespiegelt?`<g transform="translate(${w} 0) scale(-1 1)">${furnitureShape(c,w,h,o.farbe)}</g>`:furnitureShape(c,w,h,o.farbe)}</g><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="transparent" stroke="${bad?'#eb6565':'none'}" stroke-width="3" stroke-dasharray="7 5"/>${o.gesperrt?`<text x="${x+6}" y="${y+15}" font-size="14">🔒</text>`:''}</g>`;
+function drawFurniture(r,o,thumb=false){const c=byCode.get(o.typ)||{style:'custom'},x=r.x+o.x,y=r.y+o.y,w=Math.max(12,o.breite),h=Math.max(12,o.tiefe),cx=x+w/2,cy=y+h/2;let sel=selected(),active=sel?.kind==='furniture'&&sel.value.id===o.id&&!thumb;
+ let shape=`<g data-kind="furniture" data-room="${r.id}" data-id="${o.id}" transform="rotate(${o.drehung||0} ${cx} ${cy})"><g transform="translate(${x} ${y})">${o.gespiegelt?`<g transform="translate(${w} 0) scale(-1 1)">${furnitureShape(c,w,h,o.farbe)}</g>`:furnitureShape(c,w,h,o.farbe)}</g><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="transparent" stroke="none" pointer-events="all"/>${o.gesperrt?`<text x="${x+6}" y="${y+15}" font-size="14">🔒</text>`:''}</g>`;
  if(active){const radius=10/ui.zoom;shape+=`<g transform="rotate(${o.drehung||0} ${cx} ${cy})" class="selection"><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="#2877da" stroke-width="${2/ui.zoom}" stroke-dasharray="${6/ui.zoom} ${4/ui.zoom}"/>${!o.gesperrt&&!r.gesperrt?([['nw',x,y],['ne',x+w,y],['se',x+w,y+h],['sw',x,y+h]].map(([k,hx,hy])=>`<circle data-kind="resize" data-room="${r.id}" data-id="${o.id}" data-handle="${k}" cx="${hx}" cy="${hy}" r="${radius*1.8}" fill="transparent"/><rect data-kind="resize" data-room="${r.id}" data-id="${o.id}" data-handle="${k}" x="${hx-radius*.75}" y="${hy-radius*.75}" width="${radius*1.5}" height="${radius*1.5}" rx="${radius*.3}" fill="#2877da" stroke="white" stroke-width="${2/ui.zoom}"/>`).join('')):''}</g>`}
  return shape;
 }
@@ -1514,8 +1538,8 @@ function drawRoom(r,thumb=false){const pts=roomPoints(r),pstr=pts.map(p=>`${r.x+
   const cut= openings.filter(o=>o.wand===e.i).map(o=>({a:clamp(o.position,0,e.len),b:clamp(o.position+o.breite,0,e.len)})).sort((a,b)=>a.a-b.a);
   let cursor=0,seg=(a,b)=>{if(b-a<=.1)return '';const ux=e.dx/e.len,uy=e.dy/e.len;return `<path data-kind="room" data-room="${r.id}" d="M${e.x+ux*a} ${e.y+uy*a}L${e.x+ux*b} ${e.y+uy*b}" stroke="${r.gesperrt?'#7e8da4':(!thumb&&document.body.dataset.theme==='dark'?'#b2cce6':'#314b66')}" stroke-width="${thumb?8:8}" stroke-linecap="square" fill="none"/>`};
   cut.forEach(q=>{out+=seg(cursor,q.a);cursor=Math.max(cursor,q.b)});out+=seg(cursor,e.len);
-  if(ui.measure&&!thumb){const mx=e.x+e.dx/2,my=e.y+e.dy/2, nx=-e.dy/e.len,ny=e.dx/e.len;out+=`<text x="${mx-nx*20}" y="${my-ny*20}" font-size="11" text-anchor="middle" dominant-baseline="middle" fill="#6588aa" transform="rotate(${Math.atan2(e.dy,e.dx)*180/Math.PI} ${mx-nx*20} ${my-ny*20})">${fmt(e.len)} cm</text>`}
  });
+ if(ui.measure&&!thumb){out+=dimensionRuns(r).map(d=>`<text x="${d.x}" y="${d.y}" font-size="12" font-weight="650" text-anchor="middle" dominant-baseline="middle" pointer-events="none" paint-order="stroke" stroke="${document.body.dataset.theme==='dark'?'#111d2c':'#f8fbff'}" stroke-width="4" fill="${document.body.dataset.theme==='dark'?'#c2d9f2':'#43688c'}" transform="rotate(${d.angle} ${d.x} ${d.y})">${fmt(d.len)} cm</text>`).join('')}
  if(!thumb){const label=window.WP_14.labelPoint(r);out+=`<text x="${label.x}" y="${label.y}" text-anchor="middle" fill="${document.body.dataset.theme==='dark'?'#cadcf0':'#7185a0'}" font-size="17" font-weight="650" pointer-events="none">${esc(r.name)} · ${fmt(roomArea(r))} m²</text>`}
  openings.forEach(o=>out+=drawOpening(r,o,thumb));
  r.objekte.map((o,i)=>({o,i})).filter(({o})=>!o.ausgeblendet).sort((a,b)=>window.WP_13.level(a.o,byCode.get(a.o.typ))-window.WP_13.level(b.o,byCode.get(b.o.typ))||a.i-b.i).forEach(({o})=>out+=drawFurniture(r,o,thumb));
@@ -1839,12 +1863,13 @@ function settingsModal() {
     '<label class="field">'+L('Sprache','Language')+'<select id="s12-language"><option value="de">Deutsch</option><option value="en">English</option></select></label>' +
     '<details style="margin-top:14px" open class="release-notes"><summary style="cursor:pointer;font-weight:750;padding:8px 0">'+L('Versionshinweise','Release notes')+'</summary>' +
     '<div style="padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--wp-soft,#f8fbff)">' +
-    '<b>WohnPlan Web 1.4 · Created by MS</b><ul style="line-height:1.7;margin-bottom:0">' +
+    '<b>WohnPlan Web 1.4.1 · Created by MS</b><ul style="line-height:1.7;margin-bottom:0">' +
+     '<li>'+L('1.4.1: Verständlichere Wandmaße und keine roten Möbelumrandungen','1.4.1: Clearer wall dimensions and no red furniture outlines')+'</li>' +
     '<li>'+L('1.4: Freie Raumformen mit Wandeditor, Nischen und Vorsprüngen','1.4: Freeform rooms with wall editor, recesses and projections')+'</li>' +
     '<li>'+L('1.3.1: Dark Mode – besser lesbare Schaltflächen, Dialoge und Möbelkarten','1.3.1: Dark mode – improved contrast for buttons, dialogs and furniture cards')+'</li>' +
     '<li>'+L('Neue Möbelzeichnungen, Ebenen und Möbelfarben','New furniture drawings, layers and furniture colours')+'</li>' +
     '<li>'+L('Präzise Eckplatzierung, Abstandsanzeigen und Wandausrichtung','Exact corner positioning, distances and wall snapping')+'</li>' +
-    '<li>'+L('Türfreiraum- und Projektprüfung','Door clearance and project validation')+'</li>' + +
+    '<li>'+L('Türfreiraum- und Projektprüfung','Door clearance and project validation')+'</li>' +
     '<li>'+L('PDF-Export für iPad und Computer überarbeitet','Rebuilt PDF export for iPad and computers')+'</li>' +
     '<li>'+L('Helles und dunkles Design','Light and dark themes')+'</li>' +
     '<li>'+L('Rastergröße 5, 10, 25 und 50 cm','Grid spacing of 5, 10, 25 or 50 cm')+'</li>' +
