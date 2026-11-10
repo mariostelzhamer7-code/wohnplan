@@ -14,7 +14,7 @@ const starter=(w=500,h=400)=>[
  {x:Math.round(w*.75),y:Math.round(h*.2)},{x:w,y:Math.round(h*.2)},
  {x:w,y:h},{x:0,y:h}
 ];
-const points=r=>r.form==='Freie Form'&&simple(r.punkte)?r.punkte:rect(r.breite,r.tiefe);
+const points=r=>r.form==='Freie Form'&&simple(r.punkte)?r.punkte:r.form==='L-Form'?[{x:0,y:0},{x:r.breite,y:0},{x:r.breite,y:r.tiefe-r.aussparungTiefe},{x:r.breite-r.aussparungBreite,y:r.tiefe-r.aussparungTiefe},{x:r.breite-r.aussparungBreite,y:r.tiefe},{x:0,y:r.tiefe}]:rect(r.breite,r.tiefe);
 function areaSigned(pts){let sum=0;for(let i=0;i<pts.length;i++){const a=pts[i],b=pts[(i+1)%pts.length];sum+=a.x*b.y-b.x*a.y}return sum/2}
 function area(r){return Math.abs(areaSigned(points(r)))/10000}
 function pointOnSegment(x,y,a,b,eps=.01){
@@ -182,7 +182,7 @@ function mountEditor(root,initial,onSave,onCancel,opts={}){
  function applyChange(next){const error=validate(next);if(error){showError(error);return false}snapshot();pts=next;showError('');render();return true}
  function bounds(){const xs=pts.map(p=>p.x),ys=pts.map(p=>p.y),x=Math.min(...xs),y=Math.min(...ys),w=Math.max(...xs)-x,h=Math.max(...ys)-y,margin=Math.max(85,Math.max(w,h)*.13);return {x:x-margin,y:y-margin,w:w+margin*2,h:h+margin*2,unit:Math.max(11,Math.max(w,h)*.024)}}
  function render(){
-  const b=bounds(),dim=b.unit,n=pts.length,fill=document.body.dataset.theme==='dark'?'#314e70':'#dceeff';
+  const b=active?.viewBounds||bounds(),dim=b.unit,n=pts.length,fill=document.body.dataset.theme==='dark'?'#314e70':'#dceeff';
   svg.setAttribute('viewBox',[b.x,b.y,b.w,b.h].join(' '));
   const polygon=pts.map(p=>p.x+','+p.y).join(' ');
   let out='<polygon points="'+polygon+'" fill="'+fill+'" stroke="#2877da" stroke-width="'+dim*.24+'" stroke-linejoin="round"/>';
@@ -273,7 +273,7 @@ function mountEditor(root,initial,onSave,onCancel,opts={}){
   const vert=e.target.closest('[data-vertex]'),wall=e.target.closest('[data-wall]');
   if(vert){
    selected={kind:'vertex',index:Number(vert.dataset.vertex)};
-   active={id:e.pointerId,index:selected.index,start:clone(pts),moved:false};
+   active={id:e.pointerId,index:selected.index,start:clone(pts),viewBounds:bounds(),moved:false};
    try{svg.setPointerCapture(e.pointerId)}catch(_){}
   }else if(wall){selected={kind:'edge',index:Number(wall.dataset.wall)}}else return;
   showError('');render();
