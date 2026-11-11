@@ -133,10 +133,10 @@ function openPicker({choice,kind,modal,closeModal,commit,changed,toast,root}){
  function colourSwatch(c,prefs,i,compact=false){
   const x=colorEntry(c.hex),selected=tab==='color'&&selectedColor.toLowerCase()===c.hex.toLowerCase();
   return '<div class="wp151-swatch-row'+(selected?' wp151-selected':'')+'">'+
-   '<button type="button" class="wp151-choice" data-wp151-colour="'+safe(c.hex)+'" aria-pressed="'+selected+'" title="'+safe(tr(c.de,c.en))+'">'+
+   '<button type="button" class="wp151-choice chip" data-wp151-colour="'+safe(c.hex)+'" aria-pressed="'+selected+'" title="'+safe(tr(c.de,c.en))+'">'+
    '<span class="wp151-sample" style="background:'+c.hex+'"></span>'+
    '<span class="wp151-swatch-name">'+safe(tr(c.de,c.en))+'</span></button>'+
-   '<button type="button" class="wp151-star" data-wp151-star="color:'+c.hex+'" title="'+tr('Favorit umschalten','Toggle favourite')+'" aria-label="'+tr('Favorit umschalten','Toggle favourite')+'">'+favoriteMark(x,prefs)+'</button>'+
+   '<button type="button" class="wp151-star chip" data-wp151-star="color:'+c.hex+'" title="'+tr('Favorit umschalten','Toggle favourite')+'" aria-label="'+tr('Favorit umschalten','Toggle favourite')+'">'+favoriteMark(x,prefs)+'</button>'+
   '</div>';
  }
  function materialSwatch(m,prefs){
@@ -146,27 +146,27 @@ function openPicker({choice,kind,modal,closeModal,commit,changed,toast,root}){
    '<defs><pattern id="'+prefix+'" patternUnits="userSpaceOnUse" width="'+def.w+'" height="'+def.h+'">'+def.body+'</pattern></defs>'+
    '<rect x="0" y="0" width="104" height="64" rx="4" fill="url(#'+prefix+')"/></svg>';
   return '<div class="wp151-swatch-row'+(on?' wp151-selected':'')+'">'+
-    '<button type="button" class="wp151-choice" data-wp151-material="'+m.id+'" aria-pressed="'+on+'">'+
+    '<button type="button" class="wp151-choice chip" data-wp151-material="'+m.id+'" aria-pressed="'+on+'">'+
     '<span class="wp151-material-sample">'+icon+'</span><span class="wp151-swatch-name">'+safe(tr(m.de,m.en))+'</span></button>'+
-    '<button type="button" class="wp151-star" data-wp151-star="material:'+m.id+'" aria-label="'+tr('Favorit umschalten','Toggle favourite')+'">'+favoriteMark(x,prefs)+'</button></div>';
+    '<button type="button" class="wp151-star chip" data-wp151-star="material:'+m.id+'" aria-label="'+tr('Favorit umschalten','Toggle favourite')+'">'+favoriteMark(x,prefs)+'</button></div>';
  }
  function render(){
   const prefs=loadPrefs();
   const recent=prefs.recent.filter(x=>target==='floor'||x.type==='color').slice(0,8);
   const fav=prefs.favorites.filter(x=>target==='floor'||x.type==='color').slice(0,12);
-  const small=x=>x.type==='color'?'<button type="button" class="wp151-chip" data-wp151-colour="'+x.value+'"><span style="background:'+x.value+'"></span>'+safe(colorName(x.value))+'</button>':
-    '<button type="button" class="wp151-chip" data-wp151-material="'+x.value+'"><span class="wp151-chip-material" style="background:'+materialByID.get(x.value).base+'"></span>'+safe(materialLabel(x.value))+'</button>';
+  const small=x=>x.type==='color'?'<button type="button" class="wp151-chip chip" data-wp151-colour="'+x.value+'"><span style="background:'+x.value+'"></span>'+safe(colorName(x.value))+'</button>':
+    '<button type="button" class="wp151-chip chip" data-wp151-material="'+x.value+'"><span class="wp151-chip-material" style="background:'+materialByID.get(x.value).base+'"></span>'+safe(materialLabel(x.value))+'</button>';
   mount.innerHTML='<p class="wp151-description">'+tr('Wähle eine Farbe oder eine passende Oberflächenstruktur. Die Vorschau erscheint direkt im Grundriss und im PDF.','Choose a colour or material. The result appears in your plan and PDF.')+'</p>'+
    '<div class="wp151-target"><span>'+tr('Bearbeiteter Bereich','Editing')+':</span><b>'+targetText+'</b></div>'+
    (target==='floor'?'<div class="wp151-tabs" role="tablist">'+
-     '<button type="button" role="tab" aria-selected="'+(tab==='color')+'" data-wp151-tab="color">'+tr('Bodenfarben','Floor colours')+'</button>'+
-     '<button type="button" role="tab" aria-selected="'+(tab==='material')+'" data-wp151-tab="material">'+tr('Bodenbeläge','Floor materials')+'</button></div>':'')+
+     '<button type="button" role="tab" class="chip" aria-selected="'+(tab==='color')+'" data-wp151-tab="color">'+tr('Bodenfarben','Floor colours')+'</button>'+
+     '<button type="button" role="tab" class="chip" aria-selected="'+(tab==='material')+'" data-wp151-tab="material">'+tr('Bodenbeläge','Floor materials')+'</button></div>':'')+
    (fav.length?'<section class="wp151-mini"><h3>★ '+tr('Favoriten','Favourites')+'</h3><div class="wp151-chip-row">'+fav.map(small).join('')+'</div></section>':'')+
    (recent.length?'<section class="wp151-mini"><h3>↶ '+tr('Zuletzt verwendet','Recently used')+'</h3><div class="wp151-chip-row">'+recent.map(small).join('')+'</div></section>':'')+
    '<section><h3 class="wp151-section-title">'+(tab==='material'?tr('Bodenbeläge','Floor materials'):tr('Farbauswahl','Colour selection'))+'</h3>'+
    '<div class="wp151-swatch-grid">'+(tab==='material'?materials.map(m=>materialSwatch(m,prefs)).join(''):palette.map((c,i)=>colourSwatch(c,prefs,i)).join(''))+'</div></section>'+
    (tab==='color'?'<label class="wp151-own-colour">'+tr('Eigene Farbe','Custom colour')+
-    '<input type="color" id="wp151-custom" value="'+selectedColor+'"><span class="wp151-hex">'+selectedColor+'</span></label>':'')+
+    '<input type="color" id="wp151-custom" value="'+selectedColor+'"><button type="button" class="wp151-custom-star chip" data-wp151-star="color:'+selectedColor+'" aria-label="'+tr('Favorit umschalten','Toggle favourite')+'">'+favoriteMark(colorEntry(selectedColor),prefs)+'</button><span class="wp151-hex">'+selectedColor+'</span></label>':'')+
    '<p class="wp151-footer-tip">'+tr('Mit ☆ kannst du eine Farbe oder einen Bodenbelag als Favorit speichern.','Use ☆ to save favourite colours or materials.')+'</p>';
   const custom=mount.querySelector('#wp151-custom');
   if(custom)custom.oninput=()=>{selectedColor=custom.value;mount.querySelector('.wp151-hex').textContent=selectedColor;mount.querySelectorAll('.wp151-selected').forEach(el=>el.classList.remove('wp151-selected'));};
