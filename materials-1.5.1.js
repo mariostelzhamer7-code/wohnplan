@@ -88,9 +88,9 @@ function svgDefs(prefix='wp151-floor'){
   return '<pattern id="'+prefix+'-'+m.id+'" patternUnits="userSpaceOnUse" width="'+p.w+'" height="'+p.h+'">'+p.body+'</pattern>'
  }).join('');
 }
-function textureOverlay(r,points){
+function textureOverlay(r,points,prefix='wp151-floor'){
  if(!r||!materialByID.has(r.bodenMaterial))return '';
- return '<polygon points="'+points+'" fill="url(#wp151-floor-'+r.bodenMaterial+')" stroke="none" pointer-events="none"/>';
+ return '<polygon points="'+points+'" fill="url(#'+prefix+'-'+r.bodenMaterial+')" stroke="none" pointer-events="none"/>';
 }
 function baseFloor(r,defaultColour){return materialByID.get(r?.bodenMaterial)?.base||r?.bodenfarbe||defaultColour}
 function wallStroke(r,defaultColour){return hexOK(r?.wandfarbe)?r.wandfarbe:defaultColour}
