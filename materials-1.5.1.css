@@ -27,6 +27,8 @@
 .wp151-own-colour{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-weight:750;font-size:13px}
 .wp151-own-colour input[type=color]{height:44px;width:102px;border:1px solid #bdcfe2;border-radius:9px;background:#f6f9fc;cursor:pointer;padding:3px}
 .wp151-hex{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.wp151-own-colour .wp151-custom-star{min-width:44px;min-height:44px;height:44px;width:44px;padding:6px!important;font-size:24px;line-height:1;background:#e9f2fa!important;color:#2e6da6!important;border:1px solid #bad0e5!important}
+body[data-theme="dark"] .wp151-own-colour .wp151-custom-star{background:#29435e!important;color:#cde6ff!important;border-color:#54708e!important}
 .wp151-footer-tip{font-size:12px;color:var(--muted);margin:0}
 #context-bar [data-ctx="delete"]{min-height:49px;min-width:122px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:14px;font-weight:800;padding:12px 17px;border:1px solid #d48c95;border-radius:12px;background:#fff0f0;color:#a72c40;box-shadow:0 2px 5px #b8424218}
 #context-bar [data-ctx="delete"]:hover{background:#ffdddd;border-color:#bb6475}
