@@ -23,7 +23,7 @@
 <body>
 <div id="app">
  <header class="topbar">
-  <button id="brand" class="brand" title="Projekte öffnen"><img src="./icon-192.png" alt="WohnPlan" /><span class="brand-name">WohnPlan<small>Created by MS · Web 1.4.1</small></span></button>
+  <button id="brand" class="brand" title="Projekte öffnen"><img src="./icon-192.png" alt="WohnPlan" /><span class="brand-name">WohnPlan<small>Created by MS · Web 1.5</small></span></button>
   <button class="project-title" id="project-title" title="Projektübersicht öffnen">Mein Grundriss ▾</button>
   <span class="save-status" id="save-status" aria-live="polite">● Bereit</span>
   <div class="top-actions">
@@ -1406,6 +1406,8 @@ window.WP_CATALOG = [
 <script src="./upgrade-1.3.js"></script>
 <script src="./upgrade-1.4.js"></script>
 <script src="./upgrade-1.4.1.js"></script>
+<script src="./catalog-1.5.js"></script>
+<script src="./drawings-1.5.js"></script>
 <script>
 /* WohnPlan Web 1.0.1 | Created by MS
    Eigenständige Browser-Umsetzung. JSON-Backupformat kompatibel zur Swift-Modellstruktur.
@@ -1416,8 +1418,8 @@ const $ = s => document.querySelector(s);
 const svg = $('#plan-svg'), root = $('#modal-root');
 const CATALOG = window.WP_CATALOG || [];
 const byCode = new Map(CATALOG.map(x => [x.id,x]));
-const GROUPS = ['Alle','Favoriten','Zuletzt','Wohnen','Schlafen','Essen','Küche','Bad','Büro','Kinder','Flur','Outdoor','Elektronik','Sonstiges'];
-const icons = {'Wohnen':'🛋️','Schlafen':'🛏️','Essen':'🍽️','Küche':'🍳','Bad':'🛁','Büro':'🖥️','Kinder':'🧸','Flur':'🚪','Outdoor':'🌿','Elektronik':'📺','Sonstiges':'▦','Favoriten':'♥','Zuletzt':'↺','Alle':'▦'};
+const GROUPS = ['Alle','Favoriten','Zuletzt','Wohnen','Pflanzen','Teppiche','Schlafen','Essen','Küche','Bad','Büro','Kinder','Flur','Outdoor','Elektronik','Sonstiges'];
+const icons = {'Wohnen':'🛋️','Pflanzen':'🪴','Teppiche':'🧶','Schlafen':'🛏️','Essen':'🍽️','Küche':'🍳','Bad':'🛁','Büro':'🖥️','Kinder':'🧸','Flur':'🚪','Outdoor':'🌿','Elektronik':'📺','Sonstiges':'▦','Favoriten':'♥','Zuletzt':'↺','Alle':'▦'};
 const KEY='WohnPlan_Web_1_0_Autosave';
 const uid = () => typeof crypto!=='undefined' && crypto.randomUUID ? crypto.randomUUID() : 'wp-'+Date.now()+'-'+Math.random().toString(16).slice(2);
 const esc = x => String(x??'').replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -1649,10 +1651,23 @@ function openingDialog(type){const r=chooseRoom();if(!r)return;if(r.gesperrt){to
  const preview=()=>{let tmp=copy(r);tmp.oeffnungen=[...r.oeffnungen,generate()];$('#opening-preview').innerHTML=drawRoom(tmp,true)};['o-wall','o-width','o-pos','o-swing'].forEach(k=>$('#'+k)?.addEventListener('input',preview));preview();
  $('#o-cancel').onclick=closeModal;$('#o-insert').onclick=()=>{let op=generate();commit();r.oeffnungen.push(op);ui.selected={kind:'opening',room:r.id,id:op.id};closeModal();changed()};
 }
-function catalogModal(){let group=ui.catalogGroup,sub='Alle';const body=modal('Möbelkatalog · 2D-Vorschau',`<div class="catalog-tools"><input id="catalog-search" type="search" placeholder="Möbel suchen: Sofa, TV, Esstisch …" value="${esc(ui.catalogQuery)}" /><button id="catalog-clear">Suche löschen</button></div><div class="catalog-cats" id="catalog-cats"></div><div id="catalog-subs" class="chiprow" style="margin-bottom:12px"></div><div id="catalog-gallery" class="gallery"></div><p class="subtext">Das Möbel erscheint nach der Auswahl als Vorschau im Plan. Tippe dann an die gewünschte Stelle zum Einfügen.</p>`, '', {full:true});
- function list(){let q=$('#catalog-search').value.trim().toLowerCase();let items=CATALOG.filter(c=>(group==='Alle'||(group==='Favoriten'?data.favoriten.includes(c.id):group==='Zuletzt'?ui.recent.includes(c.id):c.group===group))&&(!q||[c.name,c.group,c.subgroup,window.WP_I18N.catalogName(c),window.WP_I18N.translate(c.group),window.WP_I18N.translate(c.subgroup)].join(' ').toLowerCase().includes(q)));let subs=[...new Set(items.map(c=>c.subgroup))];if(sub!=='Alle'&&!subs.includes(sub))sub='Alle';$('#catalog-cats').innerHTML=GROUPS.map(g=>`<button class="chip ${g===group?'active':''}" data-group="${esc(g)}">${icons[g]||'▦'} ${esc(window.WP_I18N.translate(g))}</button>`).join('');$('#catalog-subs').innerHTML=['Alle',...subs].map(s=>`<button class="chip ${s===sub?'active':''}" data-sub="${esc(s)}">${esc(window.WP_I18N.translate(s))}</button>`).join('');if(sub!=='Alle')items=items.filter(c=>c.subgroup===sub);$('#catalog-gallery').innerHTML=items.length?items.map(c=>`<button class="gallery-card" data-item="${c.id}"><span class="fav ${data.favoriten.includes(c.id)?'on':''}" data-fav="${c.id}" aria-label="Favorit">${data.favoriten.includes(c.id)?'♥':'♡'}</span><div class="preview"><svg viewBox="0 0 140 115"><g transform="translate(${(140-c.w*Math.min(110/Math.max(1,c.w),96/Math.max(1,c.h)))/2} ${(115-c.h*Math.min(110/Math.max(1,c.w),96/Math.max(1,c.h)))/2})">${furnitureShape(c,c.w*Math.min(110/Math.max(1,c.w),96/Math.max(1,c.h)),c.h*Math.min(110/Math.max(1,c.w),96/Math.max(1,c.h)))}</g></svg></div><strong>${esc(window.WP_I18N.catalogName(c))}</strong><small>${fmt(c.w)} × ${fmt(c.h)} cm · ${esc(window.WP_I18N.translate(c.subgroup))}</small></button>`).join(''):'<div class="empty">Keine Möbel gefunden. Ändere die Suche oder Kategorie.</div>';
- $('#catalog-cats').querySelectorAll('[data-group]').forEach(b=>b.onclick=()=>{group=b.dataset.group;sub='Alle';ui.catalogGroup=group;list()});$('#catalog-subs').querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{sub=b.dataset.sub;list()});$('#catalog-gallery').querySelectorAll('[data-fav]').forEach(el=>el.onclick=e=>{e.stopPropagation();let id=el.dataset.fav;commit();data.favoriten.includes(id)?data.favoriten=data.favoriten.filter(x=>x!==id):data.favoriten.push(id);changed(false);list()});$('#catalog-gallery').querySelectorAll('[data-item]').forEach(b=>b.onclick=()=>{const r=chooseRoom();if(!r)return;const c=byCode.get(b.dataset.item);ui.recent=[c.id,...ui.recent.filter(x=>x!==c.id)].slice(0,20);ui.newItem={type:'furniture',code:c.id,x:r.x+Math.max(15,(r.breite-c.w)/2),y:r.y+Math.max(15,(r.tiefe-c.h)/2),room:r.id};closeModal();ui.mode='einrichten';assignMode('einrichten');toast('Vorschau verschieben und in den Raum tippen.');renderScene()})}
- $('#catalog-search').oninput=()=>{ui.catalogQuery=$('#catalog-search').value;list()};$('#catalog-clear').onclick=()=>{$('#catalog-search').value='';ui.catalogQuery='';list()};list();
+function catalogModal(){let group=ui.catalogGroup,sub='Alle',visible=48;const body=modal('Möbelkatalog · 2D-Vorschau',`<div class="catalog-tools"><input id="catalog-search" type="search" placeholder="Möbel suchen: Sofa, TV, Esstisch …" value="${esc(ui.catalogQuery)}" /><button id="catalog-clear">Suche löschen</button></div><div class="catalog-cats" id="catalog-cats"></div><div id="catalog-subs" class="chiprow" style="margin-bottom:12px"></div><div id="catalog-gallery" class="gallery"></div><p class="subtext">Das Möbel erscheint nach der Auswahl als Vorschau im Plan. Tippe dann an die gewünschte Stelle zum Einfügen.</p>`, '', {full:true});
+ function list(){let q=$('#catalog-search').value.trim().toLowerCase();let items=CATALOG.filter(c=>(group==='Alle'||(group==='Favoriten'?data.favoriten.includes(c.id):group==='Zuletzt'?ui.recent.includes(c.id):c.group===group))&&(!q||[c.name,c.group,c.subgroup,window.WP_I18N.catalogName(c),window.WP_I18N.translate(c.group),window.WP_I18N.translate(c.subgroup)].join(' ').toLowerCase().includes(q)));let subs=[...new Set(items.map(c=>c.subgroup))];if(sub!=='Alle'&&!subs.includes(sub))sub='Alle';$('#catalog-cats').innerHTML=GROUPS.map(g=>`<button class="chip ${g===group?'active':''}" data-group="${esc(g)}">${icons[g]||'▦'} ${esc(window.WP_I18N.translate(g))}</button>`).join('');$('#catalog-subs').innerHTML=['Alle',...subs].map(s=>`<button class="chip ${s===sub?'active':''}" data-sub="${esc(s)}">${esc(window.WP_I18N.translate(s))}</button>`).join('');if(sub!=='Alle')items=items.filter(c=>c.subgroup===sub);$('#catalog-gallery').innerHTML=items.length?items.slice(0,visible).map(c=>`<button class="gallery-card" data-item="${c.id}"><span class="fav ${data.favoriten.includes(c.id)?'on':''}" data-fav="${c.id}" aria-label="Favorit">${data.favoriten.includes(c.id)?'♥':'♡'}</span><div class="preview"><svg viewBox="0 0 140 115"><g transform="translate(${(140-c.w*Math.min(110/Math.max(1,c.w),96/Math.max(1,c.h)))/2} ${(115-c.h*Math.min(110/Math.max(1,c.w),96/Math.max(1,c.h)))/2})">${furnitureShape(c,c.w*Math.min(110/Math.max(1,c.w),96/Math.max(1,c.h)),c.h*Math.min(110/Math.max(1,c.w),96/Math.max(1,c.h)))}</g></svg></div><strong>${esc(window.WP_I18N.catalogName(c))}</strong><small>${fmt(c.w)} × ${fmt(c.h)} cm · ${esc(window.WP_I18N.translate(c.subgroup))}</small></button>`).join(''):'<div class="empty">Keine Möbel gefunden. Ändere die Suche oder Kategorie.</div>';
+ if(items.length>visible){
+    const btn=document.createElement('button');
+    const remaining=items.length-visible;
+    btn.className='wp15-load-more outline';
+    btn.type='button';
+    btn.textContent=window.WP_I18N?.language()==='en'
+      ? 'Show more furniture ('+remaining+' remaining)'
+      : 'Weitere Möbel anzeigen ('+remaining+' übrig)';
+    btn.style.cssText='grid-column:1/-1;padding:14px;margin:9px 0;min-height:50px;text-align:center;cursor:pointer';
+    $('#catalog-gallery').appendChild(btn);
+    btn.onclick=()=>{visible+=48;list()};
+ }
+ 
+ $('#catalog-cats').querySelectorAll('[data-group]').forEach(b=>b.onclick=()=>{group=b.dataset.group;sub='Alle';visible=48;ui.catalogGroup=group;list()});$('#catalog-subs').querySelectorAll('[data-sub]').forEach(b=>b.onclick=()=>{sub=b.dataset.sub;visible=48;list()});$('#catalog-gallery').querySelectorAll('[data-fav]').forEach(el=>el.onclick=e=>{e.stopPropagation();let id=el.dataset.fav;commit();data.favoriten.includes(id)?data.favoriten=data.favoriten.filter(x=>x!==id):data.favoriten.push(id);changed(false);list()});$('#catalog-gallery').querySelectorAll('[data-item]').forEach(b=>b.onclick=()=>{const r=chooseRoom();if(!r)return;const c=byCode.get(b.dataset.item);ui.recent=[c.id,...ui.recent.filter(x=>x!==c.id)].slice(0,20);ui.newItem={type:'furniture',code:c.id,x:r.x+Math.max(15,(r.breite-c.w)/2),y:r.y+Math.max(15,(r.tiefe-c.h)/2),room:r.id};closeModal();ui.mode='einrichten';assignMode('einrichten');toast('Vorschau verschieben und in den Raum tippen.');renderScene()})}
+ $('#catalog-search').oninput=()=>{ui.catalogQuery=$('#catalog-search').value;visible=48;list()};$('#catalog-clear').onclick=()=>{$('#catalog-search').value='';ui.catalogQuery='';visible=48;list()};list();
 }
 function addGroup(){let groups=[['Sofaecke',[['sofa',0,0],['couchtisch',70,130],['sessel',250,10]]],['Essgruppe · 4 Personen',[['esstisch',65,60],['stuhl',0,75],['stuhl',245,75],['stuhl',110,0],['stuhl',110,170]]],['Arbeitsplatz',[['schreibtischPC',0,0],['buerostuhl',55,105],['regal',220,5]]],['Schlafzimmer-Set',[['bett',35,45],['nachttisch',-20,85],['nachttisch',230,85],['kommode',40,280]]]];
  modal('Möbelgruppe auswählen',`<div class="stack">${groups.map((g,i)=>`<button class="side-action" data-groupinsert="${i}">❖ <span><b>${esc(g[0])}</b><br><small>${g[1].length} Möbel gleichzeitig einfügen</small></span></button>`).join('')}</div>`);
@@ -1864,7 +1879,8 @@ function settingsModal() {
     '<label class="field">'+L('Sprache','Language')+'<select id="s12-language"><option value="de">Deutsch</option><option value="en">English</option></select></label>' +
     '<details style="margin-top:14px" open class="release-notes"><summary style="cursor:pointer;font-weight:750;padding:8px 0">'+L('Versionshinweise','Release notes')+'</summary>' +
     '<div style="padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--wp-soft,#f8fbff)">' +
-    '<b>WohnPlan Web 1.4.1 · Created by MS</b><ul style="line-height:1.7;margin-bottom:0">' +
+    '<b>WohnPlan Web 1.5 · Created by MS</b><ul style="line-height:1.7;margin-bottom:0">' +
+     '<li>'+L('1.5: 182 neue Möbel, 314 Modelle insgesamt, individuelle 2D-Skizzen, Pflanzen und Teppiche als Kategorien','1.5: 182 new furniture pieces, 314 models in total, unique 2D artwork, dedicated plant and rug categories')+'</li>' +
      '<li>'+L('1.4.1: Verständlichere Wandmaße und keine roten Möbelumrandungen','1.4.1: Clearer wall dimensions and no red furniture outlines')+'</li>' +
     '<li>'+L('1.4: Freie Raumformen mit Wandeditor, Nischen und Vorsprüngen','1.4: Freeform rooms with wall editor, recesses and projections')+'</li>' +
     '<li>'+L('1.3.1: Dark Mode – besser lesbare Schaltflächen, Dialoge und Möbelkarten','1.3.1: Dark mode – improved contrast for buttons, dialogs and furniture cards')+'</li>' +
