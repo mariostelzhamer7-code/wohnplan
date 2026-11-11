@@ -5,6 +5,11 @@
   var language = 'de';
   try { language = localStorage.getItem(KEY) === 'en' ? 'en' : 'de'; } catch (_) {}
   var phrases = [
+    ['🎨 Boden & Beläge','🎨 Floor & materials'],
+    ['🎨 Wandfarbe','🎨 Wall colour'],
+    ['🎨 Möbelfarbe','🎨 Furniture colour'],
+    ['1.5.1: 42 Farben, 20 Bodenbeläge, Wandfarben, Farbfavoriten und größere Löschen-Schaltflächen',
+     '1.5.1: 42 colours, 20 floor materials, wall colours, favourites and larger delete buttons'],
     ['Pflanzen','Plants'],['Zimmerpflanzen','Indoor plants'],['Gartenpflanzen','Garden plants'],
     ['Blumen & Kräuter','Flowers & herbs'],['Wohnteppiche','Living room rugs'],
     ['Klassische Teppiche','Classic rugs'],['Moderne Teppiche','Modern rugs'],
