@@ -169,7 +169,7 @@ function openPicker({choice,kind,modal,closeModal,commit,changed,toast,root}){
     '<input type="color" id="wp151-custom" value="'+selectedColor+'"><button type="button" class="wp151-custom-star chip" data-wp151-star="color:'+selectedColor+'" aria-label="'+tr('Favorit umschalten','Toggle favourite')+'">'+favoriteMark(colorEntry(selectedColor),prefs)+'</button><span class="wp151-hex">'+selectedColor+'</span></label>':'')+
    '<p class="wp151-footer-tip">'+tr('Mit ☆ kannst du eine Farbe oder einen Bodenbelag als Favorit speichern.','Use ☆ to save favourite colours or materials.')+'</p>';
   const custom=mount.querySelector('#wp151-custom');
-  if(custom)custom.oninput=()=>{selectedColor=custom.value;mount.querySelector('.wp151-hex').textContent=selectedColor;mount.querySelectorAll('.wp151-selected').forEach(el=>el.classList.remove('wp151-selected'));};
+  if(custom)custom.oninput=()=>{selectedColor=custom.value;mount.querySelector('.wp151-hex').textContent=selectedColor;const star=mount.querySelector('.wp151-custom-star');if(star){star.dataset.wp151Star='color:'+selectedColor;star.textContent=favoriteMark(colorEntry(selectedColor),loadPrefs())}mount.querySelectorAll('.wp151-selected').forEach(el=>el.classList.remove('wp151-selected'));};
  }
  mount.addEventListener('click',e=>{
   const b=e.target.closest('button');if(!b||!mount.contains(b))return;
