@@ -5,6 +5,13 @@
   var language = 'de';
   try { language = localStorage.getItem(KEY) === 'en' ? 'en' : 'de'; } catch (_) {}
   var phrases = [
+    ['Pflanzen','Plants'],['Zimmerpflanzen','Indoor plants'],['Gartenpflanzen','Garden plants'],
+    ['Blumen & Kräuter','Flowers & herbs'],['Wohnteppiche','Living room rugs'],
+    ['Klassische Teppiche','Classic rugs'],['Moderne Teppiche','Modern rugs'],
+    ['Kinderteppiche','Kids rugs'],['Läufer','Runners'],
+    ['Möbelkatalog · 2D-Vorschau','Furniture catalog · 2D preview'],
+    ['1.5: 182 neue Möbel, 314 Modelle insgesamt, individuelle 2D-Skizzen, Pflanzen und Teppiche als Kategorien',
+     '1.5: 182 new furniture pieces, 314 models in total, unique 2D artwork, dedicated plant and rug categories'],
     ['Werkzeuge','Tools'],['Menü schließen','Close menu'],['Werkzeugmenü','Tools menu'],
     ['📐 Planen','📐 Plan'],['🛋 Einrichten','🛋 Furnish'],
     ['Planen','Plan'],['Einrichten','Furnish'],['Räume & Wände','Rooms & walls'],
@@ -336,7 +343,7 @@
     walk(document.body);
   }
   function catalogName(item) {
-    return language === 'en' ? (catalog[item.id] || item.name) : item.name;
+    return language === 'en' ? (catalog[item.id] || item.en || item.name) : item.name;
   }
   // Keep translations readable for confirmations and text added by dialogs.
   window.WP_I18N = {
