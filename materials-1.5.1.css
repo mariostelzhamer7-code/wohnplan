@@ -1,0 +1,59 @@
+/* WohnPlan Web 1.5.1 — Material picker, accessible colour names and large delete controls */
+.wp151-picker{display:flex;flex-direction:column;gap:17px;color:var(--ink);padding-bottom:8px}
+.wp151-picker .wp151-description{font-size:13px;line-height:1.5;margin:0;color:var(--muted)}
+.wp151-target{display:flex;align-items:center;gap:9px;font-size:13px}
+.wp151-target span{color:var(--muted)}
+.wp151-target b{background:#e1efff;color:#16599d;padding:6px 13px;border-radius:99px}
+.wp151-tabs{display:flex;gap:9px;flex-wrap:wrap;padding-bottom:5px}
+.wp151-tabs button{border:1px solid #bdd5f0!important;color:#315476!important;background:#e9f2fa!important;font-weight:700;min-height:47px;padding:10px 18px}
+.wp151-tabs button[aria-selected="true"]{background:#2877da!important;color:#fff!important;border-color:#2877da!important}
+.wp151-section-title,.wp151-mini h3{margin:0 0 9px;font-size:14px;font-weight:760}
+.wp151-swatch-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px}
+.wp151-swatch-row{position:relative;min-width:0;border:1.5px solid var(--line);background:#f8fbff;border-radius:12px;display:flex;flex-direction:column;overflow:hidden;min-height:119px}
+.wp151-swatch-row:hover{border-color:#81acd8}
+.wp151-swatch-row.wp151-selected{border:2.5px solid #2877da;background:#edf6ff;box-shadow:inset 0 0 0 1px #2877da}
+.wp151-picker .wp151-choice{display:flex;flex-direction:column;align-items:stretch;text-align:center;gap:8px;min-width:0;min-height:118px;padding:9px 8px 30px;border:0!important;border-radius:10px;background:transparent!important;color:#253d59!important;font-weight:650;flex:1}
+.wp151-picker .wp151-choice:hover{background:transparent!important}
+.wp151-picker .wp151-sample{height:47px;width:100%;display:block;border-radius:8px;border:1px solid #9caebb;box-shadow:inset 0 0 0 1px #ffffff70}
+.wp151-picker .wp151-swatch-name{display:block;min-height:29px;max-height:40px;font-size:11px;line-height:1.35;overflow:hidden;overflow-wrap:anywhere}
+.wp151-material-sample{height:64px;width:100%;display:block;border-radius:8px;border:1px solid #9caebb;overflow:hidden;background:#dae5ee}
+.wp151-material-sample svg{width:100%;height:100%;display:block}
+.wp151-picker .wp151-star{position:absolute;right:5px;bottom:4px;min-width:29px;min-height:29px;width:29px;height:29px;border:0!important;border-radius:8px;padding:0!important;background:transparent!important;color:#3974aa!important;font-size:21px;line-height:1}
+.wp151-picker .wp151-star:hover{color:#bc8c3a!important;background:#eff4fd!important}
+.wp151-chip-row{display:flex;gap:7px;flex-wrap:wrap}
+.wp151-picker .wp151-chip{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:650;padding:6px 11px;border-radius:99px;min-height:34px;background:#eaf1f8!important;color:#345c80!important;border:1px solid #cbdbe9!important}
+.wp151-chip span{height:15px;width:15px;border-radius:50%;border:1px solid #8fa5b4;display:inline-block;flex:none}
+.wp151-mini{border:1px solid var(--line);padding:12px;border-radius:11px;background:#f6f9fc}
+.wp151-own-colour{display:flex;align-items:center;gap:10px;flex-wrap:wrap;font-weight:750;font-size:13px}
+.wp151-own-colour input[type=color]{height:44px;width:102px;border:1px solid #bdcfe2;border-radius:9px;background:#f6f9fc;cursor:pointer;padding:3px}
+.wp151-hex{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.wp151-footer-tip{font-size:12px;color:var(--muted);margin:0}
+#context-bar [data-ctx="delete"]{min-height:49px;min-width:122px;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-size:14px;font-weight:800;padding:12px 17px;border:1px solid #d48c95;border-radius:12px;background:#fff0f0;color:#a72c40;box-shadow:0 2px 5px #b8424218}
+#context-bar [data-ctx="delete"]:hover{background:#ffdddd;border-color:#bb6475}
+#context-bar [data-ctx="delete"] .wp151-trash-icon{width:21px;height:21px;display:block;flex:none}
+body[data-theme="dark"] .wp151-picker{color:#edf4ff}
+body[data-theme="dark"] .wp151-target b{color:#d8eafe;background:#294d75}
+body[data-theme="dark"] .wp151-tabs button{background:#29435e!important;color:#e7f2ff!important;border-color:#536d89!important}
+body[data-theme="dark"] .wp151-tabs button[aria-selected="true"]{background:#2877da!important;color:#fff!important;border-color:#77addd!important}
+body[data-theme="dark"] .wp151-mini,
+body[data-theme="dark"] .wp151-swatch-row{background:#20344b;border-color:#425975}
+body[data-theme="dark"] .wp151-swatch-row.wp151-selected{background:#284662;border-color:#81c4ff}
+body[data-theme="dark"] .wp151-picker .wp151-choice{background:transparent!important;color:#f1f7ff!important;border:0!important}
+body[data-theme="dark"] .wp151-picker .wp151-star{background:transparent!important;color:#a9d4ff!important;border:0!important}
+body[data-theme="dark"] .wp151-picker .wp151-chip{background:#2d4560!important;color:#eef6ff!important;border-color:#526d8b!important}
+body[data-theme="dark"] #context-bar [data-ctx="delete"]{background:#71394b!important;color:#ffe9ef!important;border:1px solid #ae667d!important}
+body[data-theme="dark"] #context-bar [data-ctx="delete"]:hover{background:#884458!important;border-color:#d48b9e!important}
+body[data-theme="dark"] .wp151-own-colour input[type=color]{background:#29435e}
+@media (max-width:900px){
+ .wp151-swatch-grid{grid-template-columns:repeat(auto-fill,minmax(112px,1fr))}
+ #context-bar [data-ctx="delete"]{min-width:109px;min-height:47px;padding:10px 13px}
+}
+@media (max-width:600px){
+ .wp151-swatch-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+ .wp151-picker .wp151-choice{padding:7px 5px 28px}
+ .wp151-picker .wp151-swatch-name{font-size:10.5px}
+ #context-bar [data-ctx="delete"]{min-width:102px}
+}
+@media print{
+ #context-bar [data-ctx="delete"],.wp151-picker{display:none!important}
+}
