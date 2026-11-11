@@ -18,12 +18,13 @@
  <link rel="stylesheet" href="./upgrade-1.2.css" />
  <link rel="stylesheet" href="./upgrade-1.3.css" />
 <link rel="stylesheet" href="./upgrade-1.4.css" />
+<link rel="stylesheet" href="./materials-1.5.1.css" />
  <title>WohnPlan · Created by MS</title>
 </head>
 <body>
 <div id="app">
  <header class="topbar">
-  <button id="brand" class="brand" title="Projekte öffnen"><img src="./icon-192.png" alt="WohnPlan" /><span class="brand-name">WohnPlan<small>Created by MS · Web 1.5</small></span></button>
+  <button id="brand" class="brand" title="Projekte öffnen"><img src="./icon-192.png" alt="WohnPlan" /><span class="brand-name">WohnPlan<small>Created by MS · Web 1.5.1</small></span></button>
   <button class="project-title" id="project-title" title="Projektübersicht öffnen">Mein Grundriss ▾</button>
   <span class="save-status" id="save-status" aria-live="polite">● Bereit</span>
   <div class="top-actions">
@@ -1408,6 +1409,7 @@ window.WP_CATALOG = [
 <script src="./upgrade-1.4.1.js"></script>
 <script src="./catalog-1.5.js"></script>
 <script src="./drawings-1.5.js"></script>
+<script src="./materials-1.5.1.js"></script>
 <script>
 /* WohnPlan Web 1.0.1 | Created by MS
    Eigenständige Browser-Umsetzung. JSON-Backupformat kompatibel zur Swift-Modellstruktur.
@@ -1535,11 +1537,11 @@ function drawFurniture(r,o,thumb=false){const c=byCode.get(o.typ)||{style:'custo
  if(active){const radius=10/ui.zoom;shape+=`<g transform="rotate(${o.drehung||0} ${cx} ${cy})" class="selection"><rect x="${x}" y="${y}" width="${w}" height="${h}" fill="none" stroke="#2877da" stroke-width="${2/ui.zoom}" stroke-dasharray="${6/ui.zoom} ${4/ui.zoom}"/>${!o.gesperrt&&!r.gesperrt?([['nw',x,y],['ne',x+w,y],['se',x+w,y+h],['sw',x,y+h]].map(([k,hx,hy])=>`<circle data-kind="resize" data-room="${r.id}" data-id="${o.id}" data-handle="${k}" cx="${hx}" cy="${hy}" r="${radius*1.8}" fill="transparent"/><rect data-kind="resize" data-room="${r.id}" data-id="${o.id}" data-handle="${k}" x="${hx-radius*.75}" y="${hy-radius*.75}" width="${radius*1.5}" height="${radius*1.5}" rx="${radius*.3}" fill="#2877da" stroke="white" stroke-width="${2/ui.zoom}"/>`).join('')):''}</g>`}
  return shape;
 }
-function drawRoom(r,thumb=false){const pts=roomPoints(r),pstr=pts.map(p=>`${r.x+p.x},${r.y+p.y}`).join(' '),sel=selected(),active=sel?.kind==='room'&&sel.value.id===r.id&&!thumb;let out=`<polygon data-kind="room" data-room="${r.id}" points="${pstr}" fill="${r.bodenfarbe||(!thumb&&document.body.dataset.theme==='dark'?(active?'#324e72':'#273c56'):(active?'#e0efff':'#edf4fb'))}" stroke="none"/>`;
+function drawRoom(r,thumb=false){const pts=roomPoints(r),pstr=pts.map(p=>`${r.x+p.x},${r.y+p.y}`).join(' '),sel=selected(),active=sel?.kind==='room'&&sel.value.id===r.id&&!thumb;let out=`<polygon data-kind="room" data-room="${r.id}" points="${pstr}" fill="${window.WP_151.baseFloor(r,(!thumb&&document.body.dataset.theme==='dark'?(active?'#324e72':'#273c56'):(active?'#e0efff':'#edf4fb')))}" stroke="none"/>${window.WP_151.textureOverlay(r,pstr)}`;
  const edges=roomEdges(r), openings=r.oeffnungen||[];
  edges.forEach(e=>{
   const cut= openings.filter(o=>o.wand===e.i).map(o=>({a:clamp(o.position,0,e.len),b:clamp(o.position+o.breite,0,e.len)})).sort((a,b)=>a.a-b.a);
-  let cursor=0,seg=(a,b)=>{if(b-a<=.1)return '';const ux=e.dx/e.len,uy=e.dy/e.len;return `<path data-kind="room" data-room="${r.id}" d="M${e.x+ux*a} ${e.y+uy*a}L${e.x+ux*b} ${e.y+uy*b}" stroke="${r.gesperrt?'#7e8da4':(!thumb&&document.body.dataset.theme==='dark'?'#b2cce6':'#314b66')}" stroke-width="${thumb?8:8}" stroke-linecap="square" fill="none"/>`};
+  let cursor=0,seg=(a,b)=>{if(b-a<=.1)return '';const ux=e.dx/e.len,uy=e.dy/e.len;return `<path data-kind="room" data-room="${r.id}" d="M${e.x+ux*a} ${e.y+uy*a}L${e.x+ux*b} ${e.y+uy*b}" stroke="${r.gesperrt?'#7e8da4':window.WP_151.wallStroke(r,(!thumb&&document.body.dataset.theme==='dark'?'#b2cce6':'#314b66'))}" stroke-width="${thumb?8:8}" stroke-linecap="square" fill="none"/>`};
   cut.forEach(q=>{out+=seg(cursor,q.a);cursor=Math.max(cursor,q.b)});out+=seg(cursor,e.len);
  });
 
@@ -1563,16 +1565,20 @@ function drawOpening(r,o,thumb=false){const a=openAnchor(r,o),s=selected(),isSel
  if(isSelected){out+=`<circle cx="${(a.x+a.ex)/2}" cy="${(a.y+a.ey)/2}" r="${8/ui.zoom}" fill="#2877da" stroke="white" stroke-width="${2/ui.zoom}"/>`}
  return out+'</g>';
 }
-function renderScene(){const grid=window.WP_12.get().gridSize,major=grid*5,dark=document.body.dataset.theme==='dark';const wr=worldRect();svg.setAttribute('viewBox',`${wr.x} ${wr.y} ${wr.w} ${wr.h}`);svg.innerHTML=`<defs><pattern id="wp-grid" width="${major}" height="${major}" patternUnits="userSpaceOnUse"><path d="M ${major} 0 L 0 0 0 ${major}" fill="none" stroke="${dark?'#688baa':'#aac8e7'}" stroke-width=".9" opacity=".45"/></pattern><pattern id="wp-grid-small" width="${grid}" height="${grid}" patternUnits="userSpaceOnUse"><path d="M ${grid} 0 L 0 0 0 ${grid}" fill="none" stroke="${dark?'#506d88':'#d5e4f4'}" stroke-width=".55" opacity=".5"/></pattern></defs><rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="${dark?'#111d2c':'#f8fbff'}"/>${ui.grid?`<rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="url(#wp-grid-small)"/><rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="url(#wp-grid)"/>`:''}${(project()?.raeume||[]).map(r=>drawRoom(r)).join('')}${ui.measure?(project()?.raeume||[]).map(r=>window.WP_141.drawDimensions(r,{dark,zoom:ui.zoom,language:window.WP_I18N?.language()})).join(''):''}${ui.newItem?drawPreviewItem():''}${wp13DistanceOverlay()}`;
+function renderScene(){const grid=window.WP_12.get().gridSize,major=grid*5,dark=document.body.dataset.theme==='dark';const wr=worldRect();svg.setAttribute('viewBox',`${wr.x} ${wr.y} ${wr.w} ${wr.h}`);svg.innerHTML=`<defs><pattern id="wp-grid" width="${major}" height="${major}" patternUnits="userSpaceOnUse"><path d="M ${major} 0 L 0 0 0 ${major}" fill="none" stroke="${dark?'#688baa':'#aac8e7'}" stroke-width=".9" opacity=".45"/></pattern><pattern id="wp-grid-small" width="${grid}" height="${grid}" patternUnits="userSpaceOnUse"><path d="M ${grid} 0 L 0 0 0 ${grid}" fill="none" stroke="${dark?'#506d88':'#d5e4f4'}" stroke-width=".55" opacity=".5"/></pattern>${window.WP_151.svgDefs()}</defs><rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="${dark?'#111d2c':'#f8fbff'}"/>${ui.grid?`<rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="url(#wp-grid-small)"/><rect x="${wr.x}" y="${wr.y}" width="${wr.w}" height="${wr.h}" fill="url(#wp-grid)"/>`:''}${(project()?.raeume||[]).map(r=>drawRoom(r)).join('')}${ui.measure?(project()?.raeume||[]).map(r=>window.WP_141.drawDimensions(r,{dark,zoom:ui.zoom,language:window.WP_I18N?.language()})).join(''):''}${ui.newItem?drawPreviewItem():''}${wp13DistanceOverlay()}`;
  $('#scale-label').textContent=`${window.WP_I18N?.language()==='en'?'Grid':'Raster'} ${grid}/${major} cm · ${Math.round(ui.zoom*100)}%`;$('#scene-info').textContent=`${project()?.raeume.length||0} Räume · ${fmt(project()?.raeume.reduce((a,r)=>a+roomArea(r),0))} m²`;
 }
 function drawPreviewItem(){const v=ui.newItem;if(v.type==='furniture'){const c=byCode.get(v.code);if(!c)return '';return `<g class="ghost" opacity=".63" transform="translate(${v.x} ${v.y})">${furnitureShape(c,c.w,c.h)}</g>`}return ''}
+function wp151DeleteLabel(){
+ const label=window.WP_I18N?.language()==='en'?'Delete':'Löschen';
+ return '<svg class="wp151-trash-icon" viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18M8 6V4h8v2M6 6l1 15h10l1-15M10 10v7M14 10v7"/></svg><span>'+label+'</span>';
+}
 function renderContext(){const bar=$('#context-bar'),s=selected();if(!s){bar.innerHTML='<span>Tippe ein Element an · Auf freier Fläche ziehen: Grundriss verschieben · Zwei Finger: Zoomen</span>';return}
  let v=s.value,parts=[`<b class="selection-label">${esc(s.kind==='room'?v.name:s.kind==='furniture'?v.name:v.typ)}</b>`];
  const B=(text,action,cls='')=>`<button data-ctx="${action}" class="${cls}">${text}</button>`;
- if(s.kind==='room'){parts.push(`<span class="pill">${fmt(roomArea(v))} m²</span>`,B('🎨 Bodenfarbe','color'),B('✎ Wände','walls'),B('Maße','edit'),B(v.gesperrt?'🔓 Entsperren':'🔒 Sperren','lock'),B('Verschieben','move'),B('Löschen','delete','danger'))}
- if(s.kind==='furniture'){parts.push(`<span class="pill">${fmt(v.breite)} × ${fmt(v.tiefe)} cm</span>`,B('🎨 Farbe','color'),B('▤ Ebenen','layers'),B('✎ Größe','edit'),B('↻ Drehen','rotate'),B('⇄ Spiegeln','mirror'),B('⊕ Kopieren','duplicate'),B(v.gesperrt?'🔓':'🔒','lock'),B('🗑','delete','danger'))}
- if(s.kind==='opening'){parts.push(`<span class="pill">${fmt(v.position)} cm ab Ecke</span>`,B('✎ Position','edit'));if(v.typ==='Tür')parts.push(B('⇄ Anschlag','mirror'),B(v.oeffnetNachAussen?'Nach innen':'Nach außen','swing'));parts.push(B('🗑','delete','danger'))}
+ if(s.kind==='room'){parts.push(`<span class="pill">${fmt(roomArea(v))} m²</span>`,B('🎨 Boden & Beläge','color'),B('🎨 Wandfarbe','wall-color'),B('✎ Wände','walls'),B('Maße','edit'),B(v.gesperrt?'🔓 Entsperren':'🔒 Sperren','lock'),B('Verschieben','move'),B(wp151DeleteLabel(),'delete','danger wp151-delete'))}
+ if(s.kind==='furniture'){parts.push(`<span class="pill">${fmt(v.breite)} × ${fmt(v.tiefe)} cm</span>`,B('🎨 Möbelfarbe','color'),B('▤ Ebenen','layers'),B('✎ Größe','edit'),B('↻ Drehen','rotate'),B('⇄ Spiegeln','mirror'),B('⊕ Kopieren','duplicate'),B(v.gesperrt?'🔓':'🔒','lock'),B(wp151DeleteLabel(),'delete','danger wp151-delete'))}
+ if(s.kind==='opening'){parts.push(`<span class="pill">${fmt(v.position)} cm ab Ecke</span>`,B('✎ Position','edit'));if(v.typ==='Tür')parts.push(B('⇄ Anschlag','mirror'),B(v.oeffnetNachAussen?'Nach innen':'Nach außen','swing'));parts.push(B(wp151DeleteLabel(),'delete','danger wp151-delete'))}
  bar.innerHTML=parts.join('');bar.querySelectorAll('[data-ctx]').forEach(b=>b.onclick=()=>contextAction(b.dataset.ctx));
 }
 function render(){let p=project();$('#project-title').textContent=(p?.name||'Kein Projekt')+' ▾';$('#undo-btn').disabled=!undo.length;$('#redo-btn').disabled=!redo.length;renderScene();renderContext()}
@@ -1580,6 +1586,7 @@ function chooseRoom(){const rs=project()?.raeume||[];if(!rs.length){toast('Bitte
 function contextAction(action){const s=selected();if(!s)return;const v=s.value,r=s.room;
  if(action==='edit')return editSelected();
  if(action==='color')return colorModal();
+ if(action==='wall-color')return colorModal('wall');
  if(action==='layers')return layersModal();
  if(action==='walls')return editFreeRoom(s.room,false);
  if(action==='move'){toast('Ziehe den Raum direkt auf der Planfläche.');return}
@@ -1673,7 +1680,7 @@ function addGroup(){let groups=[['Sofaecke',[['sofa',0,0],['couchtisch',70,130],
  modal('Möbelgruppe auswählen',`<div class="stack">${groups.map((g,i)=>`<button class="side-action" data-groupinsert="${i}">❖ <span><b>${esc(g[0])}</b><br><small>${g[1].length} Möbel gleichzeitig einfügen</small></span></button>`).join('')}</div>`);
  root.querySelectorAll('[data-groupinsert]').forEach(b=>b.onclick=()=>{let r=chooseRoom();if(!r)return;let set=groups[Number(b.dataset.groupinsert)][1];commit();set.forEach(([id,dx,dy])=>{let o=newFurniture(id,r);if(!o)return;o.x=clamp(snap((r.breite-330)/2+dx),0,r.breite-o.breite);o.y=clamp(snap((r.tiefe-360)/2+dy),0,r.tiefe-o.tiefe);if(r.form==='Freie Form'){const pos=window.WP_14.nearestFurniturePosition(r,o,{x:o.x,y:o.y});o.x=pos.x;o.y=pos.y}r.objekte.push(o)});closeModal();changed();toast('Möbelgruppe eingefügt')});
 }
-function projectThumb(p){let rs=p.raeume||[];if(!rs.length)return '<svg viewBox="0 0 300 140"><text x="150" y="80" text-anchor="middle" fill="#9cacc0" font-size="16">Leerer Grundriss</text></svg>';let x=Math.min(...rs.map(r=>r.x)),y=Math.min(...rs.map(r=>r.y)),maxx=Math.max(...rs.map(r=>r.x+r.breite)),maxy=Math.max(...rs.map(r=>r.y+r.tiefe));let w=maxx-x,h=maxy-y,pad=30;return `<svg viewBox="${x-pad} ${y-pad} ${Math.max(200,w+pad*2)} ${Math.max(140,h+pad*2)}" preserveAspectRatio="xMidYMid meet"><rect x="${x-pad}" y="${y-pad}" width="${w+pad*2}" height="${h+pad*2}" fill="#f7fbff"/>${rs.map(r=>{let pstr=roomPoints(r).map(q=>`${r.x+q.x},${r.y+q.y}`).join(' ');return `<polygon points="${pstr}" fill="#eaf3fd" stroke="#3b5874" stroke-width="8"/>`+r.objekte.slice(0,24).map(o=>`<rect x="${r.x+o.x}" y="${r.y+o.y}" width="${o.breite}" height="${o.tiefe}" rx="6" fill="${byCode.get(o.typ)?.rug?'#dce6f8':'#9dc5e8'}" stroke="#789ab7" stroke-width="2"/>`).join('')}).join('')}</svg>`}
+function projectThumb(p){let rs=p.raeume||[];if(!rs.length)return '<svg viewBox="0 0 300 140"><text x="150" y="80" text-anchor="middle" fill="#9cacc0" font-size="16">Leerer Grundriss</text></svg>';let x=Math.min(...rs.map(r=>r.x)),y=Math.min(...rs.map(r=>r.y)),maxx=Math.max(...rs.map(r=>r.x+r.breite)),maxy=Math.max(...rs.map(r=>r.y+r.tiefe));let w=maxx-x,h=maxy-y,pad=30;const tp='wp151-thumb-'+String(p.id).replace(/[^a-zA-Z0-9_-]/g,'').slice(0,50);return `<svg viewBox="${x-pad} ${y-pad} ${Math.max(200,w+pad*2)} ${Math.max(140,h+pad*2)}" preserveAspectRatio="xMidYMid meet"><defs>${window.WP_151.svgDefs(tp)}</defs><rect x="${x-pad}" y="${y-pad}" width="${w+pad*2}" height="${h+pad*2}" fill="#f7fbff"/>${rs.map(r=>{let pstr=roomPoints(r).map(q=>`${r.x+q.x},${r.y+q.y}`).join(' ');return `<polygon points="${pstr}" fill="${window.WP_151.baseFloor(r,'#eaf3fd')}" stroke="none"/>${window.WP_151.textureOverlay(r,pstr,tp)}<polygon points="${pstr}" fill="none" stroke="${window.WP_151.wallStroke(r,'#3b5874')}" stroke-width="8"/>`+r.objekte.slice(0,24).map(o=>`<rect x="${r.x+o.x}" y="${r.y+o.y}" width="${o.breite}" height="${o.tiefe}" rx="6" fill="${byCode.get(o.typ)?.rug?'#dce6f8':'#9dc5e8'}" stroke="#789ab7" stroke-width="2"/>`).join('')}).join('')}</svg>`}
 function projectOverview(){ui.selected=null;const body=modal('Deine WohnPlan-Projekte',`<div class="flex between" style="flex-wrap:wrap;margin-bottom:13px"><div class="flex"><button class="primary" id="new-project">＋ Neuer Grundriss</button><button class="outline" id="new-folder">＋ Neuer Ordner</button></div><button id="show-trash" class="outline">🗑 Papierkorb (${data.papierkorb.length})</button></div><div id="folder-bar" class="folder-bar"></div><div class="project-grid" id="project-grid"></div>`, '', {large:true});
  function show(){let folders=[{id:'all',name:'Alle Projekte'},{id:'root',name:'Ohne Ordner'},...data.ordner];$('#folder-bar').innerHTML=folders.map(f=>`<button data-folder="${f.id}" class="chip ${ui.folder===f.id||(!ui.folder&&f.id==='all')?'active':''}">${f.id==='all'?'▦ ':f.id==='root'?'▢ ':'📁 '}${esc(f.name)}</button>`).join('');$('#folder-bar').querySelectorAll('[data-folder]').forEach(b=>b.onclick=()=>{ui.folder=b.dataset.folder;ui.trash=false;show()});$('#show-trash').classList.toggle('primary',ui.trash);$('#show-trash').textContent=ui.trash?'↩ Zurück zu Projekten':`🗑 Papierkorb (${data.papierkorb.length})`;
  const entries=ui.trash?data.papierkorb:data.projekte.filter(p=>!ui.folder||ui.folder==='all'||(ui.folder==='root'?!p.ordnerID:p.ordnerID===ui.folder));
@@ -1736,25 +1743,13 @@ async function exportPDF() {
     $('#pdf-fail-close').onclick=closeModal;
   }
 }
-function exportSVG(){const b=currentBounds(),pad=ui.measure?275:70,W=b.w+pad*2,H=b.h+pad*2,prev=ui.selected;ui.selected=null;const content=(project()?.raeume||[]).map(r=>drawRoom(r,true)+`<text x="${window.WP_14.labelPoint(r).x}" y="${window.WP_14.labelPoint(r).y}" fill="#385f85" font-size="18" font-weight="700">${esc(r.name)} · ${fmt(roomArea(r))} m²</text>`).join('')+(ui.measure?(project()?.raeume||[]).map(r=>window.WP_141.drawDimensions(r,{dark:false,zoom:1,language:window.WP_I18N?.language()})).join(''):'');ui.selected=prev;return `<svg xmlns="http://www.w3.org/2000/svg" width="${Math.ceil(W*2)}" height="${Math.ceil(H*2)}" viewBox="${b.x-pad} ${b.y-pad} ${W} ${H}"><rect x="${b.x-pad}" y="${b.y-pad}" width="${W}" height="${H}" fill="#ffffff"/>${content}<text x="${b.x+b.w/2}" y="${b.y-pad+25}" text-anchor="middle" font-family="sans-serif" fill="#274f82" font-size="21" font-weight="bold">${esc(project()?.name||'WohnPlan')}</text><text x="${b.x+b.w/2}" y="${b.y+b.h+pad-15}" text-anchor="middle" font-family="sans-serif" fill="#90a3b8" font-size="13">WohnPlan · Created by MS</text></svg>`}
+function exportSVG(){const b=currentBounds(),pad=ui.measure?275:70,W=b.w+pad*2,H=b.h+pad*2,prev=ui.selected;ui.selected=null;const content=(project()?.raeume||[]).map(r=>drawRoom(r,true)+`<text x="${window.WP_14.labelPoint(r).x}" y="${window.WP_14.labelPoint(r).y}" fill="#385f85" font-size="18" font-weight="700">${esc(r.name)} · ${fmt(roomArea(r))} m²</text>`).join('')+(ui.measure?(project()?.raeume||[]).map(r=>window.WP_141.drawDimensions(r,{dark:false,zoom:1,language:window.WP_I18N?.language()})).join(''):'');ui.selected=prev;return `<svg xmlns="http://www.w3.org/2000/svg" width="${Math.ceil(W*2)}" height="${Math.ceil(H*2)}" viewBox="${b.x-pad} ${b.y-pad} ${W} ${H}"><defs>${window.WP_151.svgDefs()}</defs><rect x="${b.x-pad}" y="${b.y-pad}" width="${W}" height="${H}" fill="#ffffff"/>${content}<text x="${b.x+b.w/2}" y="${b.y-pad+25}" text-anchor="middle" font-family="sans-serif" fill="#274f82" font-size="21" font-weight="bold">${esc(project()?.name||'WohnPlan')}</text><text x="${b.x+b.w/2}" y="${b.y+b.h+pad-15}" text-anchor="middle" font-family="sans-serif" fill="#90a3b8" font-size="13">WohnPlan · Created by MS</text></svg>`}
 async function exportPNG(){try{let xml=exportSVG(),img=new Image(),url=URL.createObjectURL(new Blob([xml],{type:'image/svg+xml;charset=utf-8'}));img.onload=()=>{let cv=document.createElement('canvas');cv.width=img.naturalWidth;cv.height=img.naturalHeight;let ctx=cv.getContext('2d');ctx.drawImage(img,0,0);URL.revokeObjectURL(url);cv.toBlob(blob=>blob?download(blob,(project()?.name||'WohnPlan')+'.png'):toast('Bildexport nicht verfügbar'),'image/png')};img.onerror=()=>{URL.revokeObjectURL(url);toast('Bildexport nicht möglich')};img.src=url}catch(e){toast('PNG-Fehler: '+e.message)}}
 
 function wp13L(de,en){return window.WP_I18N?.language()==='en'?en:de}
-function colorModal(){
+function colorModal(kind='floor'){
  const choice=selected();if(!choice||choice.kind==='opening')return;
- if(choice.value.gesperrt||choice.room.gesperrt){toast(wp13L('Dieses Element ist gesperrt','This item is locked'));return}
- const key=choice.kind==='room'?'bodenfarbe':'farbe';
- const initial=choice.value[key]|| (choice.kind==='room'?'#edf4fb':'#b9d2e8');
- const colors=['#b9d2e8','#ffffff','#dcead4','#d6b18d','#e3c6bb','#d1d1d7','#e4d0a1','#c7b8d9','#9dc8b7','#a9bad1','#e2d7c8','#284963'];
- modal(wp13L('Farbe auswählen','Choose colour'),
-  '<div class="stack"><p class="subtext">'+wp13L('Wähle eine Farbe für die Raumfläche oder das ausgewählte Möbelstück.','Choose a colour for the room floor or selected furniture.')+'</p>'+
-  '<div class="wp13-color-list">'+colors.map(c=>'<button type="button" class="wp13-color" data-wp13-color="'+c+'" aria-label="'+c+'" style="background:'+c+'"></button>').join('')+'</div>'+
-  '<label class="field">'+wp13L('Eigene Farbe','Custom colour')+'<input type="color" id="wp13-color-picker" value="'+initial+'"></label></div>',
-  '<button id="wp13-color-cancel">'+wp13L('Abbrechen','Cancel')+'</button><button class="primary" id="wp13-color-save">'+wp13L('Übernehmen','Apply')+'</button>');
- const picker=$('#wp13-color-picker');
- root.querySelectorAll('[data-wp13-color]').forEach(el=>el.onclick=()=>{picker.value=el.dataset.wp13Color});
- $('#wp13-color-cancel').onclick=closeModal;
- $('#wp13-color-save').onclick=()=>{commit();choice.value[key]=picker.value;closeModal();changed();toast(wp13L('Farbe übernommen','Colour applied'))};
+ return window.WP_151.openPicker({choice,kind,modal,closeModal,commit,changed,toast,root});
 }
 function layersModal(roomID){
  let selection=selected();
@@ -1879,7 +1874,8 @@ function settingsModal() {
     '<label class="field">'+L('Sprache','Language')+'<select id="s12-language"><option value="de">Deutsch</option><option value="en">English</option></select></label>' +
     '<details style="margin-top:14px" open class="release-notes"><summary style="cursor:pointer;font-weight:750;padding:8px 0">'+L('Versionshinweise','Release notes')+'</summary>' +
     '<div style="padding:12px;border:1px solid var(--line);border-radius:10px;background:var(--wp-soft,#f8fbff)">' +
-    '<b>WohnPlan Web 1.5 · Created by MS</b><ul style="line-height:1.7;margin-bottom:0">' +
+    '<b>WohnPlan Web 1.5.1 · Created by MS</b><ul style="line-height:1.7;margin-bottom:0">' +
+     '<li>'+L('1.5.1: 42 Farben, 20 Bodenbeläge, Wandfarben, Farbfavoriten und größere Löschen-Schaltflächen','1.5.1: 42 colours, 20 floor materials, wall colours, favourites and larger delete buttons')+'</li>' +
      '<li>'+L('1.5: 182 neue Möbel, 314 Modelle insgesamt, individuelle 2D-Skizzen, Pflanzen und Teppiche als Kategorien','1.5: 182 new furniture pieces, 314 models in total, unique 2D artwork, dedicated plant and rug categories')+'</li>' +
      '<li>'+L('1.4.1: Verständlichere Wandmaße und keine roten Möbelumrandungen','1.4.1: Clearer wall dimensions and no red furniture outlines')+'</li>' +
     '<li>'+L('1.4: Freie Raumformen mit Wandeditor, Nischen und Vorsprüngen','1.4: Freeform rooms with wall editor, recesses and projections')+'</li>' +
